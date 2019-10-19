@@ -1,0 +1,42 @@
+.root {
+    -fx-background-color: #ffffff;
+}
+
+.button{
+    -fx-min-width: 100px;
+}
+
+#logoutButton, #loginButton{
+    -fx-background-color: #FBCFD0;
+}
+
+#addPost, #addComment{
+    -fx-background-color: #FFD8B0;
+}
+
+#postTable .column-header {
+    -fx-background-color: #D5E8D2; 
+}
+
+#deletePost{
+    -fx-background-color: #D5E8D2;
+}
+
+#postTable{
+    -fx-pref-height: 200px;
+    -fx-padding-right: 6px;
+}
+
+#commentTable .column-header {
+    -fx-background-color: #FFF2CD;
+}
+
+#deleteComment{
+    -fx-background-color: #FFF2CD;
+}
+
+#commentTable{
+    -fx-pref-height: 200px;
+    -fx-padding-right: 6px; 
+}
+
