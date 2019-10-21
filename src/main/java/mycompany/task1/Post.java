@@ -1,6 +1,16 @@
 package mycompany.task1;
 
 import java.sql.*;
+
+
+
+
+
+
+
+
+
+
 import javafx.beans.property.*;
 
 public class Post{
