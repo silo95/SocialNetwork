@@ -16,9 +16,10 @@ public class Controller {
     private final TableView<Comment> commentTable;
     private DBManager db;
     private Label welcomeLabel, errorLabel, userLabel, passwordLabel;
-    private TextField usernameField;
+    private TextField usernameField, searchPost, searchComment;
     private PasswordField passwordField ;
     private Button loginButton, logoutButton, addPost, addComment, deletePost, deleteComment;
+    private Button searchWordPost, searchUserPost, searchWordComment, searchUserComment;
     private ObservableList<Comment> commentOl;  
     private ObservableList<Post> postOl; 
     private TextArea insertPostAndComment;
@@ -29,6 +30,8 @@ public class Controller {
     public Controller(ObservableList<Post> pol, ObservableList<Comment> col, String user, String psw,
             TextField userFld, PasswordField pswFld, Label elbl, Label wlbl,
             Button logBtn, Button logoutBtn, Button addP, Button addC, Button delP, Button delC,
+            Button wordPost, Button userPost, Button wordComment, Button userComment,
+            TextField sPost, TextField sComment,
             TableView<Post> postT, TableView<Comment> commT, User loggU, TextArea ipac, TableColumn<Post, 
             String> pcl, TableColumn<Comment, String> ccol){
        postOl = pol;
@@ -51,6 +54,12 @@ public class Controller {
        insertPostAndComment = ipac;
        postCol = pcl;
        commentCol = ccol;
+       searchComment = sComment;
+       searchPost = sPost;
+       searchWordPost = wordPost;
+       searchWordComment = wordComment;
+       searchUserPost = userPost;
+       searchUserComment = userComment;
        db = getCredential();//new DBManager("localhost", "root", "070689");
     }
     
@@ -111,6 +120,10 @@ public class Controller {
                     addComment.setDisable(false);
                     deleteComment.setDisable(false);
                     deletePost.setDisable(false);
+                    searchUserComment.setDisable(false);
+                    searchUserPost.setDisable(false);
+                    searchWordComment.setDisable(false);
+                    searchWordPost.setDisable(false);
 
                 }
                 else if(!db.isRegistered(username) && db.register(loggedUser)){
@@ -128,6 +141,10 @@ public class Controller {
                     addComment.setDisable(false);
                     deleteComment.setDisable(false);
                     deletePost.setDisable(false);
+                    searchUserComment.setDisable(false);
+                    searchUserPost.setDisable(false);
+                    searchWordComment.setDisable(false);
+                    searchWordPost.setDisable(false);
                 }
                 else{
                     errorLabel.setText("Username or Password not correct. Please, try again. ");
@@ -156,7 +173,11 @@ public class Controller {
             addPost.setDisable(true);
             addComment.setDisable(true);
             deleteComment.setDisable(true);
-            deletePost.setDisable(true);           
+            deletePost.setDisable(true);   
+            searchUserComment.setDisable(true);
+            searchUserPost.setDisable(true);
+            searchWordComment.setDisable(true);
+            searchWordPost.setDisable(true);
             postOl.clear();
             commentOl.clear();            
         });
