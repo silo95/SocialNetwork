@@ -1,13 +1,21 @@
 package mycompany.task1;
 import javafx.beans.property.*;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "User")
 public class User{
-    private final SimpleStringProperty username;
-    private final SimpleStringProperty password;
-    public User(String u, String p){
-        username = new SimpleStringProperty(u);
-        password = new SimpleStringProperty(p);
-    }
+    @Column(name="IdUser")
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private int idUser;
+    
+    @Column(name="Username", length=50, nullable=false, unique=false)
+    private String username;
+    
+    @Column(name="Password", length=64, nullable=false, unique=false)
+    private String password;
+
     public String getUsername(){
         return username.get();
     }
