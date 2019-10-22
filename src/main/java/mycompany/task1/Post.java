@@ -6,14 +6,18 @@ import java.sql.*;
 
 @Entity
 @Table(name="Post")
-
 public class Post{
+    @Column(name="IdPost", nullable=false, unique=false)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPost;  
     
-    private String strPost;   
+    @Column(name="strPost", length=50, nullable=false, unique=false)
+    private String strPost;
+    
+    @Column(name="Username", nullable=false, unique=false)
     private Long user;
+    
     private Timestamp date;
     
     public Long getIdPost(){
