@@ -8,21 +8,13 @@ import java.sql.*;
 @Table(name="Post")
 
 public class Post{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPost;  
+    
     private String strPost;   
     private Long user;
     private Timestamp date;
-    
-    public Post(Long id, String str, Long usr, Timestamp dat){
-        idPost = id;  
-        strPost = str;   
-        user = usr;
-        date = dat;
-    }
-    
-    @Column(name="IdPost")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     
     public Long getIdPost(){
         return idPost;
