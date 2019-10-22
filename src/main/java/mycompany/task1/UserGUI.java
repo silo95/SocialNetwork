@@ -59,7 +59,7 @@ public class UserGUI extends Application {
         factory = Persistence.createEntityManagerFactory("SocialNetwork");
         
         Person person = new Person();
-        person.setUsername("Lavagna");
+        person.setUsername("Gessetto");
         person.setPassword("ciclamino");
         try{
             entityManager = factory.createEntityManager();
