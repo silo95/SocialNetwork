@@ -3,61 +3,67 @@ package mycompany.task1;
 
 import java.sql.*;
 import javafx.beans.property.*;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "Comment")
 public class Comment{
+    @Column(name="idComment")
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long idComment;
+    
+    @Column(name="person", length=50, nullable=false, unique=false)
+    private String person;
+    
+    @Column(name="strComment", length=50, nullable=false, unique=false)
+    private String strComment;
+    
+    @Column(name="post", nullable=false, unique=false)
+    private Long post;
+    
+    @Column(name="commentDate", nullable=false, unique=false)
+    private Timestamp commentDate;
 
-    private final SimpleIntegerProperty idComment;
-    private final SimpleStringProperty strComment;
-    private final SimpleStringProperty user;
-    private final SimpleIntegerProperty post;
-    private final SimpleObjectProperty<Timestamp> date;
-
-    public Comment(int i, String s, String u, int p, Timestamp d){
-        idComment = new SimpleIntegerProperty(i);
-        strComment = new SimpleStringProperty(s);
-        user = new SimpleStringProperty(u);
-        post = new SimpleIntegerProperty(p);
-        date = new SimpleObjectProperty<>(d);
+    
+    public Long getIdComment(){
+        return idComment;
     }
-
-    public int getIdComment(){
-        return idComment.get();
+    
+    public void setIdComment(Long s){
+        this.idComment = s;
     }
 
     public String getStrComment(){
-       return strComment.get();
+       return strComment;
     } 
 
-    public String getUser(){
-       return user.get();
+    public void setStrComment(String str){
+        this.strComment = str;
+    }
+    
+    public String getPerson(){
+       return person;
     } 
-
-    public int getPost(){
-        return post.get();
+    
+    public void setPerson(String str){
+        this.person = str;
+    }
+    
+    public Long getPost(){
+        return post;
     }
 
+    public void setPost(Long p){
+        this.post = p;
+    }
+    
     public Timestamp getDate(){
-       return date.get();
+       return commentDate;
     } 
 
-    public void setIdComment(int s){
-        idComment.set(s);
+    public void setDate(Timestamp d){
+        this.commentDate= d;
     }
-
-    public void setUser(String s){
-        user.set(s);
-    }
-
-    public void setPost(int s){
-        post.set(s);
-    }
-
-    public void setStrComment(String s){
-        strComment.set(s);
-    }
-
-    public void setDate(Timestamp s){
-        date.set(s);
-    }
-
+    
 }
