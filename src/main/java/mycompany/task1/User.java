@@ -16,16 +16,29 @@ public class User{
     @Column(name="Password", length=64, nullable=false, unique=false)
     private String password;
 
+    public String getIdPost(){
+        return idUser;
+    }
+
     public String getUsername(){
-        return username.get();
+        return username;
     }
+
     public String getPassword(){
-       return password.get();
+       return password;
     } 
-    public void setUsername(String s){
-        username.set(s);
+
+    public void setIdUser(String idUser){
+        this.idUser = idUser;
     }
-    public void setPassword(String s){
-        password.set(s);
+
+    public void setUsername(String username){
+        this.username = username;
     }
+
+    public void setPassword(String password){
+        this.password = password;
+    }
+
+
 }
