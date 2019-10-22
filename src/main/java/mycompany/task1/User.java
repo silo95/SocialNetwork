@@ -8,7 +8,7 @@ public class User{
     @Column(name="IdUser")
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private int idUser;
+    private Long idUser;
     
     @Column(name="Username", length=50, nullable=false, unique=false)
     private String username;
@@ -16,7 +16,7 @@ public class User{
     @Column(name="Password", length=64, nullable=false, unique=false)
     private String password;
 
-    public String getIdPost(){
+    public Long getIdPost(){
         return idUser;
     }
 
@@ -28,7 +28,7 @@ public class User{
        return password;
     } 
 
-    public void setIdUser(String idUser){
+    public void setIdUser(Long idUser){
         this.idUser = idUser;
     }
 
