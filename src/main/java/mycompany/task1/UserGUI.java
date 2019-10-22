@@ -12,7 +12,7 @@ import javafx.scene.shape.*;
 import javafx.stage.*;
 
 public class UserGUI extends Application {
-    private User loggedUser;
+    private Person loggedUser;
     private String username = new String();
     private String password = new String();
     private final TableView<Post> postTable = new TableView<>();

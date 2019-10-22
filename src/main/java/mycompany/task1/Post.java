@@ -15,10 +15,10 @@ public class Post{
     @Column(name="strPost", length=50, nullable=false, unique=false)
     private String strPost;
     
-    @Column(name="Username", nullable=false, unique=false)
-    private Long user;
+    @Column(name="person", nullable=false, unique=false)
+    private Long person;
     
-    private Timestamp date;
+    private Timestamp postDate;
     
     public Long getIdPost(){
         return idPost;
@@ -37,19 +37,19 @@ public class Post{
         this.strPost = strPost;
     }
 
-    public Long getUser(){
-       return user;
+    public Long getPerson(){
+       return person;
     } 
     
-    public void setUser(Long user){
-        this.user = user;
+    public void setPerson(Long person){
+        this.person = person;
     }
 
-    public Timestamp getDate(){
-       return date;
+    public Timestamp getPostDate(){
+       return postDate;
     } 
     
-    public void setDate(Timestamp date){
-        this.date = date;
+    public void setPostDate(Timestamp postDate){
+        this.postDate = postDate;
     }
 }

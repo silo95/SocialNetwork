@@ -97,7 +97,7 @@ public class DBManager{
     }
     
     
-    public boolean login(User u){ 
+    public boolean login(Person u){ 
         try(Connection co = DriverManager.getConnection(connectionString);
             PreparedStatement ps = co.prepareStatement("SELECT * FROM User "
                     + "WHERE Username = ? AND Password = ?");
@@ -113,7 +113,7 @@ public class DBManager{
         }
     }
    
-    public boolean register(User u){ 
+    public boolean register(Person u){ 
         try(Connection co = DriverManager.getConnection(connectionString);
             PreparedStatement ps = co.prepareStatement("INSERT INTO User VALUES (?,?)");
         ){
