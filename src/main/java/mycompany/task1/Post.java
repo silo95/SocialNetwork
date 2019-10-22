@@ -9,14 +9,13 @@ import java.sql.*;
 
 public class Post{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-  
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPost;  
+    
     private String strPost;   
     private Long user;
     private Timestamp date;
-
-
+    
     public Long getIdPost(){
         return idPost;
     }
