@@ -7,7 +7,7 @@ import java.sql.*;
 @Entity
 @Table(name="Post")
 public class Post{
-    @Column(name="IdPost", nullable=false, unique=false)
+    @Column(name="IdPost")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPost;  
@@ -18,6 +18,7 @@ public class Post{
     @Column(name="person", nullable=false, unique=false)
     private Long person;
     
+    @Column(name="postDate")
     private Timestamp postDate;
     
     public Long getIdPost(){

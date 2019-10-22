@@ -10,6 +10,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.scene.shape.*;
 import javafx.stage.*;
+import javax.persistence.*;
 
 public class UserGUI extends Application {
     private Person loggedUser;
@@ -50,7 +51,33 @@ public class UserGUI extends Application {
     }
 
     public static void main(String[] args) {
-        launch(args);        
+        launch(args);    
+        
+        EntityManagerFactory factory;
+        EntityManager entityManager = null;
+        
+        factory = Persistence.createEntityManagerFactory("SocialNetwork");
+        
+        Person person = new Person();
+        person.setUsername("Lavagna");
+        person.setPassword("ciclamino");
+        try{
+            entityManager = factory.createEntityManager();
+            entityManager.getTransaction().begin();
+            entityManager.persist(person);
+            entityManager.getTransaction().commit();
+            System.out.println("done");
+        } catch(Exception ex){
+            ex.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        
+        factory.close();
+        
+        
+        
+        
     }
     
     private void setMessage(){
@@ -216,6 +243,7 @@ public class UserGUI extends Application {
             usernameField, passwordField, errorLabel, welcomeLabel,
             loginButton, logoutButton, addPost, addComment, deletePost, deleteComment,
             postTable, commentTable, loggedUser, insertPostAndComment, postCol, commentCol);
+        /*
         
         contr.loginButtonSetOnAction();
         contr.logoutButtonSetOnAction();
@@ -227,6 +255,7 @@ public class UserGUI extends Application {
         contr.postTableSetRowFactory();
         contr.postColSetOnEditCommit();
         contr.commentColSetOnEditCommit();
+*/
     }
             
 }

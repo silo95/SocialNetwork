@@ -13,7 +13,7 @@ public class DBManager{
                 + "&useLegacyDatetimeCode=false&serverTimezone=UTC&user=" 
                 + u + "&password=" + p + "";
     }
-    
+    /*
     public ObservableList<Comment> getComments(int post){
         ObservableList<Comment> ol = FXCollections.observableArrayList();
         try(Connection co = DriverManager.getConnection(connectionString);
@@ -246,5 +246,5 @@ public class DBManager{
             return false;
         }    
     }
-      
+   */   
 }

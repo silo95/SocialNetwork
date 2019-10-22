@@ -51,9 +51,9 @@ public class Controller {
        insertPostAndComment = ipac;
        postCol = pcl;
        commentCol = ccol;
-       db = getCredential();//new DBManager("localhost", "root", "070689");
+       /*db = getCredential();//DBManager("localhost", "root", "070689");*/
     }
-    
+ /*   
     private DBManager getCredential(){
         String srvr, usr, psw;
         srvr = usr = psw = null;
@@ -374,5 +374,7 @@ public class Controller {
         }
         return null;
     }
+    */
+    
     
  }
