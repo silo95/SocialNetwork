@@ -10,7 +10,7 @@ import javafx.scene.control.*;
 import javax.xml.bind.DatatypeConverter;
 
 public class Controller {
-    private User loggedUser;
+    private Person loggedUser;
     private String username, password;
     private final TableView<Post> postTable;
     private final TableView<Comment> commentTable;
@@ -29,7 +29,7 @@ public class Controller {
     public Controller(ObservableList<Post> pol, ObservableList<Comment> col, String user, String psw,
             TextField userFld, PasswordField pswFld, Label elbl, Label wlbl,
             Button logBtn, Button logoutBtn, Button addP, Button addC, Button delP, Button delC,
-            TableView<Post> postT, TableView<Comment> commT, User loggU, TextArea ipac, TableColumn<Post, 
+            TableView<Post> postT, TableView<Comment> commT, Person loggU, TextArea ipac, TableColumn<Post, 
             String> pcl, TableColumn<Comment, String> ccol){
        postOl = pol;
        commentOl = col;
@@ -51,9 +51,9 @@ public class Controller {
        insertPostAndComment = ipac;
        postCol = pcl;
        commentCol = ccol;
-       db = getCredential();//new DBManager("localhost", "root", "070689");
+       /*db = getCredential();//DBManager("localhost", "root", "070689");*/
     }
-    
+ /*   
     private DBManager getCredential(){
         String srvr, usr, psw;
         srvr = usr = psw = null;
@@ -92,7 +92,7 @@ public class Controller {
             
             if(!username.isEmpty() && !password.isEmpty()){
                 errorLabel.setText("");
-                loggedUser = new User(username, password);
+                loggedUser = new Person(username, password);
             
                 if(db.isRegistered(username) && db.login(loggedUser)){
                     loginButton.setDisable(true);
@@ -374,5 +374,7 @@ public class Controller {
         }
         return null;
     }
+    */
+    
     
  }
