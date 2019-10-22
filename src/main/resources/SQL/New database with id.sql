@@ -4,7 +4,7 @@ use SocialNetwork;
 
 CREATE TABLE IF NOT EXISTS User (
 	IdUser INT PRIMARY KEY AUTO_INCREMENT,
-    Username CHAR(50) PRIMARY KEY,
+    Username CHAR(50) UNIQUE NOT NULL,
     Password CHAR(64) NOT NULL
 );
 
