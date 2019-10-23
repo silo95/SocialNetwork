@@ -184,7 +184,7 @@ public class Controller {
        
     }
     
-    public void addPostSetOnAction(){
+    public void addPostSetOnAction(){//fatto
         addPost.setOnAction((ActionEvent ev) -> {
             String content = insertPostAndComment.getText();
             if(content.length() > 50){
@@ -203,7 +203,7 @@ public class Controller {
             }
             
         });  
-    } //fatto
+    } 
     
     public void addCommentSetOnAction(){ //fatto
         addComment.setOnAction((ActionEvent ev) -> {

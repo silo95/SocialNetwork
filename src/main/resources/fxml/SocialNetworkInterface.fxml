@@ -8,6 +8,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.collections.*?>
 
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mycompany.task1.FXMLController">
   <children>
@@ -18,12 +20,12 @@
                   <Font size="12.0" />
                </font>
             </Button>
-            <TableView fx:id="postTable" layoutX="297.0" layoutY="98.0" prefHeight="182.0" prefWidth="559.0" stylesheets="@../styles/Style.css">
+            <TableView id="postTable" fx:id="postTable" layoutX="297.0" layoutY="98.0" prefHeight="182.0" prefWidth="559.0" stylesheets="@../styles/Style.css">
               <columns>
-                <TableColumn prefWidth="96.0" resizable="false" text="User" />
-                <TableColumn onEditCommit="#postColSetOnEditCommit" prefWidth="188.0" text="Post" />
-                  <TableColumn minWidth="0.0" prefWidth="133.0" text="Comments" />
-                  <TableColumn prefWidth="141.0" text="Date" />
+                    <TableColumn id="userCol" fx:id="userCol" prefWidth="70.0" resizable="false" text="User" />               
+                    <TableColumn id="postCol" fx:id="postCol" onEditCommit="#postColSetOnEditCommit" prefWidth="261.0" text="Post" />
+                    <TableColumn id="commentsCol" fx:id="commentsCol" minWidth="0.0" prefWidth="70.0" text="Comments" />
+                    <TableColumn id="date" fx:id="date" prefWidth="157.0" text="Date" />
               </columns>
             </TableView>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b0d2ff" height="45.0" layoutX="25.0" layoutY="11.0" stroke="TRANSPARENT" strokeType="INSIDE" width="830.0" />
@@ -57,7 +59,7 @@
                <font>
                   <Font size="12.0" />
                </font></Label>
-            <Button id="logoutButton" fx:id="logoutButton" layoutX="136.0" layoutY="234.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#logoutButtonSetOnAction" prefHeight="35.0" prefWidth="99.0" style="-fx-background-color: #FBCFD0;" text="Logout">
+            <Button id="logoutButton" fx:id="logoutButton" disable="true" layoutX="136.0" layoutY="234.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#logoutButtonSetOnAction" prefHeight="35.0" prefWidth="99.0" style="-fx-background-color: #FBCFD0;" text="Logout">
                <font>
                   <Font size="12.0" />
                </font></Button>
@@ -81,9 +83,9 @@
             </Button>
             <TableView id="commentTable" fx:id="commentTable" layoutX="300.0" layoutY="355.0" prefHeight="182.0" prefWidth="559.0" stylesheets="@../styles/Style.css">
                <columns>
-                  <TableColumn prefWidth="96.0" resizable="false" style="-fx-background-color: #FFF2CD;" text="User" />
-                  <TableColumn onEditCommit="#commentColSetOnEditCommit" prefWidth="270.0" text="Comment" />
-                  <TableColumn prefWidth="192.0" text="Date" />
+                  <TableColumn id="userCommentCol" fx:id="userCommentCol" prefWidth="70.0" resizable="false" text="User" />
+                  <TableColumn id="commentCol" fx:id="commentCol" onEditCommit="#commentColSetOnEditCommit" prefWidth="329.0" text="Comment" />
+                  <TableColumn id="commentDateCol" fx:id="commentDateCol" prefWidth="157.0" text="Date" />
                </columns>
             </TableView>
             <Button id="deleteComment" fx:id="deleteComment" layoutX="757.0" layoutY="540.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteCommentSetOnAction" prefHeight="35.0" prefWidth="99.0" style="-fx-background-color: #FFF2CD;" text="Delete">

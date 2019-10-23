@@ -7,20 +7,21 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.security.*;
 import java.util.ResourceBundle;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
+import javafx.collections.*;
+import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.*;
 import javax.xml.bind.DatatypeConverter;
 
 public class FXMLController implements Initializable {
     private User loggedUser;
     private DBManager db;
     private String username, password;
+   
     private ObservableList<Post> postOl; 
-    private ObservableList<Comment> commentOl;
-    
+    @FXML
+    private ObservableList<Comment> commentOl = FXCollections.observableArrayList();
     @FXML
     private TextField usernameField, searchPost, searchComment;
     @FXML
@@ -30,21 +31,25 @@ public class FXMLController implements Initializable {
     @FXML
     private Button loginButton, logoutButton, addPost, addComment, deletePost, deleteComment,
                    searchWordPost, searchUserPost, searchWordComment, searchUserComment;
-    @FXML
-    private final TableView<Post> postTable = new TableView<>();
-    @FXML
-    private final TableView<Comment> commentTable = new TableView<>();
-    @FXML
-    private TextArea insertPostAndComment;
-    @FXML
-    private TableColumn<Comment, String> commentCol;
-    @FXML
-    private TableColumn<Post, String> postCol;
+    @FXML private TableView<Post> postTable;
+    @FXML private TableView<Comment> commentTable;
+    @FXML private TextArea insertPostAndComment;
+    //@FXML public TableColumn<Comment, String> commentCol;
+    
+    //public TableColumn<Post, String> postCol;
+    @FXML TableColumn<Post, String> userCol = new TableColumn<>("User");
+    @FXML TableColumn<Post, Integer> commentsCol = new TableColumn<>("Comments");
+    @FXML TableColumn<Post, Integer> dateCol = new TableColumn<>("Date");
+    @FXML TableColumn<Post, String> postCol = new TableColumn<>("Post");
+    
+    @FXML TableColumn<Comment, String> userCommentCol = new TableColumn<>("User");
+    @FXML TableColumn<Comment, String> commentCol = new TableColumn<>("Comment");
+    @FXML TableColumn<Comment, String> commentDateCol = new TableColumn<>("Date");
     
     
     
     @FXML
-    private void loginButtonSetOnAction(ActionEvent event) {
+    public void loginButtonSetOnAction(ActionEvent event) {
         if(!usernameField.getText().isEmpty() && !passwordField.getText().isEmpty()){
             username = String.valueOf(usernameField.getText());
             password = hash(String.valueOf(passwordField.getText()));
@@ -66,6 +71,7 @@ public class FXMLController implements Initializable {
 
                 postOl = db.getPosts();
                 postTable.setItems(postOl);
+                //postTable.getItems().setAll(postOl); gigi
                 addPost.setDisable(false);
                 addComment.setDisable(false);
                 deleteComment.setDisable(false);
@@ -109,7 +115,7 @@ public class FXMLController implements Initializable {
     
     
     @FXML
-    public void logoutButtonSetOnAction(){
+    public void logoutButtonSetOnAction(ActionEvent event){
         loginButton.setDisable(false);
         logoutButton.setDisable(true);
         usernameField.clear();
@@ -150,7 +156,7 @@ public class FXMLController implements Initializable {
                         db.getNumberOfPosts(username) +" posts and " +
                         db.getNumberOfComments(username)+ " comments");
         }
-}
+    }
     
     @FXML
     public void addCommentSetOnAction(ActionEvent event){
@@ -371,5 +377,17 @@ public class FXMLController implements Initializable {
         db = getCredential();
         commentTableSetRowFactory();
         postTableSetRowFactory();
+        
+        
+        userCol.setCellValueFactory(new PropertyValueFactory<>("user"));
+        postCol.setCellValueFactory(new PropertyValueFactory<>("strPost"));
+        postCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        commentsCol.setCellValueFactory(new PropertyValueFactory<>("comments"));
+        dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+        
+        userCommentCol.setCellValueFactory(new PropertyValueFactory<>("user"));       
+        commentCol.setCellValueFactory(new PropertyValueFactory<>("strComment"));      
+        commentDateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+        commentCol.setCellFactory(TextFieldTableCell.forTableColumn());
     }    
 }
