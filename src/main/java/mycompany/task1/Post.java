@@ -25,6 +25,9 @@ public class Post{
     @JoinColumn(name="person", nullable=false, unique=false)
     private Person person;
     
+    public Post(){
+        
+    }
     public Post(String strPost, Person person, Timestamp postDate){
         //this.idPost = idPost;
         this.strPost = strPost;

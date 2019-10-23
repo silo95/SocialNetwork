@@ -61,7 +61,7 @@ public class UserGUI extends Application {
         
         factory = Persistence.createEntityManagerFactory("SocialNetwork");
 
-        //Person person = new Person("Lavagna", "ciclamino");
+        Person person = new Person("Lavagna", "ciclamino");
         
         
         /*person.setUsername("Lavagna");
@@ -70,7 +70,7 @@ public class UserGUI extends Application {
         try{
             entityManager = factory.createEntityManager();
             entityManager.getTransaction().begin();
-            Long myid = new Long(11);
+            Long myid = new Long(10);
             Person per = entityManager.getReference(Person.class, myid);
             Post post = new Post("Ciao belli", per, Timestamp.valueOf(LocalDateTime.now()));
             entityManager.persist(post);
@@ -82,8 +82,24 @@ public class UserGUI extends Application {
             entityManager.close();
         }
         
-        factory.close();
         
+        try{
+            entityManager = factory.createEntityManager();
+            entityManager.getTransaction().begin();
+            Long myid = new Long(1);
+            Post per = entityManager.getReference(Post.class, myid);
+            Long persona = new Long(1);
+            Comment comment = new Comment("Ciao belli, è un commento", persona, per, Timestamp.valueOf(LocalDateTime.now()));
+            entityManager.persist(comment);
+            entityManager.getTransaction().commit();
+            System.out.println("done");
+        } catch(Exception ex){
+            ex.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        
+        factory.close();
         
     }
     

@@ -19,14 +19,19 @@ public class Comment{
     @Column(name="strComment", length=50, nullable=false, unique=false)
     private String strComment;
     
-    @Column(name="post", nullable=false, unique=false)
-    private Long post;
+    @ManyToOne
+    @JoinColumn(name="post", nullable=false, unique=false)
+    private Post post;
     
     @Column(name="commentDate", nullable=false, unique=false)
     private Timestamp commentDate;
 
-    public Comment(Long idComment, String strComment, Long person, Long post, Timestamp commentDate){
-        this.idComment = idComment;
+    public Comment(){
+        
+    }
+        
+    public Comment(/*Long idComment, */String strComment, Long person, Post post, Timestamp commentDate){
+       // this.idComment = idComment;
         this.strComment = strComment;
         this.person = person;
         this.post = post;
@@ -57,11 +62,11 @@ public class Comment{
         this.person = person;
     }
     
-    public Long getPost(){
+    public Post getPost(){
         return post;
     }
 
-    public void setPost(Long p){
+    public void setPost(Post p){
         this.post = p;
     }
     
