@@ -66,4 +66,15 @@ public class Comment{
         this.commentDate= d;
     }
     
+    @Override
+    public String toString(){
+        return "Comment{ " + 
+                "id=" + idComment +
+                ", strPost=" + strComment +
+                ", post=" + post +
+                ", personId=" + person +
+                ", date=" + commentDate +
+                " }";
+    }
+    
 }

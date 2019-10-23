@@ -40,5 +40,11 @@ public class Person{
         this.password = password;
     }
 
-
+    @Override
+    public String toString(){
+        return "Person{ " + 
+                "id=" + idPerson +
+                ", Username=" + username +
+                " }";
+    }
 }

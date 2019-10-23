@@ -61,6 +61,7 @@ public class UserGUI extends Application {
         Person person = new Person();
         person.setUsername("Lavagna");
         person.setPassword("ciclamino");
+        System.out.println(person.toString());
         try{
             entityManager = factory.createEntityManager();
             entityManager.getTransaction().begin();
@@ -76,9 +77,14 @@ public class UserGUI extends Application {
         factory.close();
         
         
-        
-        
     }
+    
+   private void inserisco(Person p){
+       
+   }
+    
+    
+    
     
     private void setMessage(){
         Rectangle rect = new Rectangle(0.0, 0.0, 820, 40);

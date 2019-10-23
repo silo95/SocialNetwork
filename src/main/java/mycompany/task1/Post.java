@@ -53,4 +53,14 @@ public class Post{
     public void setPostDate(Timestamp postDate){
         this.postDate = postDate;
     }
+    
+    @Override
+    public String toString(){
+        return "Post{ " + 
+                "id=" + idPost +
+                ", strPost=" + strPost +
+                ", personId=" + person +
+                ", date=" + postDate +
+                " }";
+    }
 }

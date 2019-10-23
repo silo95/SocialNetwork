@@ -1,6 +1,6 @@
-mycompany\provamaven\Controller.class
-mycompany\provamaven\Post.class
-mycompany\provamaven\UserGUI.class
-mycompany\provamaven\Comment.class
-mycompany\provamaven\User.class
-mycompany\provamaven\DBManager.class
+mycompany\task1\DBManager.class
+mycompany\task1\Controller.class
+mycompany\task1\UserGUI.class
+mycompany\task1\Post.class
+mycompany\task1\Comment.class
+mycompany\task1\Person.class
