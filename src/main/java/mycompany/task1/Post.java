@@ -15,11 +15,22 @@ public class Post{
     @Column(name="strPost", length=50, nullable=false, unique=false)
     private String strPost;
     
-    @Column(name="person", nullable=false, unique=false)
-    private Long person;
+   /* @Column(name="person", nullable=false, unique=false)
+    private Long person;*/
     
     @Column(name="postDate")
     private Timestamp postDate;
+    
+    @ManyToOne
+    @JoinColumn(name="person", nullable=false, unique=false)
+    private Person person;
+    
+    public Post(String strPost, Person person, Timestamp postDate){
+        //this.idPost = idPost;
+        this.strPost = strPost;
+        this.person = person;
+        this.postDate = postDate;
+    }
     
     public Long getIdPost(){
         return idPost;
@@ -38,11 +49,11 @@ public class Post{
         this.strPost = strPost;
     }
 
-    public Long getPerson(){
+    public Person getPerson(){
        return person;
     } 
     
-    public void setPerson(Long person){
+    public void setPerson(Person person){
         this.person = person;
     }
 
@@ -59,7 +70,7 @@ public class Post{
         return "Post{ " + 
                 "id=" + idPost +
                 ", strPost=" + strPost +
-                ", personId=" + person +
+                //", personId=" + person +
                 ", date=" + postDate +
                 " }";
     }

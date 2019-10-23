@@ -1,4 +1,5 @@
 package mycompany.task1;
+import java.util.*;
 import javax.persistence.*;
 
 @Entity
@@ -14,6 +15,17 @@ public class Person{
     
     @Column(name="Password", length=64, nullable=false, unique=false)
     private String password;
+    
+    /*@OneToMany(mappedBy="person")
+    private List<Post> postList;*/
+    public Person(){
+        
+    }
+    
+    public Person(String username, String password){
+        this.username = username;
+        this.password = password;
+    }
 
     public Long getIdPerson(){
         return idPerson;

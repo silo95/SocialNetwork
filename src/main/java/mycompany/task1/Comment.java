@@ -13,8 +13,8 @@ public class Comment{
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long idComment;
     
-    @Column(name="person", length=50, nullable=false, unique=false)
-    private String person;
+    @Column(name="person", nullable=false, unique=false)
+    private Long person;
     
     @Column(name="strComment", length=50, nullable=false, unique=false)
     private String strComment;
@@ -25,6 +25,13 @@ public class Comment{
     @Column(name="commentDate", nullable=false, unique=false)
     private Timestamp commentDate;
 
+    public Comment(Long idComment, String strComment, Long person, Long post, Timestamp commentDate){
+        this.idComment = idComment;
+        this.strComment = strComment;
+        this.person = person;
+        this.post = post;
+        this.commentDate = commentDate;
+    }
     
     public Long getIdComment(){
         return idComment;
@@ -42,12 +49,12 @@ public class Comment{
         this.strComment = str;
     }
     
-    public String getPerson(){
+    public Long getPerson(){
        return person;
     } 
     
-    public void setPerson(String str){
-        this.person = str;
+    public void setPerson(Long person){
+        this.person = person;
     }
     
     public Long getPost(){
