@@ -1,0 +1,13 @@
+.root{
+    -fx-font-size: 12px;
+}
+
+#postTable .column-header {
+    -fx-background-color: #D5E8D2; 
+    -fx-font-size: 12px;
+}
+
+#commentTable .column-header {
+    -fx-background-color: #FFF2CD;
+    -fx-font-size: 12px;
+}

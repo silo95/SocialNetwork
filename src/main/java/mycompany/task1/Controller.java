@@ -63,7 +63,7 @@ public class Controller {
        db = getCredential();//new DBManager("localhost", "root", "070689");
     }
     
-    private DBManager getCredential(){
+    private DBManager getCredential(){  //fatto
         String srvr, usr, psw;
         srvr = usr = psw = null;
          try (BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -94,7 +94,7 @@ public class Controller {
         
     }
     
-    public void loginButtonSetOnAction(){
+    public void loginButtonSetOnAction(){ //fatto
         loginButton.setOnAction((ActionEvent ev) -> {
             username = String.valueOf(usernameField.getText());
             password = hash(String.valueOf(passwordField.getText())); 
@@ -157,7 +157,7 @@ public class Controller {
         });
     }
     
-    public void logoutButtonSetOnAction(){
+    public void logoutButtonSetOnAction(){ //fatto
          logoutButton.setOnAction((ActionEvent ev) -> {
             loginButton.setDisable(false);
             logoutButton.setDisable(true);
@@ -203,9 +203,9 @@ public class Controller {
             }
             
         });  
-    }
+    } //fatto
     
-    public void addCommentSetOnAction(){
+    public void addCommentSetOnAction(){ //fatto
         addComment.setOnAction((ActionEvent ev) -> {
                       
             if(postTable.getSelectionModel().getSelectedItem() != null){
@@ -268,7 +268,7 @@ public class Controller {
         });
     }
     
-    public void deleteCommentSetOnAction(){
+    public void deleteCommentSetOnAction(){ //fatto
         deleteComment.setOnAction((ActionEvent ev) -> {
             
             if(commentTable.getSelectionModel().getSelectedItem() != null){
@@ -309,7 +309,7 @@ public class Controller {
         });
     }
     
-    public void commentTableSetRowFactory(){
+    public void commentTableSetRowFactory(){ //fatto
         commentTable.setRowFactory( tv ->{
             TableRow<Comment> row = new TableRow<>();
             row.setOnMouseClicked((Event e) ->{
@@ -326,7 +326,7 @@ public class Controller {
         });              
     }
     
-    public void postTableSetRowFactory(){
+    public void postTableSetRowFactory(){ //fatto
         postTable.setRowFactory( tv ->{
             TableRow<Post> row = new TableRow<>();
             row.setOnMouseClicked((Event e) ->{
@@ -345,7 +345,7 @@ public class Controller {
         });
     }
     
-    public void postColSetOnEditCommit(){
+    public void postColSetOnEditCommit(){ //fatto
         postCol.setOnEditCommit((TableColumn.CellEditEvent<Post, String> postStringCellEditEvent) -> {
             Post post = postTable.getSelectionModel().getSelectedItem();
            
@@ -367,7 +367,7 @@ public class Controller {
         });
     }
     
-    public void commentColSetOnEditCommit(){
+    public void commentColSetOnEditCommit(){ //fatto
         commentCol.setOnEditCommit((TableColumn.CellEditEvent<Comment, String> commentStringCellEditEvent) -> {
             Comment c = commentTable.getSelectionModel().getSelectedItem();
             if(commentStringCellEditEvent.getNewValue().length() > 50){
@@ -382,7 +382,7 @@ public class Controller {
         });
     }
     
-    private String hash(String psw){
+    private String hash(String psw){ //fatto
         byte[] hash;
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");

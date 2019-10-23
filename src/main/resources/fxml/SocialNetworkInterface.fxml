@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mycompany.task1.FXMLController">
+  <children>
+    <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="870.0" VBox.vgrow="ALWAYS">
+      <children>
+            <Button id="deletePost" fx:id="deletePost" layoutX="757.0" layoutY="283.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deletePostSetOnAction" prefHeight="35.0" prefWidth="99.0" style="-fx-background-color: #D5E8D2;" text="Delete">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Button>
+            <TableView fx:id="postTable" layoutX="297.0" layoutY="98.0" prefHeight="182.0" prefWidth="559.0" stylesheets="@../styles/Style.css">
+              <columns>
+                <TableColumn prefWidth="96.0" resizable="false" text="User" />
+                <TableColumn onEditCommit="#postColSetOnEditCommit" prefWidth="188.0" text="Post" />
+                  <TableColumn minWidth="0.0" prefWidth="133.0" text="Comments" />
+                  <TableColumn prefWidth="141.0" text="Date" />
+              </columns>
+            </TableView>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b0d2ff" height="45.0" layoutX="25.0" layoutY="11.0" stroke="TRANSPARENT" strokeType="INSIDE" width="830.0" />
+            <TextField id="searchPost" fx:id="searchPost" layoutX="297.0" layoutY="283.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="186.0" promptText="Search Post">
+               <font>
+                  <Font size="12.0" />
+               </font></TextField>
+            <Button id="searchWordPost" fx:id="searchWordPost" layoutX="484.0" layoutY="283.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #D5E8D2;" text="Search by Word">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Button>
+            <Button id="searchUserPost" fx:id="searchUserPost" layoutX="606.0" layoutY="283.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #D5E8D2;" text="Search by User">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Button>
+            <TextField id="usernameField" fx:id="usernameField" layoutX="25.0" layoutY="134.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="210.0">
+               <font>
+                  <Font size="12.0" />
+               </font></TextField>
+            <Label layoutX="99.0" layoutY="110.0" prefHeight="27.0" prefWidth="63.0" text="Username" textAlignment="CENTER">
+               <font>
+                  <Font size="12.0" />
+               </font></Label>
+            <Label id="welcomeLabel" fx:id="welcomeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="279.0" layoutY="25.0" text="Insert username and password for login or registration" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label id="errorLabel" fx:id="errorLabel" layoutX="339.0" layoutY="56.0" textFill="#ff0101">
+               <font>
+                  <Font size="12.0" />
+               </font></Label>
+            <Button id="logoutButton" fx:id="logoutButton" layoutX="136.0" layoutY="234.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#logoutButtonSetOnAction" prefHeight="35.0" prefWidth="99.0" style="-fx-background-color: #FBCFD0;" text="Logout">
+               <font>
+                  <Font size="12.0" />
+               </font></Button>
+            <Button id="loginButton" fx:id="loginButton" layoutX="25.0" layoutY="234.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#loginButtonSetOnAction" prefHeight="35.0" prefWidth="99.0" style="-fx-background-color: #FBCFD0;" text="Login">
+               <font>
+                  <Font size="12.0" />
+               </font></Button>
+            <TextArea id="insertPostAndComment" fx:id="insertPostAndComment" layoutX="25.0" layoutY="421.0" prefHeight="93.0" prefWidth="242.0">
+               <font>
+                  <Font size="12.0" />
+               </font></TextArea>
+            <Button id="addPost" fx:id="addPost" layoutX="25.0" layoutY="516.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addPostSetOnAction" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #ffd8b0;" text="Add Post">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Button>
+            <Button id="addComment" fx:id="addComment" layoutX="147.0" layoutY="516.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addCommentSetOnAction" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #ffd8b0;" text="Add Comment">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Button>
+            <TableView id="commentTable" fx:id="commentTable" layoutX="300.0" layoutY="355.0" prefHeight="182.0" prefWidth="559.0" stylesheets="@../styles/Style.css">
+               <columns>
+                  <TableColumn prefWidth="96.0" resizable="false" style="-fx-background-color: #FFF2CD;" text="User" />
+                  <TableColumn onEditCommit="#commentColSetOnEditCommit" prefWidth="270.0" text="Comment" />
+                  <TableColumn prefWidth="192.0" text="Date" />
+               </columns>
+            </TableView>
+            <Button id="deleteComment" fx:id="deleteComment" layoutX="757.0" layoutY="540.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteCommentSetOnAction" prefHeight="35.0" prefWidth="99.0" style="-fx-background-color: #FFF2CD;" text="Delete">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Button>
+            <StackPane layoutX="25.0" layoutY="381.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="242.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffd8b0" height="39.0" stroke="TRANSPARENT" strokeType="INSIDE" width="242.0" />
+                  <Label text="Insert post or comment">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </StackPane>
+            <Button id="searchUserComment" fx:id="searchUserComment" layoutX="610.0" layoutY="540.0" minHeight="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #FFF2CD;" text="Search by User">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Button>
+            <Button id="searchWordComment" fx:id="searchWordComment" layoutX="488.0" layoutY="540.0" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #FFF2CD;" text="Search by Word">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Button>
+            <TextField id="searchComment" fx:id="searchComment" layoutX="300.0" layoutY="540.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="186.0" promptText="Search Comment">
+               <font>
+                  <Font size="12.0" />
+               </font></TextField>
+            <Label layoutX="99.0" layoutY="169.0" prefHeight="27.0" prefWidth="63.0" text="Password" textAlignment="CENTER">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <PasswordField id="passwordField" fx:id="passwordField" layoutX="25.0" layoutY="192.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="210.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </PasswordField>
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>
