@@ -10,11 +10,8 @@ import javax.persistence.*;
 public class Comment{
     @Column(name="idComment")
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long idComment;
-    
-    @Column(name="person", nullable=false, unique=false)
-    private Long person;
     
     @Column(name="strComment", length=50, nullable=false, unique=false)
     private String strComment;
@@ -23,6 +20,10 @@ public class Comment{
     @JoinColumn(name="post", nullable=false, unique=false)
     private Post post;
     
+    @ManyToOne
+    @JoinColumn(name="person", nullable=false, unique=false)
+    private Person person;
+    
     @Column(name="commentDate", nullable=false, unique=false)
     private Timestamp commentDate;
 
@@ -30,7 +31,7 @@ public class Comment{
         
     }
         
-    public Comment(/*Long idComment, */String strComment, Long person, Post post, Timestamp commentDate){
+    public Comment(/*Long idComment, */String strComment, Person person, Post post, Timestamp commentDate){
        // this.idComment = idComment;
         this.strComment = strComment;
         this.person = person;
@@ -54,11 +55,11 @@ public class Comment{
         this.strComment = str;
     }
     
-    public Long getPerson(){
+    public Person getPerson(){
        return person;
     } 
     
-    public void setPerson(Long person){
+    public void setPerson(Person person){
         this.person = person;
     }
     
