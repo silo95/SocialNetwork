@@ -2,6 +2,7 @@
 package mycompany.task1;
 
 import java.sql.*;
+import java.sql.Timestamp;
 import javafx.beans.property.*;
 import javax.persistence.*;
 
@@ -24,19 +25,19 @@ public class Comment{
     @JoinColumn(name="person", nullable=false, unique=false)
     private Person person;
     
-    @Column(name="commentDate", nullable=false, unique=false)
+    @Column(name="commentDate", unique=false)
     private Timestamp commentDate;
 
     public Comment(){
         
     }
         
-    public Comment(/*Long idComment, */String strComment, Person person, Post post, Timestamp commentDate){
+    public Comment(/*Long idComment, */String strComment, Person person, Post post,Timestamp t){
        // this.idComment = idComment;
         this.strComment = strComment;
         this.person = person;
         this.post = post;
-        this.commentDate = commentDate;
+        this.commentDate = t;
     }
     
     public Long getIdComment(){

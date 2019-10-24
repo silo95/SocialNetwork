@@ -32,11 +32,11 @@ public class Post{
     public Post(){
         
     }
-    public Post(String strPost, Person person, Timestamp postDate){
+    public Post(String strPost, Person person,Timestamp t){
         //this.idPost = idPost;
         this.strPost = strPost;
         this.person = person;
-        this.postDate = postDate;
+        this.postDate = t;
     }
     
     public Long getIdPost(){
