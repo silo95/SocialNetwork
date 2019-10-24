@@ -16,9 +16,10 @@ public class Controller {
     private final TableView<Comment> commentTable;
     private DBManager db;
     private Label welcomeLabel, errorLabel, userLabel, passwordLabel;
-    private TextField usernameField;
+    private TextField usernameField, searchPost, searchComment;
     private PasswordField passwordField ;
     private Button loginButton, logoutButton, addPost, addComment, deletePost, deleteComment;
+    private Button searchWordPost, searchUserPost, searchWordComment, searchUserComment;
     private ObservableList<Comment> commentOl;  
     private ObservableList<Post> postOl; 
     private TextArea insertPostAndComment;
@@ -55,6 +56,7 @@ public class Controller {
     }
  /*   
     private DBManager getCredential(){
+
         String srvr, usr, psw;
         srvr = usr = psw = null;
          try (BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -85,7 +87,7 @@ public class Controller {
         
     }
     
-    public void loginButtonSetOnAction(){
+    public void loginButtonSetOnAction(){ //fatto
         loginButton.setOnAction((ActionEvent ev) -> {
             username = String.valueOf(usernameField.getText());
             password = hash(String.valueOf(passwordField.getText())); 
@@ -111,6 +113,10 @@ public class Controller {
                     addComment.setDisable(false);
                     deleteComment.setDisable(false);
                     deletePost.setDisable(false);
+                    searchUserComment.setDisable(false);
+                    searchUserPost.setDisable(false);
+                    searchWordComment.setDisable(false);
+                    searchWordPost.setDisable(false);
 
                 }
                 else if(!db.isRegistered(username) && db.register(loggedUser)){
@@ -128,6 +134,10 @@ public class Controller {
                     addComment.setDisable(false);
                     deleteComment.setDisable(false);
                     deletePost.setDisable(false);
+                    searchUserComment.setDisable(false);
+                    searchUserPost.setDisable(false);
+                    searchWordComment.setDisable(false);
+                    searchWordPost.setDisable(false);
                 }
                 else{
                     errorLabel.setText("Username or Password not correct. Please, try again. ");
@@ -140,7 +150,7 @@ public class Controller {
         });
     }
     
-    public void logoutButtonSetOnAction(){
+    public void logoutButtonSetOnAction(){ //fatto
          logoutButton.setOnAction((ActionEvent ev) -> {
             loginButton.setDisable(false);
             logoutButton.setDisable(true);
@@ -156,14 +166,18 @@ public class Controller {
             addPost.setDisable(true);
             addComment.setDisable(true);
             deleteComment.setDisable(true);
-            deletePost.setDisable(true);           
+            deletePost.setDisable(true);   
+            searchUserComment.setDisable(true);
+            searchUserPost.setDisable(true);
+            searchWordComment.setDisable(true);
+            searchWordPost.setDisable(true);
             postOl.clear();
             commentOl.clear();            
         });
        
     }
     
-    public void addPostSetOnAction(){
+    public void addPostSetOnAction(){//fatto
         addPost.setOnAction((ActionEvent ev) -> {
             String content = insertPostAndComment.getText();
             if(content.length() > 50){
@@ -182,9 +196,9 @@ public class Controller {
             }
             
         });  
-    }
+    } 
     
-    public void addCommentSetOnAction(){
+    public void addCommentSetOnAction(){ //fatto
         addComment.setOnAction((ActionEvent ev) -> {
                       
             if(postTable.getSelectionModel().getSelectedItem() != null){
@@ -247,7 +261,7 @@ public class Controller {
         });
     }
     
-    public void deleteCommentSetOnAction(){
+    public void deleteCommentSetOnAction(){ //fatto
         deleteComment.setOnAction((ActionEvent ev) -> {
             
             if(commentTable.getSelectionModel().getSelectedItem() != null){
@@ -288,7 +302,7 @@ public class Controller {
         });
     }
     
-    public void commentTableSetRowFactory(){
+    public void commentTableSetRowFactory(){ //fatto
         commentTable.setRowFactory( tv ->{
             TableRow<Comment> row = new TableRow<>();
             row.setOnMouseClicked((Event e) ->{
@@ -305,7 +319,7 @@ public class Controller {
         });              
     }
     
-    public void postTableSetRowFactory(){
+    public void postTableSetRowFactory(){ //fatto
         postTable.setRowFactory( tv ->{
             TableRow<Post> row = new TableRow<>();
             row.setOnMouseClicked((Event e) ->{
@@ -324,7 +338,7 @@ public class Controller {
         });
     }
     
-    public void postColSetOnEditCommit(){
+    public void postColSetOnEditCommit(){ //fatto
         postCol.setOnEditCommit((TableColumn.CellEditEvent<Post, String> postStringCellEditEvent) -> {
             Post post = postTable.getSelectionModel().getSelectedItem();
            
@@ -346,7 +360,7 @@ public class Controller {
         });
     }
     
-    public void commentColSetOnEditCommit(){
+    public void commentColSetOnEditCommit(){ //fatto
         commentCol.setOnEditCommit((TableColumn.CellEditEvent<Comment, String> commentStringCellEditEvent) -> {
             Comment c = commentTable.getSelectionModel().getSelectedItem();
             if(commentStringCellEditEvent.getNewValue().length() > 50){
@@ -361,7 +375,7 @@ public class Controller {
         });
     }
     
-    private String hash(String psw){
+    private String hash(String psw){ //fatto
         byte[] hash;
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");

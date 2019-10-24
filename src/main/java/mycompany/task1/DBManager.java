@@ -66,7 +66,7 @@ public class DBManager{
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 p = new Post(rs.getInt("IdPost"), rs.getString("strPost"),
-                    rs.getString("User"), (Timestamp)rs.getObject("Date"), rs.getInt("commenti"));  // modificare la query aggiungendo il numero di commenti al post
+                    rs.getString("User"), (Timestamp)rs.getObject("Date"), rs.getInt("commenti"));  
                 ol.add(p);
             }
               
@@ -92,7 +92,6 @@ public class DBManager{
         }catch(SQLException e){
             e.printStackTrace();
         }
-        
         return counter;
     }
     

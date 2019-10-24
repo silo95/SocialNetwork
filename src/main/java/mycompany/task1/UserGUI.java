@@ -1,3 +1,4 @@
+
 package mycompany.task1;
 
 import javafx.application.Application;
@@ -21,9 +22,10 @@ public class UserGUI extends Application {
     private final TableView<Comment> commentTable = new TableView<>();
     private ObservableList<Comment> commentOl;  
     private Label welcomeLabel, errorLabel, userLabel, passwordLabel;
-    private TextField usernameField;
+    private TextField usernameField, searchPost, searchComment;
     private PasswordField passwordField ;
     private Button loginButton, logoutButton, addPost, addComment, deletePost, deleteComment;
+    private Button searchWordPost, searchUserPost, searchWordComment, searchUserComment;
     private VBox vbInsert, vbUserInfo, vbCommentTable, vbPostTable;
     private Controller contr;
     private TextArea insertPostAndComment;
@@ -185,10 +187,22 @@ public class UserGUI extends Application {
         deletePost.setDisable(true);
         deletePost.setId("deletePost");
         
+        searchPost = new TextField();
+        searchPost.setPrefWidth(210);
+        
+        searchUserPost = new Button("Search by User");
+        searchUserPost.setDisable(true);
+        searchUserPost.setId("searchUserPost");
+        
+        searchWordPost = new Button("Search by Word");
+        searchWordPost.setDisable(true);
+        searchWordPost.setId("searchWordPost");
+        
         vbPostTable = new VBox();
         HBox buttons = new HBox();
-        buttons.getChildren().add(deletePost);
-        buttons.setAlignment(Pos.CENTER_RIGHT);
+        buttons.getChildren().addAll(searchPost, searchWordPost, searchUserPost, deletePost);
+        buttons.setSpacing(2);
+        //buttons.setAlignment(Pos.CENTER_RIGHT);
                
         userCol.setPrefWidth(70);
         postCol.setPrefWidth(250);
@@ -216,10 +230,22 @@ public class UserGUI extends Application {
         deleteComment.setDisable(true);
         deleteComment.setId("deleteComment");
         
+        searchComment = new TextField();
+        searchComment.setPrefWidth(210);
+        
+        searchUserComment = new Button("Search by User");
+        searchUserComment.setDisable(true);
+        searchUserComment.setId("searchUserComment");
+        
+        searchWordComment = new Button("Search by Word");
+        searchWordComment.setDisable(true);
+        searchWordComment.setId("searchWordPost");
+        
         vbCommentTable = new VBox();
         HBox buttons = new HBox();
-        buttons.getChildren().add(deleteComment);
-        buttons.setAlignment(Pos.CENTER_RIGHT);
+        buttons.getChildren().addAll(searchComment, searchWordComment, searchUserComment, deleteComment);
+        buttons.setSpacing(2);
+        //buttons.setAlignment(Pos.CENTER_RIGHT);
           
         userCommentCol.setPrefWidth(70);
         commentCol.setPrefWidth(330);
@@ -247,7 +273,7 @@ public class UserGUI extends Application {
     private void setController(){
         contr = new Controller(postOl, commentOl, username, password,
             usernameField, passwordField, errorLabel, welcomeLabel,
-            loginButton, logoutButton, addPost, addComment, deletePost, deleteComment,
+            loginButton, logoutButton, addPost, addComment, deletePost, deleteComment,             
             postTable, commentTable, loggedUser, insertPostAndComment, postCol, commentCol);
         /*
         
@@ -265,3 +291,4 @@ public class UserGUI extends Application {
     }
             
 }
+
