@@ -1,42 +1,32 @@
 package mycompany.task1;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
+import java.io.*;
+import java.net.*;
 import java.security.*;
-import java.util.ResourceBundle;
+import java.util.*;
 import javafx.collections.*;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.*;
-import javax.xml.bind.DatatypeConverter;
+import javax.xml.bind.*;
 
 public class FXMLController implements Initializable {
     private User loggedUser;
     private DBManager db;
     private String username, password;
-   
     private ObservableList<Post> postOl; 
-    @FXML
-    private ObservableList<Comment> commentOl = FXCollections.observableArrayList();
-    @FXML
-    private TextField usernameField, searchPost, searchComment;
-    @FXML
-    private PasswordField passwordField ;
-    @FXML
-    private Label errorLabel, welcomeLabel;
-    @FXML
-    private Button loginButton, logoutButton, addPost, addComment, deletePost, deleteComment,
+    
+    @FXML private ObservableList<Comment> commentOl = FXCollections.observableArrayList();
+    @FXML private TextField usernameField, searchPost, searchComment;
+    @FXML private PasswordField passwordField ;
+    @FXML private Label errorLabel, welcomeLabel;
+    @FXML private Button loginButton, logoutButton, addPost, addComment, deletePost, deleteComment,
                    searchWordPost, searchUserPost, searchWordComment, searchUserComment;
     @FXML private TableView<Post> postTable;
     @FXML private TableView<Comment> commentTable;
     @FXML private TextArea insertPostAndComment;
-    //@FXML public TableColumn<Comment, String> commentCol;
-    
-    //public TableColumn<Post, String> postCol;
+
     @FXML TableColumn<Post, String> userCol = new TableColumn<>("User");
     @FXML TableColumn<Post, Integer> commentsCol = new TableColumn<>("Comments");
     @FXML TableColumn<Post, Integer> dateCol = new TableColumn<>("Date");
@@ -71,7 +61,6 @@ public class FXMLController implements Initializable {
 
                 postOl = db.getPosts();
                 postTable.setItems(postOl);
-                //postTable.getItems().setAll(postOl); gigi
                 addPost.setDisable(false);
                 addComment.setDisable(false);
                 deleteComment.setDisable(false);
@@ -80,6 +69,9 @@ public class FXMLController implements Initializable {
                 searchUserPost.setDisable(false);
                 searchWordComment.setDisable(false);
                 searchWordPost.setDisable(false);
+                insertPostAndComment.setDisable(false);
+                searchComment.setDisable(false);
+                searchPost.setDisable(false);
 
             }
             else if(!db.isRegistered(username) && db.register(loggedUser)){
@@ -101,6 +93,9 @@ public class FXMLController implements Initializable {
                 searchUserPost.setDisable(false);
                 searchWordComment.setDisable(false);
                 searchWordPost.setDisable(false);
+                insertPostAndComment.setDisable(false);
+                searchComment.setDisable(false);
+                searchPost.setDisable(false);
             }
             
             else{
@@ -135,6 +130,9 @@ public class FXMLController implements Initializable {
         searchUserPost.setDisable(true);
         searchWordComment.setDisable(true);
         searchWordPost.setDisable(true);
+        insertPostAndComment.setDisable(true);
+        searchComment.setDisable(true);
+        searchPost.setDisable(true);
         postOl.clear();
         commentOl.clear(); 
     }
@@ -289,7 +287,7 @@ public class FXMLController implements Initializable {
         }
     }
     
-    @FXML //potrebbe non funzionare perchè non gli ho assegnato un evento in fxml
+    @FXML
     public void commentTableSetRowFactory(){
         commentTable.setRowFactory( tv ->{
             TableRow<Comment> row = new TableRow<>();
@@ -307,7 +305,7 @@ public class FXMLController implements Initializable {
         });              
     }
     
-    @FXML //potrebbe non funzionare perchè non gli ho assegnato un evento in fxml
+    @FXML 
     public void postTableSetRowFactory(){ 
         postTable.setRowFactory( tv ->{
             TableRow<Post> row = new TableRow<>();
