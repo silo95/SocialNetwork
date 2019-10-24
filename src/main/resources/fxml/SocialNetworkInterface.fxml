@@ -67,7 +67,7 @@
                <font>
                   <Font size="12.0" />
                </font></Button>
-            <TextArea id="insertPostAndComment" fx:id="insertPostAndComment" disable="true" layoutX="25.0" layoutY="421.0" prefHeight="93.0" prefWidth="242.0">
+            <TextArea id="insertPostAndComment" fx:id="insertPostAndComment" disable="true" layoutX="25.0" layoutY="421.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="93.0" prefWidth="242.0">
                <font>
                   <Font size="12.0" />
                </font></TextArea>

@@ -375,8 +375,8 @@ public class FXMLController implements Initializable {
         db = getCredential();
         commentTableSetRowFactory();
         postTableSetRowFactory();
-        
-        
+        insertPostAndComment.setWrapText(true);
+          
         userCol.setCellValueFactory(new PropertyValueFactory<>("user"));
         postCol.setCellValueFactory(new PropertyValueFactory<>("strPost"));
         postCol.setCellFactory(TextFieldTableCell.forTableColumn());
