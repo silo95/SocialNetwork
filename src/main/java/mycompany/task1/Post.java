@@ -2,6 +2,7 @@ package mycompany.task1;
 
 import javax.persistence.*;
 import java.sql.*;
+import java.util.*;
 
 
 @Entity
@@ -20,6 +21,9 @@ public class Post{
     
     @Column(name="postDate")
     private Timestamp postDate;
+    
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Comment> comments;
     
     @ManyToOne
     @JoinColumn(name="person", nullable=false, unique=false)
@@ -66,6 +70,14 @@ public class Post{
     
     public void setPostDate(Timestamp postDate){
         this.postDate = postDate;
+    }
+    
+    public List<Comment> getComments(){
+        return comments;
+    }
+    
+    public void setComments(List<Comment> comments){
+        this.comments = comments;
     }
     
     @Override

@@ -16,8 +16,9 @@ public class Person{
     @Column(name="Password", length=64, nullable=false, unique=false)
     private String password;
     
-    /*@OneToMany(mappedBy="person")
-    private List<Post> postList;*/
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    private List<Post> posts;
+   
     public Person(){
         
     }
@@ -50,6 +51,14 @@ public class Person{
 
     public void setPassword(String password){
         this.password = password;
+    }
+    
+    public List<Post> getPosts(){
+        return posts;
+    }
+    
+    public void setPosts(List<Post> posts){
+        this.posts = posts;
     }
 
     @Override

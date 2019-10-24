@@ -87,19 +87,23 @@ public class UserGUI extends Application {
             entityManager = factory.createEntityManager();
             entityManager.getTransaction().begin();
             Long myid = new Long(1);
-            Post per = entityManager.getReference(Post.class, myid);
-            Person persona = per.getPerson();
+            Post per = entityManager.find(Post.class, myid);
+            /*Person persona = per.getPerson();
             Comment comment = new Comment("Ciao belli, è un commento", persona, per, Timestamp.valueOf(LocalDateTime.now()));
             entityManager.persist(comment);
-            entityManager.getTransaction().commit();
+            entityManager.getTransaction().commit();*/
+            for(int i=0; i<per.getComments().size(); i++){
+                System.out.println(per.getComments().get(i).toString());
+            }
             System.out.println("done");
         } catch(Exception ex){
             ex.printStackTrace();
         } finally {
             entityManager.close();
+            factory.close();
         }
         
-        factory.close();
+        
         
     }
     
