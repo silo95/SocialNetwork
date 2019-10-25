@@ -94,8 +94,67 @@ public class DBManager{
         
     }
     
+    public ObservableList<PostBeans> searchPostsByUser(String user){ 
+        
+        ObservableList<PostBeans> ol = FXCollections.observableArrayList();
+        try{
+            entityManager = factory.createEntityManager();
+            entityManager.getTransaction().begin();
+            Query q = entityManager.createNativeQuery("Select idPerson From Person where username = ?");       
+            q.setParameter(1,user);
+            long idPerson = ((Number)q.getSingleResult()).longValue();
+            
+            Person p = entityManager.find(Person.class, idPerson);
+                        
+            PostBeans post;
+            for(int i=0; i<p.getPosts().size(); i++){
+                post = new PostBeans(p.getPosts().get(i).getIdPost(), p.getPosts().get(i).getStrPost(), 
+                        p.getPosts().get(i).getPerson().getUsername(), p.getPosts().get(i).getPostDate(),
+                        p.getPosts().get(i).getComments().size(), p.getPosts().get(i).getPerson().getIdPerson());
+                ol.add(post);
+            }   
+              
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            entityManager.close();
+        }
+        return ol;    
+    }
     
-    
+    public ObservableList<CommentBeans> searchCommentsByUser(String user, Long idPost){ 
+        
+        ObservableList<CommentBeans> ol = FXCollections.observableArrayList();
+        try{
+            entityManager = factory.createEntityManager();
+            entityManager.getTransaction().begin();
+            Query q = entityManager.createNativeQuery("Select idPerson From Person where username = ?");       
+            q.setParameter(1,user);
+            long idPerson = ((Number)q.getSingleResult()).longValue();
+            
+            Query q1 = entityManager.createNativeQuery("Select * From Comment where person = ? and post = ?", Comment.class);   
+            q1.setParameter(1,idPerson);
+            q1.setParameter(2,idPost);
+            
+            List<Comment> commentList = q1.getResultList();
+                         
+            CommentBeans comm;
+            for(int i=0; i<commentList.size(); i++){
+                comm = new CommentBeans(commentList.get(i).getIdComment(), commentList.get(i).getStrComment(), 
+                        commentList.get(i).getPerson().getUsername(), commentList.get(i).getPost().getIdPost(), 
+                        commentList.get(i).getDate(), commentList.get(i).getPerson().getIdPerson());
+                ol.add(comm);
+            }   
+              
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            entityManager.close();
+        }
+        return ol;    
+    }
     
     public int getNumberOfPosts(Long id){
         int counter = 0;
@@ -242,6 +301,8 @@ public class DBManager{
             entityManager.close();
         }
     }
+    
+
     
 
     public boolean deleteComment(Long id){ 

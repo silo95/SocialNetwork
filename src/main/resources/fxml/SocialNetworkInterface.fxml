@@ -38,7 +38,7 @@
                   <Font size="12.0" />
                </font>
             </Button>
-            <Button id="searchUserPost" fx:id="searchUserPost" disable="true" layoutX="606.0" layoutY="283.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #D5E8D2;" text="Search by User">
+            <Button id="searchUserPost" fx:id="searchUserPost" disable="true" layoutX="606.0" layoutY="283.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#searchPostByUser" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #D5E8D2;" text="Search by User">
                <font>
                   <Font size="12.0" />
                </font>
@@ -103,7 +103,7 @@
                   </Label>
                </children>
             </StackPane>
-            <Button id="searchUserComment" fx:id="searchUserComment" disable="true" layoutX="610.0" layoutY="540.0" minHeight="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #FFF2CD;" text="Search by User">
+            <Button id="searchUserComment" fx:id="searchUserComment" disable="true" layoutX="610.0" layoutY="540.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#searchCommentByUser" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #FFF2CD;" text="Search by User">
                <font>
                   <Font size="12.0" />
                </font>

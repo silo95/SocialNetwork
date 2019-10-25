@@ -15,6 +15,7 @@ public class FXMLController implements Initializable {
     private Long loggedUserId;
     private DBManager db;
     private String username, password;
+    private Long currentPost;
     
     private ObservableList<PostBeans> postOl;   //se non funziona, aggiungere @FXML
     private ObservableList<CommentBeans> commentOl = FXCollections.observableArrayList();   //se non funziona, aggiungere @FXML
@@ -159,6 +160,26 @@ public class FXMLController implements Initializable {
                         db.getNumberOfPosts(loggedUserId) +" posts and " +
                         db.getNumberOfComments(loggedUserId)+ " comments");
         }
+    }
+    
+    @FXML
+    public void searchPostByUser(ActionEvent event){
+        String user = searchPost.getText();
+        if(!user.isEmpty()){
+            postOl = db.searchPostsByUser(user);
+            postTable.setItems(postOl);
+            searchPost.clear();
+        }   
+    }
+    
+    @FXML
+    public void searchCommentByUser(ActionEvent event){
+        String user = searchComment.getText();
+        if(!user.isEmpty()){
+            commentOl = db.searchCommentsByUser(user, currentPost);
+            commentTable.setItems(commentOl);
+            searchComment.clear();
+        }   
     }
     
     @FXML
@@ -317,7 +338,8 @@ public class FXMLController implements Initializable {
             TableRow<PostBeans> row = new TableRow<>();
             row.setOnMouseClicked((Event e) ->{
                 PostBeans p = row.getItem();
-                commentOl = db.getComments(p.getIdPost());
+                currentPost = p.getIdPost();
+                commentOl = db.getComments(currentPost);
                 commentTable.setItems(commentOl);
                 errorLabel.setText("");
                 if(!username.equals(p.getUser())){
