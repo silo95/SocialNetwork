@@ -1,9 +1,6 @@
-
 package mycompany.task1;
 
-import java.sql.*;
 import java.sql.Timestamp;
-import javafx.beans.property.*;
 import javax.persistence.*;
 
 @Entity

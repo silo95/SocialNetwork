@@ -1,21 +1,10 @@
 package mycompany.task1;
 
-import java.math.BigInteger;
 import java.sql.*;
-import java.time.Clock;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Locale;
+import java.time.*;
+import java.util.*;
 import javafx.collections.*;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.persistence.*;
 
 public class DBManager{
     
@@ -31,17 +20,22 @@ public class DBManager{
         factory.close();
     }
     
-    public ObservableList<Comment> getComments(Long post){
+    public ObservableList<CommentBeans> getComments(Long post){
         
-        ObservableList<Comment> ol = FXCollections.observableArrayList();
+        ObservableList<CommentBeans> ol = FXCollections.observableArrayList();
         try{
             entityManager = factory.createEntityManager();
             entityManager.getTransaction().begin();
             Query q = entityManager.createNativeQuery("Select * From Comment where post = ? order by commentDate desc",Comment.class);
             q.setParameter(1,post);
             List<Comment> commentList = q.getResultList();
-            ol.addAll(commentList);
-            
+            CommentBeans comm;
+            for(int i=0; i<commentList.size(); i++){
+                comm = new CommentBeans(commentList.get(i).getIdComment(), commentList.get(i).getStrComment(), 
+                        commentList.get(i).getPerson().getUsername(), commentList.get(i).getPost().getIdPost(), 
+                        commentList.get(i).getDate(), commentList.get(i).getPerson().getIdPerson());
+                ol.add(comm);
+            }           
               
         }catch(Exception e){
             e.printStackTrace();
@@ -73,15 +67,22 @@ public class DBManager{
         return counter;
     }
     
-    public ObservableList<Post> getPosts(){ 
+    public ObservableList<PostBeans> getPosts(){ 
         
-        ObservableList<Post> ol = FXCollections.observableArrayList();
+        ObservableList<PostBeans> ol = FXCollections.observableArrayList();
         try{
             entityManager = factory.createEntityManager();
             entityManager.getTransaction().begin();
             Query q = entityManager.createNativeQuery("Select * From Post order by postDate desc",Post.class);
             List<Post> postList = q.getResultList();
-            ol.addAll(postList);
+            
+            PostBeans post;
+            for(int i=0; i<postList.size(); i++){
+                post = new PostBeans(postList.get(i).getIdPost(), postList.get(i).getStrPost(), 
+                        postList.get(i).getPerson().getUsername(), postList.get(i).getPostDate(),
+                        postList.get(i).getComments().size() ,postList.get(i).getPerson().getIdPerson());
+                ol.add(post);
+            }   
               
         }catch(Exception e){
             e.printStackTrace();
@@ -114,7 +115,7 @@ public class DBManager{
     }
     
 
-    public boolean login(String username, String password){ 
+    public Long login(String username, String password){ 
         try{
             entityManager = factory.createEntityManager();
             entityManager.getTransaction().begin();
@@ -122,16 +123,12 @@ public class DBManager{
                     + "and Password = ?");
             q.setParameter(1, username);
             q.setParameter(2, password);
-            if(((Number)q.getSingleResult()).intValue() <= 0){
-                return false;
-            }
-            else{
-                return true;
-            }
+            
+            return ((Number)q.getSingleResult()).longValue();
                 
         }catch(Exception e){
             e.printStackTrace();
-            return false;
+            return new Long(-1);
         }finally{
             entityManager.close();
         }
