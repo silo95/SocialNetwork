@@ -116,20 +116,30 @@ public class DBManager{
     }
     
 
-   /* public boolean login(Person u){ 
+    public boolean login(String username, String password){ 
         try{
-            ps.setString(1,u.getUsername()); 
-            ps.setString(2,u.getPassword()); 
-            ResultSet rs = ps.executeQuery();
-            return rs.next(); 
-            
-        }catch(SQLException e){
+            entityManager = factory.createEntityManager();
+            entityManager.getTransaction().begin();
+            Query q = entityManager.createNativeQuery("Select idPerson From Person where Username = ? "
+                    + "and Password = ?");
+            q.setParameter(1, username);
+            q.setParameter(2, password);
+            if(((Number)q.getSingleResult()).intValue() <= 0){
+                return false;
+            }
+            else{
+                return true;
+            }
+                
+        }catch(Exception e){
             e.printStackTrace();
             return false;
+        }finally{
+            entityManager.close();
         }
     }
    
-    public boolean register(Person u){ 
+    /*public boolean register(Person u){ 
         try(Connection co = DriverManager.getConnection(connectionString);
             PreparedStatement ps = co.prepareStatement("INSERT INTO User VALUES (?,?)");
         ){
