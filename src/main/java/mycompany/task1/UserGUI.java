@@ -1,6 +1,10 @@
 
 package mycompany.task1;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
 import javafx.application.Application;
 import javafx.collections.*;
 import javafx.geometry.*;
@@ -53,32 +57,25 @@ public class UserGUI extends Application {
     }
 
     public static void main(String[] args) {
-        launch(args);    
+        //launch(args);    
+        DBManager db = new DBManager();
+      
+        /*Long id = new Long(3);
+        System.out.println(db.getNumberOfComments(id));
+        */
+        db.deletePost(new Long(4));
         
-        EntityManagerFactory factory;
-        EntityManager entityManager = null;
+
         
-        factory = Persistence.createEntityManagerFactory("SocialNetwork");
-        
-        Person person = new Person();
-        person.setUsername("Lavagna");
-        person.setPassword("ciclamino");
-        System.out.println(person.toString());
-        try{
-            entityManager = factory.createEntityManager();
+         /*           entityManager = factory.createEntityManager();
             entityManager.getTransaction().begin();
-            entityManager.persist(person);
+            Long myid = new Long(10);
+            Person per = entityManager.getReference(Person.class, myid);
+            Post post = new Post("Ciao belli", per, Timestamp.valueOf(LocalDateTime.now()));
+            entityManager.persist(post);
             entityManager.getTransaction().commit();
             System.out.println("done");
-        } catch(Exception ex){
-            ex.printStackTrace();
-        } finally {
-            entityManager.close();
-        }
-        
-        factory.close();
-        
-        
+*/
     }
     
    private void inserisco(Person p){

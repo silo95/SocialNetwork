@@ -2,6 +2,7 @@
 package mycompany.task1;
 
 import java.sql.*;
+import java.sql.Timestamp;
 import javafx.beans.property.*;
 import javax.persistence.*;
 
@@ -10,21 +11,34 @@ import javax.persistence.*;
 public class Comment{
     @Column(name="idComment")
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long idComment;
-    
-    @Column(name="person", length=50, nullable=false, unique=false)
-    private String person;
     
     @Column(name="strComment", length=50, nullable=false, unique=false)
     private String strComment;
     
-    @Column(name="post", nullable=false, unique=false)
-    private Long post;
+    @ManyToOne
+    @JoinColumn(name="post", nullable=false, unique=false)
+    private Post post;
     
-    @Column(name="commentDate", nullable=false, unique=false)
+    @ManyToOne
+    @JoinColumn(name="person", nullable=false, unique=false)
+    private Person person;
+    
+    @Column(name="commentDate", unique=false)
     private Timestamp commentDate;
 
+    public Comment(){
+        
+    }
+        
+    public Comment(/*Long idComment, */String strComment, Person person, Post post,Timestamp t){
+       // this.idComment = idComment;
+        this.strComment = strComment;
+        this.person = person;
+        this.post = post;
+        this.commentDate = t;
+    }
     
     public Long getIdComment(){
         return idComment;
@@ -42,19 +56,19 @@ public class Comment{
         this.strComment = str;
     }
     
-    public String getPerson(){
+    public Person getPerson(){
        return person;
     } 
     
-    public void setPerson(String str){
-        this.person = str;
+    public void setPerson(Person person){
+        this.person = person;
     }
     
-    public Long getPost(){
+    public Post getPost(){
         return post;
     }
 
-    public void setPost(Long p){
+    public void setPost(Post p){
         this.post = p;
     }
     

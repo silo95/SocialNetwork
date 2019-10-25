@@ -1,55 +1,74 @@
 package mycompany.task1;
 
+import java.math.BigInteger;
 import java.sql.*;
+import java.time.Clock;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Locale;
 import javafx.collections.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 public class DBManager{
     
-    private final String connectionString;
+    private final EntityManagerFactory factory;
+    private EntityManager entityManager;
+
     
-    public DBManager(String s, String u, String p){
-        connectionString = "jdbc:mysql://" + s + ":"
-                + "3306/SocialNetwork?useUnicode=true&allowPublicKeyRetrieval=true&useSSL=false&useJDBCCompliantTimezoneShift=true"
-                + "&useLegacyDatetimeCode=false&serverTimezone=UTC&user=" 
-                + u + "&password=" + p + "";
+    public DBManager(){
+        factory = Persistence.createEntityManagerFactory("SocialNetwork");      
     }
-    /*
-    public ObservableList<Comment> getComments(int post){
+    
+    public void exit(){
+        factory.close();
+    }
+    
+    public ObservableList<Comment> getComments(Long post){
+        
         ObservableList<Comment> ol = FXCollections.observableArrayList();
-        try(Connection co = DriverManager.getConnection(connectionString);
-            PreparedStatement ps = co.prepareStatement("Select * From Comment where post = ? order by Date desc");
-        ){
-            Comment c;
-            ps.setInt(1,post);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                c = new Comment(rs.getInt("IdComment"), rs.getString("strComment"),
-                rs.getString("User"), rs.getInt("Post"),(Timestamp)rs.getObject("Date")); 
-                ol.add(c);
-            }
+        try{
+            entityManager = factory.createEntityManager();
+            entityManager.getTransaction().begin();
+            Query q = entityManager.createNativeQuery("Select * From Comment where post = ? order by commentDate desc",Comment.class);
+            q.setParameter(1,post);
+            List<Comment> commentList = q.getResultList();
+            ol.addAll(commentList);
+            
               
-        }catch(SQLException e){
+        }catch(Exception e){
             e.printStackTrace();
         }
-        
+        finally{
+            entityManager.close();
+        }
         return ol;
+        
          
     }
     
-    public int getNumberOfComments(String username){
+    public int getNumberOfComments(Long id){
         int counter = 0;
-        try(Connection co = DriverManager.getConnection(connectionString);
-            PreparedStatement ps = co.prepareStatement("Select count(*) From Comment where user = ? ");
-        ){
-            ps.setString(1,username);
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                counter = rs.getInt(1);
-            }
-              
-        }catch(SQLException e){
+        try{
+        
+            entityManager = factory.createEntityManager();
+            entityManager.getTransaction().begin();
+            Query q = entityManager.createNativeQuery("Select count(*) From Comment where person = ?");
+            q.setParameter(1,id);
+            counter = ((Number)q.getSingleResult()).intValue();
+                            
+        }catch(Exception e){
             e.printStackTrace();
-        }
+        }finally{
+            entityManager.close();
+        } 
         
         return counter;
     }
@@ -57,62 +76,68 @@ public class DBManager{
     public ObservableList<Post> getPosts(){ 
         
         ObservableList<Post> ol = FXCollections.observableArrayList();
-        try(Connection co = DriverManager.getConnection(connectionString);
-            PreparedStatement ps = co.prepareStatement("SELECT distinct IdPost, strPost, P.User, P.Date,count(IdComment) as commenti\n" +
-                " FROM Post P left outer join comment C on C.Post = P.IdPost\n" +
-                " group by IdPost order by Date desc;");
-        ){
-            Post p;
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                p = new Post(rs.getInt("IdPost"), rs.getString("strPost"),
-                    rs.getString("User"), (Timestamp)rs.getObject("Date"), rs.getInt("commenti"));  
-                ol.add(p);
-            }
+        try{
+            entityManager = factory.createEntityManager();
+            entityManager.getTransaction().begin();
+            Query q = entityManager.createNativeQuery("Select * From Post order by postDate desc",Post.class);
+            List<Post> postList = q.getResultList();
+            ol.addAll(postList);
               
-        }catch(SQLException e){
+        }catch(Exception e){
             e.printStackTrace();
         }
-        
+        finally{
+            entityManager.close();
+        }
         return ol;
+        
     }
     
     
-    public int getNumberOfPosts(String username){
+    
+    
+    public int getNumberOfPosts(Long id){
         int counter = 0;
-        try(Connection co = DriverManager.getConnection(connectionString);
-            PreparedStatement ps = co.prepareStatement("Select count(*) From Post where user = ? ");
-        ){
-            ps.setString(1,username);
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                counter = rs.getInt(1);
-            }
+        try{
+            entityManager = factory.createEntityManager();
+            entityManager.getTransaction().begin();
+            Query q = entityManager.createNativeQuery("Select count(*) From Post where person = ?");
+            q.setParameter(1,id);
+            counter = ((Number)q.getSingleResult()).intValue();
               
-        }catch(SQLException e){
+        }catch(Exception e){
             e.printStackTrace();
+        }finally{
+            entityManager.close();
         }
         return counter;
     }
     
-    
-    public boolean login(Person u){ 
-        try(Connection co = DriverManager.getConnection(connectionString);
-            PreparedStatement ps = co.prepareStatement("SELECT * FROM User "
-                    + "WHERE Username = ? AND Password = ?");
-        ){
-            ps.setString(1,u.getUsername()); 
-            ps.setString(2,u.getPassword()); 
-            ResultSet rs = ps.executeQuery();
-            return rs.next(); 
-            
-        }catch(SQLException e){
+
+    public boolean login(String username, String password){ 
+        try{
+            entityManager = factory.createEntityManager();
+            entityManager.getTransaction().begin();
+            Query q = entityManager.createNativeQuery("Select idPerson From Person where Username = ? "
+                    + "and Password = ?");
+            q.setParameter(1, username);
+            q.setParameter(2, password);
+            if(((Number)q.getSingleResult()).intValue() <= 0){
+                return false;
+            }
+            else{
+                return true;
+            }
+                
+        }catch(Exception e){
             e.printStackTrace();
             return false;
+        }finally{
+            entityManager.close();
         }
     }
    
-    public boolean register(Person u){ 
+    /*public boolean register(Person u){ 
         try(Connection co = DriverManager.getConnection(connectionString);
             PreparedStatement ps = co.prepareStatement("INSERT INTO User VALUES (?,?)");
         ){
@@ -140,110 +165,123 @@ public class DBManager{
             e.printStackTrace();
             return false;
         }          
-    }
+    }*/
     
-    public boolean updatePost(int IdPost,String newPost){
-     try(Connection co = DriverManager.getConnection(connectionString);
-            PreparedStatement ps = co.prepareStatement("UPDATE Post SET strPost = ? where IdPost = ?");           
-        ){                
-            ps.setString(1,newPost);
-            ps.setInt(2, IdPost);
-            ps.executeUpdate();
+    public boolean updatePost(Long idPost,String newPost){
+        try{                
+
+            entityManager = factory.createEntityManager();
+            entityManager.getTransaction().begin();
+            Post p = entityManager.getReference(Post.class,idPost);
+            p.setStrPost(newPost);
+            entityManager.persist(p);
+            entityManager.getTransaction().commit();
             return true;  
-            
-        }catch(SQLException e){
+          
+        }catch(Exception e){
             e.printStackTrace();
             return false;
            
+        }finally{
+            entityManager.close();
+        } 
+    }
+    
+    public boolean updateComment(Long idComment,String newComment){
+        try{                
+
+            entityManager = factory.createEntityManager();
+            entityManager.getTransaction().begin();
+            Comment c = entityManager.getReference(Comment.class,idComment);
+            c.setStrComment(newComment);
+            entityManager.persist(c);
+            entityManager.getTransaction().commit();
+            return true;  
+          
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+           
+        }finally{
+            entityManager.close();
+        } 
+    }
+    
+    public boolean addComment(String content, Long user,Long post){ 
+        try{   
+            entityManager = factory.createEntityManager();
+            entityManager.getTransaction().begin();
+            Person per = entityManager.getReference(Person.class,user);
+            Post pos = entityManager.getReference(Post.class,post);
+            Comment c;
+            c = new Comment(content,per,pos,Timestamp.valueOf(LocalDateTime.now()));
+            entityManager.persist(c);
+            entityManager.getTransaction().commit();
+            return true;  
+            
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }finally{
+            entityManager.close();
+        }   
+    }
+    
+    public boolean addPost(String content, Long user){ 
+        try{   
+            entityManager = factory.createEntityManager();
+            entityManager.getTransaction().begin();
+            Person per = entityManager.getReference(Person.class,user);         
+            Post p = new Post(content,per,Timestamp.valueOf(LocalDateTime.now()));
+            entityManager.persist(p);
+            entityManager.getTransaction().commit();
+            return true;  
+            
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        finally{
+            entityManager.close();
         }
     }
     
-    public boolean updateComment(int IdComment,String newComment){
-        try(Connection co = DriverManager.getConnection(connectionString);
-               PreparedStatement ps = co.prepareStatement("UPDATE Comment SET strComment = ? where IdComment = ?");           
-            ){                
-               ps.setString(1,newComment);
-               ps.setInt(2, IdComment);
-               ps.executeUpdate();
-               return true;  
-               
-           }catch(SQLException e){
-               e.printStackTrace();
-               return false;
 
-           }
-    }
-    
-    public boolean addComment(String content, String user,int post){ 
-        try(Connection co = DriverManager.getConnection(connectionString);
-            PreparedStatement ps = co.prepareStatement("INSERT INTO comment(strComment,User,Post,Date)\n" +
-            "VALUES (?,?,?,CURRENT_TIMESTAMP);");           
-        ){                
-            ps.setString(1, content);
-            ps.setString(2, user);
-            ps.setInt(3, post);
-
-            ps.executeUpdate();
-            return true;  
-            
-        }catch(SQLException e){
-            e.printStackTrace();
-            return false;
-        }    
-    }
-    
-    public boolean addPost(String content, String user){ 
-        try(Connection co = DriverManager.getConnection(connectionString);
-            PreparedStatement ps = co.prepareStatement("INSERT INTO post(strPost,User,Date)\n" +
-            "VALUES (?,?,CURRENT_TIMESTAMP);");           
-        ){                
-            ps.setString(1, content);
-            ps.setString(2, user);
-
-            ps.executeUpdate();
-            return true;  
-            
-        }catch(SQLException e){
-            e.printStackTrace();
-            return false;
-        }    
-    }
-    
-
-    public boolean deleteComment(Comment c){ 
-        if(c== null){
+    public boolean deleteComment(Long id){ 
+     /*   if(c== null){
             System.out.println("Err: no comment selected");
             return false;
-        }        
-        try(Connection co = DriverManager.getConnection(connectionString);
-            PreparedStatement ps = co.prepareStatement("DELETE FROM comment WHERE idComment = ?;");           
-        ){                
-            ps.setInt(1, c.getIdComment());
-            ps.executeUpdate();
+        }  */      
+        try{                
+            entityManager = factory.createEntityManager();
+            entityManager.getTransaction().begin();
+            Comment c = entityManager.getReference(Comment.class,id);         
+            entityManager.remove(c);
+            entityManager.getTransaction().commit();
             return true;  
             
-        }catch(SQLException e){
+        }catch(Exception e){
             e.printStackTrace();
             return false;
-        }    
+        }finally{
+            entityManager.close();
+        } 
     }
     
-    public boolean deletePost(Post p){ 
-        if(p == null){
-            System.out.println("Err: no comment selected");
-            return false;
-        }        
-        try(Connection co = DriverManager.getConnection(connectionString);
-            PreparedStatement ps = co.prepareStatement("DELETE FROM post WHERE idPost = ?;");           
-        ){                
-            ps.setInt(1, p.getIdPost());
-            ps.executeUpdate();
+    public boolean deletePost(Long id){ 
+        try{                
+            entityManager = factory.createEntityManager();
+            entityManager.getTransaction().begin();
+            Post p = entityManager.getReference(Post.class,id);         
+            entityManager.remove(p);
+            entityManager.getTransaction().commit();
             return true;  
             
-        }catch(SQLException e){
+        }catch(Exception e){
             e.printStackTrace();
             return false;
-        }    
+        }finally{
+            entityManager.close();
+        }      
     }
-   */   
-}
+}  
