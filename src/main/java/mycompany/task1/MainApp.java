@@ -1,5 +1,9 @@
 package mycompany.task1;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.*;
 import static javafx.application.Application.launch;
 import javafx.fxml.*;
@@ -29,8 +33,27 @@ public class MainApp extends Application {
      *
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args){
         launch(args);
+        /*LevelDBManager levelDB = new LevelDBManager();
+        levelDB.putKeyValue("Username",1,"nascita","20-11-1995");
+        levelDB.putKeyValue("Username",1,"citta","Nicotera");
+        levelDB.putKeyValue("Username",2,"nascita","20-11-2000");
+        levelDB.putKeyValue("Username",1,"sesso","maschio");
+        levelDB.putKeyValue("Username",3,"nascita","20-11-3000");
+        try {
+            List<String> res = levelDB.getValue("Username",1);
+            for(int i = 0; i < res.size(); i++){
+                String[] attribute =res.get(i).split(":");
+                System.out.println(attribute[0] + ":" + attribute[1]);
+              //  System.out.println(res.get(i));
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        levelDB.close();
+       // System.out.println(levelDB.getValue("Capitale"));*/
     }
 
 }
