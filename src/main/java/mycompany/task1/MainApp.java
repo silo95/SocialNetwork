@@ -21,10 +21,12 @@ public class MainApp extends Application {
     public static String username;
     public static long loggedUserId;
     public static DBManager db;
+    public static LevelDBManager ldb;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         db = new DBManager();
+        ldb = new LevelDBManager();
         stage = primaryStage;    
         firstScene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/FirstScene.fxml")));     
         registrationScene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/RegistrationScene.fxml")));
@@ -34,13 +36,13 @@ public class MainApp extends Application {
         stage.setScene(firstScene);
         stage.show();     
         
-        
-        
     }
 
 
     public static void main(String[] args) {
         launch(args);
+        
+        
     }
     
     public static Stage getStage() {

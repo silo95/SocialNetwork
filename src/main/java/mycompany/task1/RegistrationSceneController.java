@@ -21,11 +21,7 @@ public class RegistrationSceneController {
     @FXML private PasswordField passwordField;
     @FXML private Label errorLabel;
     
-    ArrayList<ArrayList<String>> toAdd = new ArrayList<ArrayList<String>>();
-    ArrayList<String> singleList = new ArrayList<String>();
-    
-    
-    
+
     public RegistrationSceneController(){
         db = MainApp.db;       
         //username = MainApp.username;
@@ -37,52 +33,39 @@ public class RegistrationSceneController {
     }
     
     private void getValuesFromForm(){
-        if(!nameField.getText().isEmpty()){               
-                singleList.add(levelDBString +":"+ loggedUserId+":name");
-                singleList.add(nameField.getText());            
-                toAdd.add(singleList);
+        
+        if(!nameField.getText().isEmpty()){            
+            MainApp.ldb.putValuesToUser(levelDBString +":"+ loggedUserId + ":name", nameField.getText());
         }
 
-        if(!surnameField.getText().isEmpty()){               
-            singleList.add(levelDBString +":"+ loggedUserId+":surname");
-            singleList.add(nameField.getText());            
-            toAdd.add(singleList);
+        if(!surnameField.getText().isEmpty()){    
+            MainApp.ldb.putValuesToUser(levelDBString +":"+ loggedUserId+":surname", surnameField.getText());
         }
 
-        if(!genderField.getText().isEmpty()){               
-            singleList.add(levelDBString +":"+ loggedUserId+":gender");
-            singleList.add(nameField.getText());            
-            toAdd.add(singleList);
+        if(!genderField.getText().isEmpty()){   
+            MainApp.ldb.putValuesToUser(levelDBString +":"+ loggedUserId+":gender", genderField.getText());
         }
-        if(!dateBirthField.getText().isEmpty()){               
-            singleList.add(levelDBString +":"+ loggedUserId+":dateBirth");
-            singleList.add(nameField.getText());            
-            toAdd.add(singleList);
+        
+        if(!dateBirthField.getText().isEmpty()){ 
+            MainApp.ldb.putValuesToUser(levelDBString +":"+ loggedUserId+":dateBirth", dateBirthField.getText());
         }
 
-        if(!countryField.getText().isEmpty()){               
-            singleList.add(levelDBString +":"+ loggedUserId+":country");
-            singleList.add(nameField.getText());            
-            toAdd.add(singleList);
+        if(!countryField.getText().isEmpty()){  
+            MainApp.ldb.putValuesToUser(levelDBString +":"+ loggedUserId+":country", countryField.getText());
         }
 
-        if(!cityField.getText().isEmpty()){               
-            singleList.add(levelDBString +":"+ loggedUserId+":city");
-            singleList.add(nameField.getText());            
-            toAdd.add(singleList);
+        if(!cityField.getText().isEmpty()){  
+            MainApp.ldb.putValuesToUser(levelDBString +":"+ loggedUserId+":city", cityField.getText());
         }
 
-        if(!streetField.getText().isEmpty()){               
-            singleList.add(levelDBString +":"+ loggedUserId+":street");
-            singleList.add(nameField.getText());            
-            toAdd.add(singleList);
+        if(!streetField.getText().isEmpty()){ 
+            MainApp.ldb.putValuesToUser(levelDBString +":"+ loggedUserId+":street", streetField.getText());
         }
 
-        if(!phoneField.getText().isEmpty()){               
-            singleList.add(levelDBString +":"+ loggedUserId+":phone");
-            singleList.add(nameField.getText());            
-            toAdd.add(singleList);
+        if(!phoneField.getText().isEmpty()){     
+            MainApp.ldb.putValuesToUser(levelDBString +":"+ loggedUserId+":phone", phoneField.getText());
         }
+        
     }
     
     @FXML
@@ -91,13 +74,24 @@ public class RegistrationSceneController {
         
         if(!usernameField.getText().isEmpty() && !passwordField.getText().isEmpty()){
             String username = String.valueOf(usernameField.getText());
-            String password = hash(String.valueOf(passwordField.getText()));
-            
-            loggedUserId = db.login(username, password); //cambiare con register
             
             //dobbiamo controllare che lo username non sia già presente nel DB
+            
+            String password = hash(String.valueOf(passwordField.getText())); 
+            loggedUserId = db.register(username, password);
+            
            
             getValuesFromForm();
+            
+            List<String> res = MainApp.ldb.getValuesFromUser(levelDBString, loggedUserId);
+            
+            System.out.println("size list " + res.size());
+            
+            for(int i = 0; i < res.size(); i++){
+                String[] attribute = res.get(i).split(":");
+                System.out.println(attribute[0] + ":" + attribute[1]);
+             
+            }
             
             /*
             

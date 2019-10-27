@@ -3,7 +3,7 @@ package mycompany.task1;
 
 import java.io.File;
 import java.io.IOException;
-import static java.lang.Integer.parseInt;
+import static java.lang.Long.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -39,16 +39,13 @@ private DB db;
             db.delete(bytes(key));
         }
     }
-    public void putValuesToUser(ArrayList<ArrayList<String>> toAdd){
-        for(int i = 0; i < toAdd.size(); i++){
-            String key = toAdd.get(i).get(0);
-            String value = toAdd.get(i).get(1);
-            db.put(bytes(key), bytes(value));
-        }
-        
+    
+    //[username:id:attribute] [attribute_value]
+    public void putValuesToUser(String key, String value){
+        db.put(bytes(key), bytes(value));  
     }
  
-    public List<String> getValuesFromUser(String entity, int id){
+    public List<String> getValuesFromUser(String entity, Long id){
        
         List<String> result = new ArrayList();  
   
@@ -61,7 +58,7 @@ private DB db;
             while (keyIterator.hasNext()) {
                 String key = asString(keyIterator.peekNext().getKey());
                 String[] keySplit = key.split(":"); 
-                if (parseInt(keySplit[1]) != id) {
+                if (parseLong(keySplit[1]) != id) {
                         break;
                     }
                 String resultAttribute = new String(keySplit[keySplit.length - 1] + ":" + asString(db.get(bytes(key))));

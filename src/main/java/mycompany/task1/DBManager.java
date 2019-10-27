@@ -193,21 +193,28 @@ public class DBManager{
         }
     }
    
-    /*public boolean register(Person u){ 
-        try(Connection co = DriverManager.getConnection(connectionString);
-            PreparedStatement ps = co.prepareStatement("INSERT INTO User VALUES (?,?)");
-        ){
-            ps.setString(1,u.getUsername());
-            ps.setString(2,u.getPassword());
-            ps.execute();
-            return true;  
+    public Long register(String username, String password){ 
+        try{                
+            entityManager = factory.createEntityManager();
+            entityManager.getTransaction().begin();
+            Person p = new Person(username, password);
+            entityManager.persist(p);
+            entityManager.getTransaction().commit();
             
-        }catch(SQLException e){
+            Query q = entityManager.createNativeQuery("Select idPerson From Person where Username = ?");
+            q.setParameter(1, username);
+            
+            return ((Number)q.getSingleResult()).longValue();
+          
+        }catch(Exception e){
             e.printStackTrace();
-            return false;
-        }
+            return new Long(-1);
+           
+        }finally{
+            entityManager.close();
+        } 
     }
-    
+    /*
     public boolean isRegistered(String u){ 
         try(Connection co = DriverManager.getConnection(connectionString);
             PreparedStatement ps = co.prepareStatement("SELECT * FROM User "
