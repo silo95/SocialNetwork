@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mycompany.task1.FirstSceneController">
+  <children>
+    <AnchorPane id="errorLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="870.0" VBox.vgrow="ALWAYS">
+      <children>
+            <TextField id="usernameField" fx:id="usernameField" layoutX="331.0" layoutY="242.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="210.0">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </TextField>
+            <PasswordField id="passwordField" fx:id="passwordField" layoutX="331.0" layoutY="300.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="210.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </PasswordField>
+            <Button id="registrationButton" fx:id="registrationButton" layoutX="331.0" layoutY="342.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#registrationSetOnAction" prefHeight="35.0" prefWidth="99.0" style="-fx-background-color: #FBCFD0;" text="Registration">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Button>
+            <Button id="loginButton" fx:id="loginButton" layoutX="442.0" layoutY="342.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#loginSetOnAction" prefHeight="35.0" prefWidth="99.0" style="-fx-background-color: #FBCFD0;" text="Login">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Button>
+            <Label layoutX="405.0" layoutY="218.0" prefHeight="27.0" prefWidth="63.0" text="Username" textAlignment="CENTER">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            
+            <Label layoutX="405.0" layoutY="277.0" prefHeight="27.0" prefWidth="63.0" text="Password" textAlignment="CENTER">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="errorLabel" alignment="CENTER" layoutX="21.0" layoutY="64.0" prefHeight="27.0" prefWidth="830.0" textAlignment="CENTER" textFill="#e50000">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <StackPane prefHeight="64.0" prefWidth="870.0">
+               <children>
+                  <Label id="welcomeLabel" fx:id="welcomeLabel" alignment="CENTER" contentDisplay="CENTER" text="Insert username and password or push Registration button" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <graphic>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b0d2ff" height="45.0" stroke="TRANSPARENT" strokeType="INSIDE" width="830.0" />
+                     </graphic>
+                  </Label>
+               </children>
+            </StackPane>
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>

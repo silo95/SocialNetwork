@@ -9,21 +9,24 @@ import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.PickResult;
 import javax.xml.bind.*;
 
-public class FXMLController implements Initializable {
+public class HomeSceneController implements Initializable {
     private Long loggedUserId;
-    private DBManager db;
+    public static DBManager db;
     private String username, password;
     private Long currentPost;
     
-    private ObservableList<PostBeans> postOl;   //se non funziona, aggiungere @FXML
-    private ObservableList<CommentBeans> commentOl = FXCollections.observableArrayList();   //se non funziona, aggiungere @FXML
+    private ObservableList<PostBeans> postOl;
+    private ObservableList<CommentBeans> commentOl = FXCollections.observableArrayList();   
     
     @FXML private TextField usernameField, searchPost, searchComment;
     @FXML private PasswordField passwordField ;
-    @FXML private Label errorLabel, welcomeLabel;
-    @FXML private Button loginButton, logoutButton, addPost, addComment, deletePost, deleteComment,
+    @FXML private Label welcomeLabel;
+    @FXML private Label errorLabel;
+    @FXML private Button profileButton, logoutButton, addPost, addComment, deletePost, deleteComment,
                    searchWordPost, searchUserPost, searchWordComment, searchUserComment;
     @FXML private TableView<PostBeans> postTable;
     @FXML private TableView<CommentBeans> commentTable;
@@ -38,109 +41,28 @@ public class FXMLController implements Initializable {
     @FXML TableColumn<CommentBeans, String> commentCol = new TableColumn<>("Comment");
     @FXML TableColumn<CommentBeans, String> commentDateCol = new TableColumn<>("Date");
     
-    
-    
-    @FXML
-    public void loginButtonSetOnAction(ActionEvent event) {
-        if(!usernameField.getText().isEmpty() && !passwordField.getText().isEmpty()){
-            username = String.valueOf(usernameField.getText());
-            password = hash(String.valueOf(passwordField.getText()));
-         
-            //loggedUser = new Person(username, password);
-            loggedUserId = db.login(username, password);
-            
-            System.out.println("logged id " + loggedUserId);
-            
-                
-            if(/*db.isRegistered(username) &&*/ loggedUserId > 0){
-
-                loginButton.setDisable(true);
-                logoutButton.setDisable(false);
-                usernameField.setEditable(false);
-                usernameField.setStyle("-fx-text-inner-color: #bfbfbf;");
-                passwordField.setEditable(false);
-                passwordField.setStyle("-fx-text-inner-color: #bfbfbf;");
-                errorLabel.setText("");
-                welcomeLabel.setText("Hello " + username + ", you've written " + 
-                        db.getNumberOfPosts(loggedUserId) +" posts and " +
-                        db.getNumberOfComments(loggedUserId)+ " comments");
-
-                postOl = db.getPosts();
-                postTable.setItems(postOl);
-                addPost.setDisable(false);
-                addComment.setDisable(false);
-                deleteComment.setDisable(false);
-                deletePost.setDisable(false);
-                searchUserComment.setDisable(false);
-                searchUserPost.setDisable(false);
-                searchWordComment.setDisable(false);
-                searchWordPost.setDisable(false);
-                insertPostAndComment.setDisable(false);
-                searchComment.setDisable(false);
-                searchPost.setDisable(false);
-
-            }/*
-            else if(!db.isRegistered(username) && db.register(loggedUser)){
-                loginButton.setDisable(true);
-                logoutButton.setDisable(false);
-                usernameField.setEditable(false);
-                usernameField.setStyle("-fx-text-inner-color: #bfbfbf;");
-                passwordField.setEditable(false);
-                passwordField.setStyle("-fx-text-inner-color: #bfbfbf;");
-                errorLabel.setText("");
-                welcomeLabel.setText("Hello " + username + ", your registration has been successfully completed!");
-                postOl = db.getPosts();
-                postTable.setItems(postOl);
-                addPost.setDisable(false);
-                addComment.setDisable(false);
-                deleteComment.setDisable(false);
-                deletePost.setDisable(false);
-                searchUserComment.setDisable(false);
-                searchUserPost.setDisable(false);
-                searchWordComment.setDisable(false);
-                searchWordPost.setDisable(false);
-                insertPostAndComment.setDisable(false);
-                searchComment.setDisable(false);
-                searchPost.setDisable(false);
-            }
-            */
-            else{
-                errorLabel.setText("Username or Password not correct. Please, try again. ");
-            }
-            
-        }
-        else{
-             errorLabel.setText("Insert all the required fields.");
-        }
+    public HomeSceneController(){
+        db = MainApp.db;       
+        username = MainApp.username;
+        loggedUserId = MainApp.loggedUserId;   
     }
-    
     
     @FXML
     public void logoutButtonSetOnAction(ActionEvent event){
-        loginButton.setDisable(false);
-        logoutButton.setDisable(true);
         usernameField.clear();
         passwordField.clear();
-        usernameField.setEditable(true);
-        passwordField.setEditable(true);
-        welcomeLabel.setText("Insert username and password for login or registration");
+        welcomeLabel.setText("");
         errorLabel.setText("");
         usernameField.setStyle("-fx-text-inner-color: black;");
         passwordField.setStyle("-fx-text-inner-color: black;");
-        usernameField.requestFocus();
-        addPost.setDisable(true);
-        addComment.setDisable(true);
-        deleteComment.setDisable(true);
-        deletePost.setDisable(true);   
-        searchUserComment.setDisable(true);
-        searchUserPost.setDisable(true);
-        searchWordComment.setDisable(true);
-        searchWordPost.setDisable(true);
-        insertPostAndComment.setDisable(true);
-        searchComment.setDisable(true);
-        searchPost.setDisable(true);
         postOl.clear();
         commentOl.clear(); 
+        MainApp.getStage().setScene(MainApp.firstScene);
+    }
+    
+    @FXML
+    public void profileButtonOnAction(ActionEvent event){
+        MainApp.getStage().setScene(MainApp.profileScene);
     }
     
     @FXML
@@ -152,22 +74,28 @@ public class FXMLController implements Initializable {
                 errorLabel.setText("The content of post is empty");
         } else{
             errorLabel.setText("");
-            db.addPost(content, loggedUserId);
+            db.addPost(content, MainApp.loggedUserId);
             postOl = db.getPosts();
             postTable.setItems(postOl);
             insertPostAndComment.clear();
-            welcomeLabel.setText("Hello " + username + ", you've written " + 
-                        db.getNumberOfPosts(loggedUserId) +" posts and " +
-                        db.getNumberOfComments(loggedUserId)+ " comments");
+            welcomeLabel.setText("Hello " + MainApp.username + ", you've written " + 
+                        db.getNumberOfPosts(MainApp.loggedUserId) +" posts and " +
+                        db.getNumberOfComments(MainApp.loggedUserId)+ " comments");
         }
     }
     
     @FXML
     public void searchPostByUser(ActionEvent event){
         String user = searchPost.getText();
-        if(!user.isEmpty()){
-            postOl = db.searchPostsByUser(user);
-            postTable.setItems(postOl);
+        if(!user.isEmpty() ){
+            if(user.equals("All")){
+                postOl = db.getPosts();
+                postTable.setItems(postOl);
+            }
+            else{
+                postOl = db.searchPostsByUser(user);
+                postTable.setItems(postOl);
+            } 
             searchPost.clear();
         }   
     }
@@ -196,7 +124,7 @@ public class FXMLController implements Initializable {
                 errorLabel.setText("The content of comment is empty");
             } else{
                 errorLabel.setText("");
-                db.addComment(content, loggedUserId, p.getIdPost());
+                db.addComment(content, MainApp.loggedUserId, p.getIdPost());
                 commentOl = db.getComments(p.getIdPost());
                 commentTable.setItems(commentOl);
                 postOl = db.getPosts();
@@ -207,9 +135,9 @@ public class FXMLController implements Initializable {
                 postTable.getSelectionModel().select(index);
                 postTable.getFocusModel().focus(index);
 
-                welcomeLabel.setText("Hello " + username + ", you've written " + 
-                            db.getNumberOfPosts(loggedUserId) +" posts and " +
-                            db.getNumberOfComments(loggedUserId)+ " comments");
+                welcomeLabel.setText("Hello " + MainApp.username + ", you've written " + 
+                            db.getNumberOfPosts(MainApp.loggedUserId) +" posts and " +
+                            db.getNumberOfComments(MainApp.loggedUserId)+ " comments");
             }
         }
         else{
@@ -223,15 +151,15 @@ public class FXMLController implements Initializable {
             errorLabel.setText("");
             PostBeans p = postTable.getFocusModel().getFocusedItem();
 
-            if(!username.equals(p.getUser())){
+            if(!MainApp.username.equals(p.getUser())){
                 errorLabel.setText("You can delete only your post!");
                 postTable.refresh();             
             } else {
                 db.deletePost(p.getIdPost());
                 postTable.getItems().remove(p);    
-                welcomeLabel.setText("Hello " + username + ", you've written " + 
-                            db.getNumberOfPosts(loggedUserId) +" posts and " +
-                            db.getNumberOfComments(loggedUserId)+ " comments");
+                welcomeLabel.setText("Hello " + MainApp.username + ", you've written " + 
+                            db.getNumberOfPosts(MainApp.loggedUserId) +" posts and " +
+                            db.getNumberOfComments(MainApp.loggedUserId)+ " comments");
             }
         }
         else{
@@ -246,7 +174,7 @@ public class FXMLController implements Initializable {
             errorLabel.setText("");
             CommentBeans c = commentTable.getFocusModel().getFocusedItem();
 
-            if(!username.equals(c.getUser())){
+            if(!MainApp.username.equals(c.getUser())){
                 errorLabel.setText("You can delete only your comment!");
                 commentTable.refresh();  
             } else{  
@@ -267,9 +195,9 @@ public class FXMLController implements Initializable {
                 postTable.getSelectionModel().select(index);
                 postTable.getFocusModel().focus(index);
 
-                welcomeLabel.setText("Hello " + username + ", you've written " + 
-                            db.getNumberOfPosts(loggedUserId) +" posts and " +
-                            db.getNumberOfComments(loggedUserId)+ " comments");
+                welcomeLabel.setText("Hello " + MainApp.username + ", you've written " + 
+                            db.getNumberOfPosts(MainApp.loggedUserId) +" posts and " +
+                            db.getNumberOfComments(MainApp.loggedUserId)+ " comments");
 
                 }    
         }
@@ -283,7 +211,7 @@ public class FXMLController implements Initializable {
     public void postColSetOnEditCommit(TableColumn.CellEditEvent<Post, String> postStringCellEditEvent){
         PostBeans post = postTable.getSelectionModel().getSelectedItem();
            
-        if(!username.equals(post.getUser())){
+        if(!MainApp.username.equals(post.getUser())){
             errorLabel.setText("Warning: only the author can modify the post");
             postTable.refresh();   
         }
@@ -321,7 +249,7 @@ public class FXMLController implements Initializable {
             row.setOnMouseClicked((Event e) ->{
                 CommentBeans c = row.getItem();
                 errorLabel.setText("");
-                if(!username.equals(c.getUser())){         
+                if(!MainApp.username.equals(c.getUser())){         
                     commentTable.setEditable(false);
                 } else {
                     commentTable.setEditable(true);
@@ -336,13 +264,14 @@ public class FXMLController implements Initializable {
     public void postTableSetRowFactory(){ 
         postTable.setRowFactory( tv ->{
             TableRow<PostBeans> row = new TableRow<>();
+                        
             row.setOnMouseClicked((Event e) ->{
                 PostBeans p = row.getItem();
                 currentPost = p.getIdPost();
                 commentOl = db.getComments(currentPost);
                 commentTable.setItems(commentOl);
                 errorLabel.setText("");
-                if(!username.equals(p.getUser())){
+                if(!MainApp.username.equals(p.getUser())){
                     postTable.setEditable(false);
                 } else {
                     postTable.setEditable(true);
@@ -351,8 +280,32 @@ public class FXMLController implements Initializable {
                       
             return row;
         });
-    }    
+       
+    }   
     
+    
+    @FXML
+    public void clickUser(){
+        userCol.setCellFactory(tc -> {
+            TableCell<PostBeans, String> cell = new TableCell<PostBeans, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty) ;
+                    setText(empty ? null : item);
+                }
+            };
+            cell.setOnMouseClicked(e -> {
+                if (!cell.isEmpty()) {
+                    String user = cell.getItem();
+                    if(!user.equals(username)){     // in questo modo visualizziamo solamente il profilo dei nostri amici
+                        MainApp.getStage().setScene(MainApp.profileScene);
+                    }
+                }
+            });
+            return cell ;
+        });
+    }
+    /*
     private String hash(String psw){
         byte[] hash;
         try {
@@ -401,10 +354,11 @@ public class FXMLController implements Initializable {
     */
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        db = new DBManager();
-        commentTableSetRowFactory();
-        postTableSetRowFactory();
+    public void initialize(URL url, ResourceBundle rb) {       
+        welcomeLabel.setText("Hello " + username + ", you've written " + 
+            db.getNumberOfPosts(loggedUserId) +" posts and " +
+            db.getNumberOfComments(loggedUserId)+ " comments");
+        
         insertPostAndComment.setWrapText(true);
           
         userCol.setCellValueFactory(new PropertyValueFactory<>("user"));
@@ -417,5 +371,12 @@ public class FXMLController implements Initializable {
         commentCol.setCellValueFactory(new PropertyValueFactory<>("strComment"));      
         commentDateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
         commentCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        
+        postOl = db.getPosts();
+        postTable.setItems(postOl);
+        
+        commentTableSetRowFactory();
+        postTableSetRowFactory();
+        clickUser();
     }    
 }

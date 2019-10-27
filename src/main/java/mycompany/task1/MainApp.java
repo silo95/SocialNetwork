@@ -13,29 +13,43 @@ import javafx.stage.*;
 
 
 public class MainApp extends Application {
+    private static Stage stage;
+    public static Scene firstScene;
+    public static Scene homeScene;
+    public static Scene registrationScene;
+    public static Scene profileScene;
+    public static String username;
+    public static long loggedUserId;
+    public static DBManager db;
 
     @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/SocialNetworkInterface.fxml"));
-        
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add("/styles/Style.css");
+    public void start(Stage primaryStage) throws Exception {
+        db = new DBManager();
+        stage = primaryStage;    
+        firstScene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/FirstScene.fxml")));     
+        registrationScene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/RegistrationScene.fxml")));
+        profileScene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/ProfileScene.fxml")));
         
         stage.setTitle("Social Network");
-        stage.setScene(scene);
-        stage.show();
+        stage.setScene(firstScene);
+        stage.show();     
+        
+        
+        
     }
 
-    /**
-     * The main() method is ignored in correctly deployed JavaFX application.
-     * main() serves only as fallback in case the application can not be
-     * launched through deployment artifacts, e.g., in IDEs with limited FX
-     * support. NetBeans ignores main().
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
         launch(args);
+    }
+    
+    public static Stage getStage() {
+        return stage;
+    }
+    
+    
+       //Commenti da inserire nel main
+    
        /* LevelDBManager levelDB = new LevelDBManager();
         
         List<String> res = levelDB.getValuesFromUser("Username",1);
@@ -74,6 +88,6 @@ public class MainApp extends Application {
 
          
         levelDB.close();*/
-    }
+    
 
 }

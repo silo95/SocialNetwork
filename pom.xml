@@ -27,7 +27,7 @@
             <version>1.0.2.Final</version>
         </dependency>
         
-                <!-- https://mvnrepository.com/artifact/org.iq80.leveldb/leveldb -->
+                
         <dependency>
             <groupId>org.iq80.leveldb</groupId>
             <artifactId>leveldb</artifactId>
