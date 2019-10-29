@@ -30,7 +30,7 @@ public class MainApp extends Application {
         stage = primaryStage;    
         firstScene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/FirstScene.fxml")));     
         registrationScene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/RegistrationScene.fxml")));
-        profileScene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/ProfileScene.fxml")));
+        profileScene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/MyProfileScene.fxml")));
         
         stage.setTitle("Social Network");
         stage.setScene(firstScene);
