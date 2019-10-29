@@ -192,6 +192,29 @@ public class DBManager{
             entityManager.close();
         }
     }
+    
+    public Long getIdByUser(String username){
+        try{
+            entityManager = factory.createEntityManager();
+            entityManager.getTransaction().begin();
+            Query q = entityManager.createNativeQuery("Select idPerson From Person where Username = ?");
+            q.setParameter(1, username);
+            
+            List result = q.getResultList();
+            
+            if(result.isEmpty())
+                return new Long(-1);
+            
+            return ((Number)result.get(0)).longValue();
+     
+        }catch(Exception e){
+            e.printStackTrace();
+            return new Long(-1);
+           
+        }finally{
+            entityManager.close();
+        } 
+    }
    
     public Long register(String username, String password){ 
         try{                
@@ -203,7 +226,6 @@ public class DBManager{
             
             Query q = entityManager.createNativeQuery("Select idPerson From Person where Username = ?");
             q.setParameter(1, username);
-            
             return ((Number)q.getSingleResult()).longValue();
           
         }catch(Exception e){
@@ -230,6 +252,8 @@ public class DBManager{
         }          
     }*/
     
+    //FARE L'UPDATE USERNAME E PASSWORD
+    
     public boolean updatePost(Long idPost,String newPost){
         try{                
 
@@ -237,7 +261,7 @@ public class DBManager{
             entityManager.getTransaction().begin();
             Post p = entityManager.getReference(Post.class,idPost);
             p.setStrPost(newPost);
-            entityManager.persist(p);
+            entityManager.merge(p);
             entityManager.getTransaction().commit();
             return true;  
           
@@ -257,7 +281,7 @@ public class DBManager{
             entityManager.getTransaction().begin();
             Comment c = entityManager.getReference(Comment.class,idComment);
             c.setStrComment(newComment);
-            entityManager.persist(c);
+            entityManager.merge(c);
             entityManager.getTransaction().commit();
             return true;  
           

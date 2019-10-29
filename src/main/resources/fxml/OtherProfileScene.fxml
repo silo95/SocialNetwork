@@ -13,31 +13,27 @@
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="870.0" VBox.vgrow="ALWAYS">
          <children>
-            <Label alignment="CENTER" layoutX="465.0" layoutY="126.0" prefHeight="20.0" prefWidth="300.0" text="Username" textAlignment="CENTER">
+            <Label alignment="CENTER" layoutX="468.0" layoutY="154.0" prefHeight="20.0" prefWidth="300.0" text="Username" textAlignment="CENTER">
                <font>
                   <Font size="12.0" />
                </font>
             </Label>
-            <TextField id="usernameField" fx:id="usernameField" editable="false" layoutX="465.0" layoutY="151.0" prefHeight="30.0" prefWidth="300.0">
+            <TextField id="usernameField" fx:id="usernameField" editable="false" layoutX="468.0" layoutY="179.0" prefHeight="30.0" prefWidth="300.0">
                <font>
                   <Font size="12.0" />
                </font>
             </TextField>
-            <PasswordField id="passwordField" fx:id="passwordField" editable="false" layoutX="465.0" layoutY="204.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0">
-               <font>
-                  <Font size="12.0" />
-               </font></PasswordField>
-            <TextField editable="false" layoutX="150.0" layoutY="289.0" prefHeight="30.0" prefWidth="300.0">
+            <TextField id="nameField" fx:id="nameField" editable="false" layoutX="150.0" layoutY="289.0" prefHeight="30.0" prefWidth="300.0">
                <font>
                   <Font size="12.0" />
                </font>
             </TextField>
-            <TextField editable="false" layoutX="150.0" layoutY="347.0" prefHeight="30.0" prefWidth="300.0">
+            <TextField id="surnameField" fx:id="surnameField" editable="false" layoutX="150.0" layoutY="347.0" prefHeight="30.0" prefWidth="300.0">
                <font>
                   <Font size="12.0" />
                </font>
             </TextField>
-            <TextField layoutX="151.0" layoutY="407.0" prefHeight="30.0" prefWidth="300.0">
+            <TextField id="genderField" fx:id="genderField" layoutX="151.0" layoutY="407.0" prefHeight="30.0" prefWidth="300.0">
                <font>
                   <Font size="12.0" />
                </font>
@@ -46,11 +42,6 @@
                <font>
                   <Font size="12.0" />
                </font></Button>
-            <Label alignment="CENTER" layoutX="466.0" layoutY="184.0" prefHeight="20.0" prefWidth="300.0" text="Password" textAlignment="CENTER">
-               <font>
-                  <Font size="12.0" />
-               </font>
-            </Label>
             <Label alignment="CENTER" layoutX="150.0" layoutY="269.0" prefHeight="20.0" prefWidth="300.0" text="Name" textAlignment="CENTER">
                <font>
                   <Font size="12.0" />
@@ -83,11 +74,6 @@
                   </Label>
                </children>
             </StackPane>
-            <Label fx:id="errorLabel" alignment="CENTER" layoutX="162.0" layoutY="58.0" prefHeight="27.0" prefWidth="529.0" textAlignment="CENTER" textFill="#e50000">
-               <font>
-                  <Font size="12.0" />
-               </font>
-            </Label>
             <ImageView fitHeight="141.0" fitWidth="133.0" layoutX="234.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/users.png" />
@@ -113,27 +99,27 @@
                   <Font size="12.0" />
                </font>
             </Label>
-            <TextField editable="false" layoutX="467.0" layoutY="408.0" prefHeight="30.0" prefWidth="300.0">
+            <TextField id="streetField" fx:id="streetField" editable="false" layoutX="467.0" layoutY="408.0" prefHeight="30.0" prefWidth="300.0">
                <font>
                   <Font size="12.0" />
                </font>
             </TextField>
-            <TextField editable="false" layoutX="466.0" layoutY="348.0" prefHeight="30.0" prefWidth="300.0">
+            <TextField id="cityField" fx:id="cityField" editable="false" layoutX="466.0" layoutY="348.0" prefHeight="30.0" prefWidth="300.0">
                <font>
                   <Font size="12.0" />
                </font>
             </TextField>
-            <TextField editable="false" layoutX="466.0" layoutY="290.0" prefHeight="30.0" prefWidth="300.0">
+            <TextField id="countryField" fx:id="countryField" editable="false" layoutX="466.0" layoutY="290.0" prefHeight="30.0" prefWidth="300.0">
                <font>
                   <Font size="12.0" />
                </font>
             </TextField>
-            <TextField editable="false" layoutX="466.0" layoutY="465.0" prefHeight="30.0" prefWidth="300.0">
+            <TextField id="phoneField" fx:id="phoneField" editable="false" layoutX="466.0" layoutY="465.0" prefHeight="30.0" prefWidth="300.0">
                <font>
                   <Font size="12.0" />
                </font>
             </TextField>
-            <TextField editable="false" layoutX="150.0" layoutY="465.0" prefHeight="30.0" prefWidth="300.0">
+            <TextField id="dateBirthField" fx:id="dateBirthField" editable="false" layoutX="150.0" layoutY="465.0" prefHeight="30.0" prefWidth="300.0">
                <font>
                   <Font size="12.0" />
                </font>

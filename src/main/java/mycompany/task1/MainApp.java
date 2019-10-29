@@ -18,10 +18,13 @@ public class MainApp extends Application {
     public static Scene homeScene;
     public static Scene registrationScene;
     public static Scene profileScene;
+    //public static Scene otherProfileScene;
     public static String username;
     public static long loggedUserId;
     public static DBManager db;
     public static LevelDBManager ldb;
+    
+    public static OtherProfileSceneController otherProfileController;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -31,6 +34,25 @@ public class MainApp extends Application {
         firstScene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/FirstScene.fxml")));     
         registrationScene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/RegistrationScene.fxml")));
         profileScene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/MyProfileScene.fxml")));
+        //otherProfileScene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/OtherProfileScene.fxml")));
+        
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/OtherProfileScene.fxml"));
+        Parent root = loader.load();
+        otherProfileController = (OtherProfileSceneController)loader.getController();
+        Scene otherProfileScene = new Scene(root);
+
+        /*
+        static MyController myControllerHandle;
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
+                Parent root = loader.load();
+
+                //Now we have access to getController() through the instance... don't forget the type cast
+                myControllerHandle = (MyController)loader.getController();
+
+                Scene scene = new Scene(root);
+        */
+        
         
         stage.setTitle("Social Network");
         stage.setScene(firstScene);

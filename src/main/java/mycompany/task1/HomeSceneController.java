@@ -1,17 +1,14 @@
 package mycompany.task1;
 
-import java.io.*;
+import java.io.IOException;
+
 import java.net.*;
-import java.security.*;
 import java.util.*;
 import javafx.collections.*;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.PickResult;
-import javax.xml.bind.*;
 
 public class HomeSceneController implements Initializable {
     private Long loggedUserId;
@@ -22,8 +19,8 @@ public class HomeSceneController implements Initializable {
     private ObservableList<PostBeans> postOl;
     private ObservableList<CommentBeans> commentOl = FXCollections.observableArrayList();   
     
-    @FXML private TextField usernameField, searchPost, searchComment;
-    @FXML private PasswordField passwordField ;
+    @FXML private TextField searchPost, searchComment;
+    @FXML private TextField searchUser;
     @FXML private Label welcomeLabel;
     @FXML private Label errorLabel;
     @FXML private Button profileButton, logoutButton, addPost, addComment, deletePost, deleteComment,
@@ -49,12 +46,12 @@ public class HomeSceneController implements Initializable {
     
     @FXML
     public void logoutButtonSetOnAction(ActionEvent event){
-        usernameField.clear();
-        passwordField.clear();
+        //usernameField.clear();
+        //passwordField.clear();
         welcomeLabel.setText("");
         errorLabel.setText("");
-        usernameField.setStyle("-fx-text-inner-color: black;");
-        passwordField.setStyle("-fx-text-inner-color: black;");
+        //usernameField.setStyle("-fx-text-inner-color: black;");
+        //passwordField.setStyle("-fx-text-inner-color: black;");
         postOl.clear();
         commentOl.clear(); 
         MainApp.getStage().setScene(MainApp.firstScene);
@@ -63,6 +60,29 @@ public class HomeSceneController implements Initializable {
     @FXML
     public void profileButtonOnAction(ActionEvent event){
         MainApp.getStage().setScene(MainApp.profileScene);
+    }
+    
+    @FXML
+    public void searchButtonOnAction(ActionEvent event){
+        String user = searchUser.getText();
+        
+        if(!user.isEmpty()){
+            Long idUser = db.getIdByUser(user);
+            
+            if(idUser > 0){
+                
+                MainApp.otherProfileController.getInfoUser(user, idUser);
+                
+            }
+            else{
+                //utente non presente
+            }
+            
+
+        }
+        else{
+            //devi inserire lo username dell'utente da cercare
+        }
     }
     
     @FXML

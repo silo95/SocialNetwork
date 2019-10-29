@@ -1,26 +1,54 @@
 package mycompany.task1;
 
-import java.io.*;
+
 import java.net.*;
-import java.security.*;
 import java.util.*;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.control.*;
-import javax.xml.bind.*;
 
 public class OtherProfileSceneController {
-    public static Long loggedUserId;
-    private DBManager db;
-    public static String username, password;
-    @FXML private TextField usernameField;
-    @FXML private PasswordField passwordField;
-    @FXML private Label errorLabel;
+    private static final String levelDBString = "username";
     
-    public OtherProfileSceneController(){
-        db = MainApp.db;       
-        username = MainApp.username;
-        loggedUserId = MainApp.loggedUserId;   
+    @FXML private TextField usernameField;  
+    @FXML private TextField nameField, surnameField, genderField, dateBirthField,
+                            countryField, cityField, streetField, phoneField;
+    
+    private List<String> fields = Arrays.asList(new String[]{"city", "country", "dateBirth", "gender", "name", "phone", "street", "surname"});
+    private HashMap<String, TextField> infoUser = new HashMap<>();
+    
+    public void OtherProfileSceneController(){
+        infoUser.put("city", cityField);
+        infoUser.put("country", countryField);
+        infoUser.put("dateBirth", dateBirthField);
+        infoUser.put("gender", genderField);
+        infoUser.put("name", nameField);
+        infoUser.put("phone", phoneField);
+        infoUser.put("street", streetField);
+        infoUser.put("surname", surnameField);   
+    }
+    
+    
+    public void getInfoUser(String username, Long userId){
+        usernameField.setText(username);
+        
+        List<String> info = MainApp.ldb.getValuesFromUser(levelDBString, userId);
+        int internalIndex = 0;
+        
+        for(int i = 0; i < fields.size(); i++){
+            String[] splittedElement = info.get(internalIndex).split(":");
+            System.out.println("elemento splittato " + splittedElement[0]);
+            System.out.println("elemento di fields " + fields.get(i));
+            System.out.println("value " + splittedElement[1]);
+            System.out.println("hash map " + infoUser.get(fields.get(i)));
+            
+            if(splittedElement[0].compareTo(fields.get(i)) != 0){
+                infoUser.get(fields.get(i)).setText(splittedElement[1]);
+                internalIndex++;
+            }
+        }
+
+            
     }
 
     
@@ -28,28 +56,8 @@ public class OtherProfileSceneController {
         MainApp.getStage().setScene(MainApp.homeScene);
     }
     
-    @FXML
-    public void saveButtonOnAction(){
-  
-    }
-
-    
-    private String hash(String psw){
-        byte[] hash;
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            hash = digest.digest(psw.getBytes("UTF-8")); 
-            return DatatypeConverter.printHexBinary(hash);
-        }catch (UnsupportedEncodingException ex) {
-            ex.printStackTrace();
-        }catch (NoSuchAlgorithmException ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
-    
     
     public void initialize(URL url, ResourceBundle rb) {
-
+        
     }     
 }
