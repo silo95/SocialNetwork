@@ -72,7 +72,7 @@ public class HomeSceneController implements Initializable {
             if(idUser > 0){
                 
                 MainApp.otherProfileController.getInfoUser(user, idUser);
-                
+                MainApp.getStage().setScene(MainApp.otherProfileScene);
             }
             else{
                 //utente non presente

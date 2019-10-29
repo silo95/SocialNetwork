@@ -35,6 +35,7 @@ public class OtherProfileSceneController {
         List<String> info = MainApp.ldb.getValuesFromUser(levelDBString, userId);
         int internalIndex = 0;
         
+        
         for(int i = 0; i < fields.size(); i++){
             String[] splittedElement = info.get(internalIndex).split(":");
             System.out.println("elemento splittato " + splittedElement[0]);
@@ -47,8 +48,7 @@ public class OtherProfileSceneController {
                 internalIndex++;
             }
         }
-
-            
+        
     }
 
     

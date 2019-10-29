@@ -18,7 +18,7 @@ public class MainApp extends Application {
     public static Scene homeScene;
     public static Scene registrationScene;
     public static Scene profileScene;
-    //public static Scene otherProfileScene;
+    public static Scene otherProfileScene;
     public static String username;
     public static long loggedUserId;
     public static DBManager db;
@@ -40,18 +40,8 @@ public class MainApp extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/OtherProfileScene.fxml"));
         Parent root = loader.load();
         otherProfileController = (OtherProfileSceneController)loader.getController();
-        Scene otherProfileScene = new Scene(root);
+        otherProfileScene = new Scene(root);
 
-        /*
-        static MyController myControllerHandle;
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
-                Parent root = loader.load();
-
-                //Now we have access to getController() through the instance... don't forget the type cast
-                myControllerHandle = (MyController)loader.getController();
-
-                Scene scene = new Scene(root);
-        */
         
         
         stage.setTitle("Social Network");
