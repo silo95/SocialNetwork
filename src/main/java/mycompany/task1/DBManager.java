@@ -156,6 +156,42 @@ public class DBManager{
         return ol;    
     }
     
+    public ObservableList<PostBeans> searchPostsByPostContent(String search){ 
+        
+        ObservableList<PostBeans> ol = FXCollections.observableArrayList();
+        try{
+            entityManager = factory.createEntityManager();
+            entityManager.getTransaction().begin();
+            Query q = entityManager.createNativeQuery("Select idPost From Post where strPost LIKE ?");   
+            search = "%" + search + "%";
+            q.setParameter(1,search);
+            
+            
+            List<Post> p = q.getResultList();
+                        
+            PostBeans post;
+            for(int i=0; i<p.size(); i++){
+                System.out.println(p.get(i).getIdPost());
+                post = new PostBeans(
+                            p.get(i).getIdPost(), 
+                            p.get(i).getStrPost(), 
+                            p.get(i).getPerson().getUsername(), 
+                            p.get(i).getPostDate(),
+                            p.get(i).getComments().size(), 
+                            p.get(i).getPerson().getIdPerson()
+                        );
+                ol.add(post);
+            }   
+              
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            entityManager.close();
+        }
+        return ol;    
+    }
+    
     public int getNumberOfPosts(Long id){
         int counter = 0;
         try{
@@ -229,6 +265,22 @@ public class DBManager{
             return false;
         }          
     }*/
+    
+    public boolean updatePerson(Person person){
+        try{ 
+            entityManager = factory.createEntityManager();
+            entityManager.getTransaction().begin();
+            entityManager.merge(person);
+            entityManager.getTransaction().commit();
+            return true;            
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+           
+        }finally{
+            entityManager.close();
+        } 
+    }
     
     public boolean updatePost(Long idPost,String newPost){
         try{                
