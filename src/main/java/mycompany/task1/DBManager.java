@@ -156,6 +156,65 @@ public class DBManager{
         return ol;    
     }
     
+    public ObservableList<PostBeans> searchPostsByContent(String search){ 
+        
+        ObservableList<PostBeans> ol = FXCollections.observableArrayList();
+        try{
+            entityManager = factory.createEntityManager();
+            entityManager.getTransaction().begin();
+            Query q = entityManager.createNativeQuery("Select * From Post where strPost LIKE ?", Post.class);   
+            search = "%" + search + "%";
+            q.setParameter(1,search);
+    
+            List<Post> postList = q.getResultList();
+            
+            PostBeans post;
+            for(int i=0; i<postList.size(); i++){
+                post = new PostBeans(postList.get(i).getIdPost(), postList.get(i).getStrPost(), 
+                        postList.get(i).getPerson().getUsername(), postList.get(i).getPostDate(),
+                        postList.get(i).getComments().size() ,postList.get(i).getPerson().getIdPerson());
+                ol.add(post);
+            } 
+              
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            entityManager.close();
+        }
+        return ol;    
+    }
+    
+        public ObservableList<CommentBeans> searchCommentsByContent(String search, Long idPost){ 
+        
+        ObservableList<CommentBeans> ol = FXCollections.observableArrayList();
+        try{
+            entityManager = factory.createEntityManager();
+            entityManager.getTransaction().begin();
+            Query q = entityManager.createNativeQuery("Select * From Comment where post = ? AND strComment LIKE ?", Comment.class);   
+            search = "%" + search + "%";
+            q.setParameter(1,idPost);
+            q.setParameter(2,search);
+    
+            List<Comment> commentList = q.getResultList();
+            
+            CommentBeans comm;
+            for(int i=0; i<commentList.size(); i++){
+                comm = new CommentBeans(commentList.get(i).getIdComment(), commentList.get(i).getStrComment(), 
+                        commentList.get(i).getPerson().getUsername(), commentList.get(i).getPost().getIdPost(), 
+                        commentList.get(i).getDate(), commentList.get(i).getPerson().getIdPerson());
+                ol.add(comm);
+            }
+              
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            entityManager.close();
+        }
+        return ol;    
+    }
+    
     public int getNumberOfPosts(Long id){
         int counter = 0;
         try{
@@ -253,6 +312,22 @@ public class DBManager{
     }*/
     
     //FARE L'UPDATE USERNAME E PASSWORD
+
+    public boolean updatePerson(Person person){
+        try{ 
+            entityManager = factory.createEntityManager();
+            entityManager.getTransaction().begin();
+            entityManager.merge(person);
+            entityManager.getTransaction().commit();
+            return true;            
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+           
+        }finally{
+            entityManager.close();
+        } 
+    }
     
     public boolean updatePost(Long idPost,String newPost){
         try{                
