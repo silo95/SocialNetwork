@@ -1,7 +1,5 @@
 package mycompany.task1;
 
-import java.io.IOException;
-
 import java.net.*;
 import java.util.*;
 import javafx.collections.*;
@@ -12,7 +10,7 @@ import javafx.scene.control.cell.*;
 
 public class HomeSceneController implements Initializable {
     private Long loggedUserId;
-    public static DBManager db;
+    private DBManager db;
     private String username, password;
     private Long currentPost;
     
@@ -23,8 +21,8 @@ public class HomeSceneController implements Initializable {
     @FXML private TextField searchUser;
     @FXML private Label welcomeLabel;
     @FXML private Label errorLabel;
-    @FXML private Button profileButton, logoutButton, addPost, addComment, deletePost, deleteComment,
-                   searchWordPost, searchUserPost, searchWordComment, searchUserComment;
+    //@FXML private Button profileButton, logoutButton, addPost, addComment, deletePost, deleteComment,
+    //               searchWordPost, searchUserPost, searchWordComment, searchUserComment;
     @FXML private TableView<PostBeans> postTable;
     @FXML private TableView<CommentBeans> commentTable;
     @FXML private TextArea insertPostAndComment;
@@ -38,20 +36,24 @@ public class HomeSceneController implements Initializable {
     @FXML TableColumn<CommentBeans, String> commentCol = new TableColumn<>("Comment");
     @FXML TableColumn<CommentBeans, String> commentDateCol = new TableColumn<>("Date");
     
-    public HomeSceneController(){
-        db = MainApp.db;       
-        username = MainApp.username;
-        loggedUserId = MainApp.loggedUserId;   
+    
+    public void setParameters(String user, String pass, Long id){        
+        username = user;
+        password = pass;
+        loggedUserId = id;
+        
+        postOl = db.getPosts();
+        postTable.setItems(postOl);
+        
+        welcomeLabel.setText("Hello " + username + ", you've written " + 
+            db.getNumberOfPosts(loggedUserId) +" posts and " +
+            db.getNumberOfComments(loggedUserId)+ " comments");
     }
     
     @FXML
     public void logoutButtonSetOnAction(ActionEvent event){
-        //usernameField.clear();
-        //passwordField.clear();
         welcomeLabel.setText("");
         errorLabel.setText("");
-        //usernameField.setStyle("-fx-text-inner-color: black;");
-        //passwordField.setStyle("-fx-text-inner-color: black;");
         postOl.clear();
         commentOl.clear(); 
         MainApp.getStage().setScene(MainApp.firstScene);
@@ -59,29 +61,37 @@ public class HomeSceneController implements Initializable {
     
     @FXML
     public void profileButtonOnAction(ActionEvent event){
+        MainApp.myProfileController.getInfoUser(username, password, loggedUserId);
         MainApp.getStage().setScene(MainApp.profileScene);
     }
     
     @FXML
     public void searchButtonOnAction(ActionEvent event){
+        errorLabel.setText("");
         String user = searchUser.getText();
         
         if(!user.isEmpty()){
-            Long idUser = db.getIdByUser(user);
             
-            if(idUser > 0){
-                
-                MainApp.otherProfileController.getInfoUser(user, idUser);
-                MainApp.getStage().setScene(MainApp.otherProfileScene);
+            if(user.compareTo(username) == 0){
+                MainApp.myProfileController.getInfoUser(username, password, loggedUserId);
+                MainApp.getStage().setScene(MainApp.profileScene);
             }
             else{
-                //utente non presente
-            }
-            
+                Long idUser = db.getIdByUser(user);
 
+                if(idUser > 0){           
+                    MainApp.otherProfileController.getInfoUser(user, idUser);
+                    MainApp.getStage().setScene(MainApp.otherProfileScene);
+                }
+                else{
+                    errorLabel.setText("User does not exist");
+                }
+            }
+            searchUser.clear();
+            
         }
         else{
-            //devi inserire lo username dell'utente da cercare
+            errorLabel.setText("Insert the username in the Search User bar");
         }
     }
     
@@ -201,7 +211,6 @@ public class HomeSceneController implements Initializable {
                 db.deleteComment(c.getIdComment());
                 commentTable.getItems().remove(c);
                 commentTable.refresh();  
-                //TableView.TableViewFocusModel<PostBeans> fm =  postTable.getFocusModel(); 
 
                 PostBeans p = postTable.getSelectionModel().getSelectedItem();
                 int index = postTable.getSelectionModel().getSelectedIndex();
@@ -317,7 +326,13 @@ public class HomeSceneController implements Initializable {
             cell.setOnMouseClicked(e -> {
                 if (!cell.isEmpty()) {
                     String user = cell.getItem();
-                    if(!user.equals(username)){     // in questo modo visualizziamo solamente il profilo dei nostri amici
+                    if(!user.equals(username)){ 
+                        Long idUser = db.getIdByUser(user);
+                        MainApp.otherProfileController.getInfoUser(user, idUser);
+                        MainApp.getStage().setScene(MainApp.otherProfileScene);
+                    }
+                    else{
+                        MainApp.myProfileController.getInfoUser(username, password, loggedUserId);
                         MainApp.getStage().setScene(MainApp.profileScene);
                     }
                 }
@@ -325,60 +340,10 @@ public class HomeSceneController implements Initializable {
             return cell ;
         });
     }
-    /*
-    private String hash(String psw){
-        byte[] hash;
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            hash = digest.digest(psw.getBytes("UTF-8")); 
-            return DatatypeConverter.printHexBinary(hash);
-        }catch (UnsupportedEncodingException ex) {
-            ex.printStackTrace();
-        }catch (NoSuchAlgorithmException ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
-    
-    /*
-    private DBManager getCredential(){
-        String srvr, usr, psw;
-        srvr = usr = psw = null;
-         try (BufferedReader br = new BufferedReader(new InputStreamReader(
-                           this.getClass().getResourceAsStream("/config.txt")))) {
-
-            // read line by line
-            String line = null;
-            int i = 0;
-            while (i<3 && (line = br.readLine()) != null) {
-                switch (i) {
-                    case 0:
-                        srvr = line;
-                        break;
-                    case 1:
-                        usr = line; 
-                        break;
-                    default:
-                        psw = line;
-                        break;
-                }
-                i++;
-            }
-           return new DBManager();
-        } catch (IOException e) {
-            System.err.format("IOException: %s%n", e);
-        }  
-         return null;
-        
-    }
-    */
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {       
-        welcomeLabel.setText("Hello " + username + ", you've written " + 
-            db.getNumberOfPosts(loggedUserId) +" posts and " +
-            db.getNumberOfComments(loggedUserId)+ " comments");
-        
+    public void initialize(URL url, ResourceBundle rb) {   
+        db = MainApp.db;         
         insertPostAndComment.setWrapText(true);
           
         userCol.setCellValueFactory(new PropertyValueFactory<>("user"));
@@ -391,10 +356,7 @@ public class HomeSceneController implements Initializable {
         commentCol.setCellValueFactory(new PropertyValueFactory<>("strComment"));      
         commentDateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
         commentCol.setCellFactory(TextFieldTableCell.forTableColumn());
-        
-        postOl = db.getPosts();
-        postTable.setItems(postOl);
-        
+                
         commentTableSetRowFactory();
         postTableSetRowFactory();
         clickUser();

@@ -64,7 +64,7 @@
             </Label>
             <StackPane prefHeight="64.0" prefWidth="870.0">
                <children>
-                  <Label id="welcomeLabel" fx:id="welcomeLabel" alignment="CENTER" contentDisplay="CENTER" text="Here you can view your friend's info." textAlignment="CENTER">
+                  <Label id="welcomeLabel" fx:id="welcomeLabel" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>

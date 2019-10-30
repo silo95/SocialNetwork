@@ -3,32 +3,42 @@ package mycompany.task1;
 import java.io.*;
 import java.net.*;
 import java.security.*;
+import java.time.LocalDate;
 import java.util.*;
 import javafx.event.*;
 import javafx.fxml.*;
-import javafx.scene.*;
 import javafx.scene.control.*;
 import javax.xml.bind.*;
 
-public class RegistrationSceneController {
-    public static Long loggedUserId;
-    private final DBManager db;
+public class RegistrationSceneController implements Initializable{
+    private Long loggedUserId;
+    private DBManager db;
     private final String levelDBString = "username";
     //public static String username, password;
-    @FXML private TextField usernameField;
-    @FXML private TextField nameField, surnameField, genderField, dateBirthField,
-                            countryField, cityField, streetField, phoneField;
     @FXML private PasswordField passwordField;
     @FXML private Label errorLabel;
+    @FXML private TextField usernameField;
+    @FXML private TextField nameField, surnameField, 
+                            countryField, cityField, streetField, phoneField;
+    @FXML private ComboBox genderComboBox;
+    @FXML private DatePicker calendar;
     
-
-    public RegistrationSceneController(){
-        db = MainApp.db;       
-        //username = MainApp.username;
-        //loggedUserId = MainApp.loggedUserId;   
+        
+    private void cleanFields(){
+        usernameField.clear();
+        passwordField.clear();
+        cityField.clear();
+        countryField.clear();
+        nameField.clear();
+        phoneField.clear();
+        streetField.clear();
+        surnameField.clear();     
+        genderComboBox.getSelectionModel().clearSelection();
+        calendar.getEditor().clear();
     }
       
     public void backSetOnAction(ActionEvent event){
+        cleanFields();
         MainApp.getStage().setScene(MainApp.firstScene);
     }
     
@@ -41,14 +51,19 @@ public class RegistrationSceneController {
         if(!surnameField.getText().isEmpty()){    
             MainApp.ldb.putValuesToUser(levelDBString +":"+ loggedUserId+":surname", surnameField.getText());
         }
-
-        if(!genderField.getText().isEmpty()){   
-            MainApp.ldb.putValuesToUser(levelDBString +":"+ loggedUserId+":gender", genderField.getText());
+        
+        
+        if(!genderComboBox.getSelectionModel().isEmpty()){ 
+            String gender = genderComboBox.getSelectionModel().getSelectedItem().toString();
+            MainApp.ldb.putValuesToUser(levelDBString +":"+ loggedUserId+":gender", gender);
         }
         
-        if(!dateBirthField.getText().isEmpty()){ 
-            MainApp.ldb.putValuesToUser(levelDBString +":"+ loggedUserId+":dateBirth", dateBirthField.getText());
+        
+        if(!calendar.getEditor().getText().isEmpty()){
+            String date = calendar.getValue().toString();
+            MainApp.ldb.putValuesToUser(levelDBString +":"+ loggedUserId+":dateBirth", date);
         }
+        
 
         if(!countryField.getText().isEmpty()){  
             MainApp.ldb.putValuesToUser(levelDBString +":"+ loggedUserId+":country", countryField.getText());
@@ -68,45 +83,34 @@ public class RegistrationSceneController {
         
     }
     
+
+    
     @FXML
     public void registerOnAction(){
         errorLabel.setText("");
         
         if(!usernameField.getText().isEmpty() && !passwordField.getText().isEmpty()){
             String username = String.valueOf(usernameField.getText());
-            
+                     
             //dobbiamo controllare che lo username non sia già presente nel DB
             
             String password = hash(String.valueOf(passwordField.getText())); 
             loggedUserId = db.register(username, password);
             
-           
             getValuesFromForm();
             
+            /*
             List<String> res = MainApp.ldb.getValuesFromUser(levelDBString, loggedUserId);
-            
-            System.out.println("size list " + res.size());
             
             for(int i = 0; i < res.size(); i++){
                 String[] attribute = res.get(i).split(":");
                 System.out.println(attribute[0] + ":" + attribute[1]);
-             
-            }
-            
-            /*
-            
-            MainApp.username = username;
-            MainApp.loggedUserId = loggedUserId;
-            try{
-                MainApp.homeScene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/HomeScene.fxml")));
-                MainApp.homeScene.getStylesheets().add("/styles/Style.css");
-                MainApp.getStage().setScene(MainApp.homeScene);
-
-            }catch(IOException ioe){
-                System.err.println("Error in loading /fxml/HomeScene.fxml");
             }
             */
             
+            MainApp.homeController.setParameters(username, password, loggedUserId);  
+            MainApp.getStage().setScene(MainApp.homeScene);
+            cleanFields();            
         }
         else{
             errorLabel.setText("Insert all the required fields. ");
@@ -120,9 +124,7 @@ public class RegistrationSceneController {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             hash = digest.digest(psw.getBytes("UTF-8")); 
             return DatatypeConverter.printHexBinary(hash);
-        }catch (UnsupportedEncodingException ex) {
-            ex.printStackTrace();
-        }catch (NoSuchAlgorithmException ex) {
+        }catch (UnsupportedEncodingException|NoSuchAlgorithmException ex) {
             ex.printStackTrace();
         }
         return null;
@@ -130,7 +132,8 @@ public class RegistrationSceneController {
     
     
     public void initialize(URL url, ResourceBundle rb) {
-
+        db = MainApp.db; 
+        genderComboBox.getItems().addAll("Female", "Male");
     } 
     
     

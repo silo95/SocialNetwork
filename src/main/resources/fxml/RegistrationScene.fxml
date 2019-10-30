@@ -23,21 +23,83 @@
                   <Font size="12.0" />
                </font>
             </TextField>
+            <Label alignment="CENTER" layoutX="463.0" layoutY="217.0" prefHeight="20.0" prefWidth="300.0" text="Password (*)" textAlignment="CENTER">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
             <PasswordField id="passwordField" fx:id="passwordField" layoutX="462.0" layoutY="237.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0">
                <font>
                   <Font size="12.0" />
                </font></PasswordField>
+            <Label alignment="CENTER" layoutX="139.0" layoutY="286.0" prefHeight="20.0" prefWidth="300.0" text="Name (optional)" textAlignment="CENTER">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
             <TextField id="nameField" fx:id="nameField" layoutX="139.0" layoutY="306.0" prefHeight="30.0" prefWidth="300.0">
                <font>
                   <Font size="12.0" />
                </font>
             </TextField>
+            <Label alignment="CENTER" layoutX="140.0" layoutY="344.0" prefHeight="20.0" prefWidth="300.0" text="Surname (optional)" textAlignment="CENTER">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
             <TextField id="surnameField" fx:id="surnameField" layoutX="139.0" layoutY="364.0" prefHeight="30.0" prefWidth="300.0">
                <font>
                   <Font size="12.0" />
                </font>
             </TextField>
-            <TextField id="genderField" fx:id="genderField" layoutX="140.0" layoutY="424.0" prefHeight="30.0" prefWidth="300.0" promptText="eg. Male or Female">
+            <Label alignment="CENTER" layoutX="140.0" layoutY="404.0" prefHeight="20.0" prefWidth="300.0" text="Gender (optional)" textAlignment="CENTER">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <ComboBox id="genderComboBox" fx:id="genderComboBox" layoutX="139.0" layoutY="421.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" />
+            <Label alignment="CENTER" layoutX="141.0" layoutY="462.0" prefHeight="20.0" prefWidth="300.0" text="Date of Birth (optional)" textAlignment="CENTER">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <DatePicker id="calendar" fx:id="calendar" layoutX="139.0" layoutY="483.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" />
+            <Label alignment="CENTER" layoutX="464.0" layoutY="287.0" prefHeight="20.0" prefWidth="300.0" text="Country (optional)" textAlignment="CENTER">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <TextField id="countryField" fx:id="countryField" layoutX="464.0" layoutY="307.0" prefHeight="30.0" prefWidth="300.0">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </TextField>
+            <Label alignment="CENTER" layoutX="465.0" layoutY="345.0" prefHeight="20.0" prefWidth="300.0" text="City (optional)" textAlignment="CENTER">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <TextField id="cityField" fx:id="cityField" layoutX="464.0" layoutY="365.0" prefHeight="30.0" prefWidth="300.0">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </TextField>
+            <Label alignment="CENTER" layoutX="465.0" layoutY="405.0" prefHeight="20.0" prefWidth="300.0" text="Street Address (optional)" textAlignment="CENTER">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <TextField id="streetField" fx:id="streetField" layoutX="465.0" layoutY="425.0" prefHeight="30.0" prefWidth="300.0">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </TextField>
+            <Label alignment="CENTER" layoutX="466.0" layoutY="463.0" prefHeight="20.0" prefWidth="300.0" text="Phone Number (optional)" textAlignment="CENTER">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <TextField id="phoneField" fx:id="phoneField" layoutX="466.0" layoutY="483.0" prefHeight="30.0" prefWidth="300.0">
                <font>
                   <Font size="12.0" />
                </font>
@@ -50,31 +112,6 @@
                <font>
                   <Font size="12.0" />
                </font></Button>
-            <Label alignment="CENTER" layoutX="463.0" layoutY="217.0" prefHeight="20.0" prefWidth="300.0" text="Password (*)" textAlignment="CENTER">
-               <font>
-                  <Font size="12.0" />
-               </font>
-            </Label>
-            <Label alignment="CENTER" layoutX="139.0" layoutY="286.0" prefHeight="20.0" prefWidth="300.0" text="Name (optional)" textAlignment="CENTER">
-               <font>
-                  <Font size="12.0" />
-               </font>
-            </Label>
-            <Label alignment="CENTER" layoutX="140.0" layoutY="344.0" prefHeight="20.0" prefWidth="300.0" text="Surname (optional)" textAlignment="CENTER">
-               <font>
-                  <Font size="12.0" />
-               </font>
-            </Label>
-            <Label alignment="CENTER" layoutX="141.0" layoutY="462.0" prefHeight="20.0" prefWidth="300.0" text="Date of Birth (optional)" textAlignment="CENTER">
-               <font>
-                  <Font size="12.0" />
-               </font>
-            </Label>
-            <Label alignment="CENTER" layoutX="140.0" layoutY="404.0" prefHeight="20.0" prefWidth="300.0" text="Gender (optional)" textAlignment="CENTER">
-               <font>
-                  <Font size="12.0" />
-               </font>
-            </Label>
             <StackPane prefHeight="64.0" prefWidth="870.0">
                <children>
                   <Label id="welcomeLabel" fx:id="welcomeLabel" alignment="CENTER" contentDisplay="CENTER" text="Fill the following form. (*)Username and Password are required" textAlignment="CENTER">
@@ -97,51 +134,6 @@
                   <Image url="@../images/registration.png" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" layoutX="465.0" layoutY="405.0" prefHeight="20.0" prefWidth="300.0" text="Street Address (optional)" textAlignment="CENTER">
-               <font>
-                  <Font size="12.0" />
-               </font>
-            </Label>
-            <Label alignment="CENTER" layoutX="466.0" layoutY="463.0" prefHeight="20.0" prefWidth="300.0" text="Phone Number (optional)" textAlignment="CENTER">
-               <font>
-                  <Font size="12.0" />
-               </font>
-            </Label>
-            <Label alignment="CENTER" layoutX="465.0" layoutY="345.0" prefHeight="20.0" prefWidth="300.0" text="City (optional)" textAlignment="CENTER">
-               <font>
-                  <Font size="12.0" />
-               </font>
-            </Label>
-            <Label alignment="CENTER" layoutX="464.0" layoutY="287.0" prefHeight="20.0" prefWidth="300.0" text="Country (optional)" textAlignment="CENTER">
-               <font>
-                  <Font size="12.0" />
-               </font>
-            </Label>
-            <TextField id="streetField" fx:id="streetField" layoutX="465.0" layoutY="425.0" prefHeight="30.0" prefWidth="300.0">
-               <font>
-                  <Font size="12.0" />
-               </font>
-            </TextField>
-            <TextField id="cityField" fx:id="cityField" layoutX="464.0" layoutY="365.0" prefHeight="30.0" prefWidth="300.0">
-               <font>
-                  <Font size="12.0" />
-               </font>
-            </TextField>
-            <TextField id="countryField" fx:id="countryField" layoutX="464.0" layoutY="307.0" prefHeight="30.0" prefWidth="300.0">
-               <font>
-                  <Font size="12.0" />
-               </font>
-            </TextField>
-            <TextField id="dateBirthField" fx:id="dateBirthField" layoutX="139.0" layoutY="483.0" prefHeight="30.0" prefWidth="300.0">
-               <font>
-                  <Font size="12.0" />
-               </font>
-            </TextField>
-            <TextField id="phoneField" fx:id="phoneField" layoutX="466.0" layoutY="483.0" prefHeight="30.0" prefWidth="300.0">
-               <font>
-                  <Font size="12.0" />
-               </font>
-            </TextField>
          </children>
     </AnchorPane>
   </children>

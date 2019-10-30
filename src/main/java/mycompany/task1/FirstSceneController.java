@@ -6,40 +6,33 @@ import java.security.*;
 import java.util.*;
 import javafx.event.*;
 import javafx.fxml.*;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javax.xml.bind.*;
 
 public class FirstSceneController implements Initializable {
-    public static Long loggedUserId;
-    //public DBManager db;
-    private DBManager db;
-    public static String username, password;
+    private static Long loggedUserId;
+    private static String username, password;
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
     @FXML private Label errorLabel;
     
+    
     @FXML
-    public void loginSetOnAction(ActionEvent event){ //modificare nel caso
+    public void loginSetOnAction(ActionEvent event){
         errorLabel.setText("");
         
         if(!usernameField.getText().isEmpty() && !passwordField.getText().isEmpty()){
             username = String.valueOf(usernameField.getText());
             password = hash(String.valueOf(passwordField.getText()));
-            loggedUserId = db.login(username, password);
+            loggedUserId = MainApp.db.login(username, password);
             
             if(loggedUserId > 0){
                 MainApp.username = username;
                 MainApp.loggedUserId = loggedUserId;
                 usernameField.clear();
                 passwordField.clear();
-                try{
-                    MainApp.homeScene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/HomeScene.fxml")));
-                    MainApp.homeScene.getStylesheets().add("/styles/Style.css");
-                    MainApp.getStage().setScene(MainApp.homeScene);
-                }catch(IOException ioe){
-                    System.err.println("Error in loading /fxml/HomeScene.fxml");
-                }
+                MainApp.homeController.setParameters(username, password, loggedUserId);
+                MainApp.getStage().setScene(MainApp.homeScene);
                 
             }            
             else{
@@ -63,16 +56,14 @@ public class FirstSceneController implements Initializable {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             hash = digest.digest(psw.getBytes("UTF-8")); 
             return DatatypeConverter.printHexBinary(hash);
-        }catch (UnsupportedEncodingException ex) {
-            ex.printStackTrace();
-        }catch (NoSuchAlgorithmException ex) {
+        }catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
             ex.printStackTrace();
         }
         return null;
     }
     
     public void initialize(URL url, ResourceBundle rb) {
-        db = MainApp.db;
+        
     }
        
 }

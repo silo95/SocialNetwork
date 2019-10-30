@@ -1,12 +1,7 @@
 package mycompany.task1;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.*;
-import static javafx.application.Application.launch;
+import static javafx.application.Application.*;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.stage.*;
@@ -25,6 +20,8 @@ public class MainApp extends Application {
     public static LevelDBManager ldb;
     
     public static OtherProfileSceneController otherProfileController;
+    public static MyProfileSceneController myProfileController;
+    public static HomeSceneController homeController;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -32,18 +29,21 @@ public class MainApp extends Application {
         ldb = new LevelDBManager();
         stage = primaryStage;    
         firstScene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/FirstScene.fxml")));     
-        registrationScene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/RegistrationScene.fxml")));
-        profileScene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/MyProfileScene.fxml")));
-        //otherProfileScene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/OtherProfileScene.fxml")));
+        registrationScene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/RegistrationScene.fxml")));      
         
+        FXMLLoader otherSceneLoader = new FXMLLoader(getClass().getResource("/fxml/OtherProfileScene.fxml"));
+        otherProfileScene = new Scene(otherSceneLoader.load());
+        otherProfileController = (OtherProfileSceneController)otherSceneLoader.getController();
         
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/OtherProfileScene.fxml"));
-        Parent root = loader.load();
-        otherProfileController = (OtherProfileSceneController)loader.getController();
-        otherProfileScene = new Scene(root);
+        FXMLLoader profileSceneLoader = new FXMLLoader(getClass().getResource("/fxml/MyProfileScene.fxml"));
+        profileScene = new Scene(profileSceneLoader.load());
+        myProfileController = (MyProfileSceneController)profileSceneLoader.getController();
+        
+        FXMLLoader homeSceneLoader = new FXMLLoader(getClass().getResource("/fxml/HomeScene.fxml"));
+        homeScene = new Scene(homeSceneLoader.load());
+        homeController = (HomeSceneController)homeSceneLoader.getController();
+        
 
-        
-        
         stage.setTitle("Social Network");
         stage.setScene(firstScene);
         stage.show();     
