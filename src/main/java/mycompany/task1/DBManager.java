@@ -312,7 +312,7 @@ public class DBManager{
             entityManager.getTransaction().begin();
             Post p = entityManager.getReference(Post.class,idPost);
             p.setStrPost(newPost);
-            entityManager.persist(p);
+            entityManager.merge(p);
             entityManager.getTransaction().commit();
             return true;  
           
@@ -332,7 +332,7 @@ public class DBManager{
             entityManager.getTransaction().begin();
             Comment c = entityManager.getReference(Comment.class,idComment);
             c.setStrComment(newComment);
-            entityManager.persist(c);
+            entityManager.merge(c);
             entityManager.getTransaction().commit();
             return true;  
           
