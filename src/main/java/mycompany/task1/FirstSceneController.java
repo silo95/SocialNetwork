@@ -46,6 +46,8 @@ public class FirstSceneController implements Initializable {
     }
     
     public void registrationSetOnAction(ActionEvent event){
+        usernameField.clear();
+        passwordField.clear();
         errorLabel.setText("");
         MainApp.getStage().setScene(MainApp.registrationScene);
     }

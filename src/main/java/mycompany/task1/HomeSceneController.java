@@ -21,8 +21,8 @@ public class HomeSceneController implements Initializable {
     @FXML private TextField searchUser;
     @FXML private Label welcomeLabel;
     @FXML private Label errorLabel;
-    //@FXML private Button profileButton, logoutButton, addPost, addComment, deletePost, deleteComment,
-    //               searchWordPost, searchUserPost, searchWordComment, searchUserComment;
+    @FXML private Button profileButton, logoutButton, addPost, addComment, deletePost, deleteComment,
+                   searchWordPost, searchUserPost, searchWordComment, searchUserComment;
     @FXML private TableView<PostBeans> postTable;
     @FXML private TableView<CommentBeans> commentTable;
     @FXML private TextArea insertPostAndComment;
@@ -104,13 +104,13 @@ public class HomeSceneController implements Initializable {
                 errorLabel.setText("The content of post is empty");
         } else{
             errorLabel.setText("");
-            db.addPost(content, MainApp.loggedUserId);
+            db.addPost(content, loggedUserId);
             postOl = db.getPosts();
             postTable.setItems(postOl);
             insertPostAndComment.clear();
-            welcomeLabel.setText("Hello " + MainApp.username + ", you've written " + 
-                        db.getNumberOfPosts(MainApp.loggedUserId) +" posts and " +
-                        db.getNumberOfComments(MainApp.loggedUserId)+ " comments");
+            welcomeLabel.setText("Hello " + username + ", you've written " + 
+                        db.getNumberOfPosts(loggedUserId) +" posts and " +
+                        db.getNumberOfComments(loggedUserId)+ " comments");
         }
     }
     
@@ -131,6 +131,16 @@ public class HomeSceneController implements Initializable {
     }
     
     @FXML
+    public void searchPostsByContent(ActionEvent event){
+        String word = searchPost.getText();
+        if(!word.isEmpty() ){
+            postOl = db.searchPostsByContent(word);
+            postTable.setItems(postOl);
+            searchPost.clear();
+        }   
+    }
+    
+    @FXML
     public void searchCommentByUser(ActionEvent event){
         String user = searchComment.getText();
         if(!user.isEmpty()){
@@ -138,6 +148,16 @@ public class HomeSceneController implements Initializable {
             commentTable.setItems(commentOl);
             searchComment.clear();
         }   
+    }
+    
+    @FXML
+    public void searchCommentsByContent(ActionEvent event){
+        String word = searchComment.getText();
+        if(!word.isEmpty()){
+            commentOl = db.searchCommentsByContent(word, currentPost);
+            commentTable.setItems(commentOl);
+            searchComment.clear();
+        }  
     }
     
     @FXML
@@ -154,7 +174,7 @@ public class HomeSceneController implements Initializable {
                 errorLabel.setText("The content of comment is empty");
             } else{
                 errorLabel.setText("");
-                db.addComment(content, MainApp.loggedUserId, p.getIdPost());
+                db.addComment(content, loggedUserId, p.getIdPost());
                 commentOl = db.getComments(p.getIdPost());
                 commentTable.setItems(commentOl);
                 postOl = db.getPosts();
@@ -165,9 +185,9 @@ public class HomeSceneController implements Initializable {
                 postTable.getSelectionModel().select(index);
                 postTable.getFocusModel().focus(index);
 
-                welcomeLabel.setText("Hello " + MainApp.username + ", you've written " + 
-                            db.getNumberOfPosts(MainApp.loggedUserId) +" posts and " +
-                            db.getNumberOfComments(MainApp.loggedUserId)+ " comments");
+                welcomeLabel.setText("Hello " + username + ", you've written " + 
+                            db.getNumberOfPosts(loggedUserId) +" posts and " +
+                            db.getNumberOfComments(loggedUserId)+ " comments");
             }
         }
         else{
@@ -181,15 +201,15 @@ public class HomeSceneController implements Initializable {
             errorLabel.setText("");
             PostBeans p = postTable.getFocusModel().getFocusedItem();
 
-            if(!MainApp.username.equals(p.getUser())){
+            if(!username.equals(p.getUser())){
                 errorLabel.setText("You can delete only your post!");
                 postTable.refresh();             
             } else {
                 db.deletePost(p.getIdPost());
                 postTable.getItems().remove(p);    
-                welcomeLabel.setText("Hello " + MainApp.username + ", you've written " + 
-                            db.getNumberOfPosts(MainApp.loggedUserId) +" posts and " +
-                            db.getNumberOfComments(MainApp.loggedUserId)+ " comments");
+                welcomeLabel.setText("Hello " + username + ", you've written " + 
+                            db.getNumberOfPosts(loggedUserId) +" posts and " +
+                            db.getNumberOfComments(loggedUserId)+ " comments");
             }
         }
         else{
@@ -204,7 +224,7 @@ public class HomeSceneController implements Initializable {
             errorLabel.setText("");
             CommentBeans c = commentTable.getFocusModel().getFocusedItem();
 
-            if(!MainApp.username.equals(c.getUser())){
+            if(!username.equals(c.getUser())){
                 errorLabel.setText("You can delete only your comment!");
                 commentTable.refresh();  
             } else{  
@@ -224,9 +244,9 @@ public class HomeSceneController implements Initializable {
                 postTable.getSelectionModel().select(index);
                 postTable.getFocusModel().focus(index);
 
-                welcomeLabel.setText("Hello " + MainApp.username + ", you've written " + 
-                            db.getNumberOfPosts(MainApp.loggedUserId) +" posts and " +
-                            db.getNumberOfComments(MainApp.loggedUserId)+ " comments");
+                welcomeLabel.setText("Hello " + username + ", you've written " + 
+                            db.getNumberOfPosts(loggedUserId) +" posts and " +
+                            db.getNumberOfComments(loggedUserId)+ " comments");
 
                 }    
         }
@@ -240,7 +260,7 @@ public class HomeSceneController implements Initializable {
     public void postColSetOnEditCommit(TableColumn.CellEditEvent<Post, String> postStringCellEditEvent){
         PostBeans post = postTable.getSelectionModel().getSelectedItem();
            
-        if(!MainApp.username.equals(post.getUser())){
+        if(!username.equals(post.getUser())){
             errorLabel.setText("Warning: only the author can modify the post");
             postTable.refresh();   
         }
@@ -278,7 +298,7 @@ public class HomeSceneController implements Initializable {
             row.setOnMouseClicked((Event e) ->{
                 CommentBeans c = row.getItem();
                 errorLabel.setText("");
-                if(!MainApp.username.equals(c.getUser())){         
+                if(!username.equals(c.getUser())){         
                     commentTable.setEditable(false);
                 } else {
                     commentTable.setEditable(true);

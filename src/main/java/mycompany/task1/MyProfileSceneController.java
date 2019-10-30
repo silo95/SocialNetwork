@@ -55,6 +55,8 @@ public class MyProfileSceneController implements Initializable{
         loggedUserId = userId;
         
         usernameField.setText(user);
+        errorLabel.setText("");
+        errorLabel.setStyle("-fx-text-fill: #e50000");
         //passwordField.setText(pass);
         
         List<String> info = MainApp.ldb.getValuesFromUser(levelDBString, userId);
@@ -90,7 +92,47 @@ public class MyProfileSceneController implements Initializable{
     
     @FXML
     public void saveButtonOnAction(){
-        //dobbiamo controllare che lo username non sia già presente e fare l'update sul db e sul ldb
+        String user = usernameField.getText();
+        errorLabel.setText("");
+        //errorLabel.setStyle("-fx-text-fill: #e50000");
+        
+        if(!passwordField.getText().isEmpty()){
+            String pass = hash(String.valueOf(passwordField.getText())); 
+            if(!user.equals(username)){
+                Long idUserTemp = db.getIdByUser(user);
+                if(idUserTemp < 0){          
+                    Person p = new Person(user, pass);
+                    p.setIdUser(loggedUserId);
+                    db.updatePerson(p);
+                    errorLabel.setStyle("-fx-text-fill: green");
+                    errorLabel.setText("Profile has ben correctly updated.");
+                }
+                else{
+                    
+                    errorLabel.setText("Username not available. "); 
+                    return;
+                }
+            }else{
+                if(!pass.equals(password)){
+                    Person p = new Person(username, pass); 
+                    p.setIdUser(loggedUserId);
+                    db.updatePerson(p);
+                    errorLabel.setStyle("-fx-text-fill: green");
+                    errorLabel.setText("Profile has ben correctly updated.");
+                }
+                
+            }
+            
+            
+            
+        }
+        else{
+            errorLabel.setText("You must enter a new password or re-insert the old one. ");
+            return;
+        }
+        
+        //levelDB -> altre info utente
+        
     }
 
     

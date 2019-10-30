@@ -94,25 +94,22 @@ public class RegistrationSceneController implements Initializable{
         if(!usernameField.getText().isEmpty() && !passwordField.getText().isEmpty()){
             String username = String.valueOf(usernameField.getText());
                      
-            //dobbiamo controllare che lo username non sia già presente nel DB
-            
-            String password = hash(String.valueOf(passwordField.getText())); 
-            loggedUserId = db.register(username, password);
-            
-            getValuesFromForm();
-            
-            /*
-            List<String> res = MainApp.ldb.getValuesFromUser(levelDBString, loggedUserId);
-            
-            for(int i = 0; i < res.size(); i++){
-                String[] attribute = res.get(i).split(":");
-                System.out.println(attribute[0] + ":" + attribute[1]);
+            Long idUserTemp = db.getIdByUser(username);
+            if(idUserTemp < 0){
+                String password = hash(String.valueOf(passwordField.getText())); 
+                loggedUserId = db.register(username, password);
+
+                getValuesFromForm();
+
+                MainApp.homeController.setParameters(username, password, loggedUserId);  
+                MainApp.getStage().setScene(MainApp.homeScene);
+                cleanFields(); 
             }
-            */
+            else{
+                errorLabel.setText("Username not available. ");
+            }
             
-            MainApp.homeController.setParameters(username, password, loggedUserId);  
-            MainApp.getStage().setScene(MainApp.homeScene);
-            cleanFields();            
+                       
         }
         else{
             errorLabel.setText("Insert all the required fields. ");
