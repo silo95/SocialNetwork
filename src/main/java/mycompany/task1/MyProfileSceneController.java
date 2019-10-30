@@ -55,7 +55,7 @@ public class MyProfileSceneController implements Initializable{
         loggedUserId = userId;
         
         usernameField.setText(user);
-        passwordField.setText(pass);
+        //passwordField.setText(pass);
         
         List<String> info = MainApp.ldb.getValuesFromUser(levelDBString, userId);
         int internalIndex = 0;

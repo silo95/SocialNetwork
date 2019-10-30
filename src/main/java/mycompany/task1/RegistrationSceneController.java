@@ -3,8 +3,8 @@ package mycompany.task1;
 import java.io.*;
 import java.net.*;
 import java.security.*;
-import java.time.LocalDate;
 import java.util.*;
+import javafx.beans.value.ChangeListener;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.control.*;
@@ -41,6 +41,8 @@ public class RegistrationSceneController implements Initializable{
         cleanFields();
         MainApp.getStage().setScene(MainApp.firstScene);
     }
+    
+
     
     private void getValuesFromForm(){
         
@@ -134,6 +136,7 @@ public class RegistrationSceneController implements Initializable{
     public void initialize(URL url, ResourceBundle rb) {
         db = MainApp.db; 
         genderComboBox.getItems().addAll("Female", "Male");
+        
     } 
     
     

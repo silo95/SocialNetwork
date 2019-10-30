@@ -43,7 +43,10 @@ public class MainApp extends Application {
         homeScene = new Scene(homeSceneLoader.load());
         homeController = (HomeSceneController)homeSceneLoader.getController();
         
-
+        stage.setOnCloseRequest((WindowEvent we)-> {    
+            db.exit();
+        });
+        
         stage.setTitle("Social Network");
         stage.setScene(firstScene);
         stage.show();     
