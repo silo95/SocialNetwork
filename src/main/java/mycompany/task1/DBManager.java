@@ -35,7 +35,8 @@ public class DBManager{
                         commentList.get(i).getPerson().getUsername(), commentList.get(i).getPost().getIdPost(), 
                         commentList.get(i).getDate(), commentList.get(i).getPerson().getIdPerson());
                 ol.add(comm);
-            }           
+            }
+            entityManager.getTransaction().commit();
               
         }catch(Exception e){
             e.printStackTrace();
@@ -57,7 +58,7 @@ public class DBManager{
             Query q = entityManager.createNativeQuery("Select count(*) From Comment where person = ?");
             q.setParameter(1,id);
             counter = ((Number)q.getSingleResult()).intValue();
-                            
+            entityManager.getTransaction().commit();                
         }catch(Exception e){
             e.printStackTrace();
         }finally{
@@ -83,7 +84,7 @@ public class DBManager{
                         postList.get(i).getComments().size() ,postList.get(i).getPerson().getIdPerson());
                 ol.add(post);
             }   
-              
+            entityManager.getTransaction().commit(); 
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -113,7 +114,7 @@ public class DBManager{
                         p.getPosts().get(i).getComments().size(), p.getPosts().get(i).getPerson().getIdPerson());
                 ol.add(post);
             }   
-              
+            entityManager.getTransaction().commit();  
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -146,7 +147,7 @@ public class DBManager{
                         commentList.get(i).getDate(), commentList.get(i).getPerson().getIdPerson());
                 ol.add(comm);
             }   
-              
+            entityManager.getTransaction().commit();  
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -175,7 +176,7 @@ public class DBManager{
                         postList.get(i).getComments().size() ,postList.get(i).getPerson().getIdPerson());
                 ol.add(post);
             } 
-              
+            entityManager.getTransaction().commit();  
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -205,7 +206,7 @@ public class DBManager{
                         commentList.get(i).getDate(), commentList.get(i).getPerson().getIdPerson());
                 ol.add(comm);
             }
-              
+            entityManager.getTransaction().commit(); 
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -223,7 +224,7 @@ public class DBManager{
             Query q = entityManager.createNativeQuery("Select count(*) From Post where person = ?");
             q.setParameter(1,id);
             counter = ((Number)q.getSingleResult()).intValue();
-              
+            entityManager.getTransaction().commit();  
         }catch(Exception e){
             e.printStackTrace();
         }finally{
@@ -241,7 +242,7 @@ public class DBManager{
                     + "and Password = ?");
             q.setParameter(1, username);
             q.setParameter(2, password);
-            
+            entityManager.getTransaction().commit();
             return ((Number)q.getSingleResult()).longValue();
                 
         }catch(Exception e){
@@ -260,7 +261,7 @@ public class DBManager{
             q.setParameter(1, username);
             
             List result = q.getResultList();
-            
+            entityManager.getTransaction().commit();
             if(result.isEmpty())
                 return new Long(-1);
             
@@ -295,23 +296,6 @@ public class DBManager{
             entityManager.close();
         } 
     }
-    /*
-    public boolean isRegistered(String u){ 
-        try(Connection co = DriverManager.getConnection(connectionString);
-            PreparedStatement ps = co.prepareStatement("SELECT * FROM User "
-                    + "WHERE Username = ?");
-        ){
-            ps.setString(1,u); 
-            ResultSet rs = ps.executeQuery();
-            return rs.next();
-         
-        }catch(SQLException e){
-            e.printStackTrace();
-            return false;
-        }          
-    }*/
-    
-    //FARE L'UPDATE USERNAME E PASSWORD
 
     public boolean updatePerson(Person person){
         try{ 
@@ -351,19 +335,16 @@ public class DBManager{
     
     public boolean updateComment(Long idComment,String newComment){
         try{                
-
             entityManager = factory.createEntityManager();
             entityManager.getTransaction().begin();
             Comment c = entityManager.getReference(Comment.class,idComment);
             c.setStrComment(newComment);
             entityManager.merge(c);
             entityManager.getTransaction().commit();
-            return true;  
-          
+            return true;          
         }catch(Exception e){
             e.printStackTrace();
-            return false;
-           
+            return false;         
         }finally{
             entityManager.close();
         } 
@@ -379,8 +360,7 @@ public class DBManager{
             c = new Comment(content,per,pos,Timestamp.valueOf(LocalDateTime.now()));
             entityManager.persist(c);
             entityManager.getTransaction().commit();
-            return true;  
-            
+            return true;      
         }catch(Exception e){
             e.printStackTrace();
             return false;
@@ -411,11 +391,7 @@ public class DBManager{
 
     
 
-    public boolean deleteComment(Long id){ 
-     /*   if(c== null){
-            System.out.println("Err: no comment selected");
-            return false;
-        }  */      
+    public boolean deleteComment(Long id){     
         try{                
             entityManager = factory.createEntityManager();
             entityManager.getTransaction().begin();

@@ -21,8 +21,6 @@ public class HomeSceneController implements Initializable {
     @FXML private TextField searchUser;
     @FXML private Label welcomeLabel;
     @FXML private Label errorLabel;
-    @FXML private Button profileButton, logoutButton, addPost, addComment, deletePost, deleteComment,
-                   searchWordPost, searchUserPost, searchWordComment, searchUserComment;
     @FXML private TableView<PostBeans> postTable;
     @FXML private TableView<CommentBeans> commentTable;
     @FXML private TextArea insertPostAndComment;
@@ -138,6 +136,12 @@ public class HomeSceneController implements Initializable {
             postTable.setItems(postOl);
             searchPost.clear();
         }   
+    }
+    
+    @FXML
+    public void viewAllPosts(ActionEvent event){
+        postOl = db.getPosts();
+        postTable.setItems(postOl);
     }
     
     @FXML

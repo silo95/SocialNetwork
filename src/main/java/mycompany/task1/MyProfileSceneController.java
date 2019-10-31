@@ -3,6 +3,7 @@ package mycompany.task1;
 import java.io.*;
 import java.net.*;
 import java.security.*;
+import java.time.*;
 import java.util.*;
 import javafx.event.*;
 import javafx.fxml.*;
@@ -18,12 +19,10 @@ public class MyProfileSceneController implements Initializable{
     private final List<String> fields = Arrays.asList(new String[]{"city", "country", "dateBirth", "gender",
                                                                     "name", "phone", "street", "surname"});
     
-    
     @FXML private Label errorLabel;
     @FXML private TextField usernameField; 
     @FXML private PasswordField passwordField;
-    @FXML private TextField nameField, surnameField, /*genderField, dateBirthField,*/
-                            countryField, cityField, streetField, phoneField;
+    @FXML private TextField nameField, surnameField, countryField, cityField, streetField, phoneField;
     @FXML private ComboBox genderComboBox;
     @FXML private DatePicker calendar;
     
@@ -33,7 +32,6 @@ public class MyProfileSceneController implements Initializable{
         passwordField.clear();
         cityField.clear();
         countryField.clear();
-        //dateBirthField.clear();
         nameField.clear();
         phoneField.clear();
         streetField.clear();
@@ -53,15 +51,12 @@ public class MyProfileSceneController implements Initializable{
         username = user;
         password = pass;
         loggedUserId = userId;
-        
         usernameField.setText(user);
         errorLabel.setText("");
         errorLabel.setStyle("-fx-text-fill: #e50000");
-        //passwordField.setText(pass);
         
         List<String> info = MainApp.ldb.getValuesFromUser(levelDBString, userId);
         int internalIndex = 0;
-        //System.out.println("stampo valori da db: " + info);
         if(!info.isEmpty()){
             for(int i = 0; i < fields.size(); i++){
                 
@@ -76,9 +71,6 @@ public class MyProfileSceneController implements Initializable{
                             calendar.getEditor().setText(splittedElement[1]);
                         }
                         else{
-                            //System.out.println("stampo fields in posizione " + i + fields.get(i));
-                          //  System.out.println("stampo il valore a capo");
-                            //System.out.println(splittedElement[1]);
                             if(splittedElement[1] != null)
                                 infoUser.get(fields.get(i)).setText(splittedElement[1]);
                         }
@@ -88,8 +80,6 @@ public class MyProfileSceneController implements Initializable{
                             return;
                         }
                     }
-
-                
                 } 
             }   
         }
@@ -98,64 +88,54 @@ public class MyProfileSceneController implements Initializable{
     
     @FXML
     public void saveButtonOnAction(){
+        
         String user = usernameField.getText();
         errorLabel.setText("");
-        //errorLabel.setStyle("-fx-text-fill: #e50000");
-        
-        if(!passwordField.getText().isEmpty()){
-            String pass = hash(String.valueOf(passwordField.getText())); 
-            if(!user.equals(username)){
-                Long idUserTemp = db.getIdByUser(user);
-                if(idUserTemp < 0){          
-                    Person p = new Person(user, pass);
-                    p.setIdUser(loggedUserId);
-                    db.updatePerson(p);
-                    errorLabel.setStyle("-fx-text-fill: green");
-                    errorLabel.setText("Profile has ben correctly updated.");
+
+        if(!user.isEmpty() && user.compareTo(username) != 0){
+            Long idUserTemp = db.getIdByUser(user);
+            if(idUserTemp < 0){   
+                String pass = password;
+                if(!passwordField.getText().isEmpty()){
+                    pass = hash(String.valueOf(passwordField.getText()));
                 }
-                else{
-                    
-                    errorLabel.setText("Username not available. "); 
-                    return;
-                }
-            }else{
-                if(!pass.equals(password)){
-                    Person p = new Person(username, pass); 
-                    p.setIdUser(loggedUserId);
-                    db.updatePerson(p);
-                    errorLabel.setStyle("-fx-text-fill: green");
-                    errorLabel.setText("Profile has ben correctly updated.");
+
+                Person p = new Person(user, pass);
+                p.setIdUser(loggedUserId);
+                db.updatePerson(p);
+                errorLabel.setStyle("-fx-text-fill: green");
+                errorLabel.setText("Profile has ben correctly updated.");
+            }
+            else{
+                errorLabel.setText("Username not available. "); 
+                return;
+            }  
+        }     
+        else{
+            if(!passwordField.getText().isEmpty()){
+                String pass = hash(String.valueOf(passwordField.getText()));
+                Person p = new Person(username, pass);
+                p.setIdUser(loggedUserId);
+                db.updatePerson(p);
+            }
+        }
+
+        for(int i = 0; i < fields.size(); i++){
+            String key = levelDBString +":"+ loggedUserId + ":" + fields.get(i);
+
+            if(fields.get(i).compareTo("gender") == 0){
+                
+                if(genderComboBox.getValue() != null){
+                    if(genderComboBox.getSelectionModel().getSelectedItem().toString().equals("Prefer not to say"))
+                        MainApp.ldb.deleteSingleValueFromUser(key);
+                    else
+                        MainApp.ldb.putValuesToUser(key, (String) genderComboBox.getValue());  
                 }
                 
             }
-            
-            
-            
-        }
-        else{
-            errorLabel.setText("You must enter a new password or re-insert the old one. ");
-            return;
-        }
-        
-        //MODIFICA CAMPI
-        
-        //TO DO: Considerare variazioni?
-        
-        //System.out.println("Prendo i valori presenti");
-        for(int i = 0; i < fields.size(); i++){
-            String key = "username:"+ loggedUserId + ":" + fields.get(i);
-            //System.out.println("Relativo al campo " + fields.get(i));
-
-            if(fields.get(i).compareTo("gender") == 0){
-                //System.out.println("campo gender: " + genderComboBox.getValue());
-                if(genderComboBox.getValue() != null)
-                MainApp.ldb.putValuesToUser(key, (String) genderComboBox.getValue());            
-            }
             else if(fields.get(i).compareTo("dateBirth") == 0){
-               // System.out.println(calendar.getEditor().getText());
                 if(calendar.getEditor().getText().isEmpty())
                     MainApp.ldb.deleteSingleValueFromUser(key);            
-
                 else
                     MainApp.ldb.putValuesToUser(key,(String)calendar.getEditor().getText());            
             }
@@ -164,23 +144,20 @@ public class MyProfileSceneController implements Initializable{
                 if(t == null)
                     continue;
                 else{
-                    if(t.getText().isEmpty()){
-                        //System.out.println("sto cancellando questo attributo: " + fields.get(i));
+                    if(t.getText().isEmpty()) 
                         MainApp.ldb.deleteSingleValueFromUser(key);
-                    }
                     
-                    else{
-                       // System.out.println("sto aggiungendo questo attributo: " + fields.get(i) + " e aggiungo questo valore: " + (String)t.getText());
+                    else
                         MainApp.ldb.putValuesToUser(key,(String)t.getText());                        
-                    }
+                    
                 }
                 
             }
         }
-        //levelDB -> altre info utente
         
-        
-        
+        errorLabel.setStyle("-fx-text-fill: green");
+        errorLabel.setText("Profile has ben correctly updated.");
+
     }
 
     
@@ -202,12 +179,34 @@ public class MyProfileSceneController implements Initializable{
         
         infoUser.put("city", cityField);
         infoUser.put("country", countryField);
-        //infoUser.put("dateBirth", dateBirthField);
         infoUser.put("name", nameField);
         infoUser.put("phone", phoneField);
         infoUser.put("street", streetField);
         infoUser.put("surname", surnameField);
         
-        genderComboBox.getItems().addAll("Female", "Male");
+        genderComboBox.getItems().addAll("Female", "Male", "Prefer not to say");
+        
+        usernameField.focusedProperty().addListener((ov, oldv, newv) -> {
+            if(!newv){
+                if(usernameField.getText().isEmpty())
+                    usernameField.setText(username);
+            }
+        });
+        
+        phoneField.textProperty().addListener((ov, oldv, newValue) -> {
+            if(!newValue.matches("\\d*")){
+                phoneField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+        
+        calendar.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate today = LocalDate.now();
+                setDisable(empty || date.compareTo(today) > 0 );
+            }
+        });
+        
     }     
 }

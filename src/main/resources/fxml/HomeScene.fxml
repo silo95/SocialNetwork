@@ -29,16 +29,16 @@
               </columns>
             </TableView>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b0d2ff" height="45.0" layoutX="25.0" layoutY="11.0" stroke="TRANSPARENT" strokeType="INSIDE" width="830.0" />
-            <TextField id="searchPost" fx:id="searchPost" layoutX="297.0" layoutY="283.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="186.0" promptText="Search post. e.g &quot;All&quot; for all posts">
+            <TextField id="searchPost" fx:id="searchPost" layoutX="297.0" layoutY="283.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="120.0" promptText="Search Post">
                <font>
-                  <Font size="11.0" />
+                  <Font size="12.0" />
                </font></TextField>
-            <Button id="searchWordPost" fx:id="searchWordPost" layoutX="484.0" layoutY="283.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#searchPostsByContent" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #D5E8D2;" text="Search by Word">
+            <Button id="searchWordPost" fx:id="searchWordPost" layoutX="418.0" layoutY="283.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#searchPostsByContent" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #D5E8D2;" text="Search by Content">
                <font>
                   <Font size="12.0" />
                </font>
             </Button>
-            <Button id="searchUserPost" fx:id="searchUserPost" layoutX="606.0" layoutY="283.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#searchPostByUser" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #D5E8D2;" text="Search by User">
+            <Button id="searchUserPost" fx:id="searchUserPost" layoutX="539.0" layoutY="283.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#searchPostByUser" prefHeight="35.0" prefWidth="99.0" style="-fx-background-color: #D5E8D2;" text="Search by User">
                <font>
                   <Font size="12.0" />
                </font>
@@ -99,21 +99,26 @@
                   </Label>
                </children>
             </StackPane>
-            <Button id="searchUserComment" fx:id="searchUserComment" layoutX="610.0" layoutY="540.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#searchCommentByUser" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #FFF2CD;" text="Search by User">
+            <Button id="searchUserComment" fx:id="searchUserComment" layoutX="543.0" layoutY="540.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#searchCommentByUser" prefHeight="35.0" prefWidth="99.0" style="-fx-background-color: #FFF2CD;" text="Search by User">
                <font>
                   <Font size="12.0" />
                </font>
             </Button>
-            <Button id="searchWordComment" fx:id="searchWordComment" layoutX="488.0" layoutY="540.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#searchCommentsByContent" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #FFF2CD;" text="Search by Word">
+            <Button id="searchWordComment" fx:id="searchWordComment" layoutX="421.0" layoutY="540.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#searchCommentsByContent" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #FFF2CD;" text="Search by Content">
                <font>
                   <Font size="12.0" />
                </font>
             </Button>
-            <TextField id="searchComment" fx:id="searchComment" layoutX="300.0" layoutY="540.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="186.0" promptText="Search Comment">
+            <TextField id="searchComment" fx:id="searchComment" layoutX="300.0" layoutY="540.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="120.0" promptText="Search Comment">
                <font>
                   <Font size="12.0" />
                </font></TextField>
             <Button id="searchUserButton" fx:id="searchUserButton" layoutX="186.0" layoutY="98.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#searchButtonOnAction" prefHeight="35.0" prefWidth="81.0" style="-fx-background-color: #FBCFD0;" text="Search User">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Button>
+            <Button id="viewPosts" fx:id="viewPosts" layoutX="639.0" layoutY="283.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#viewAllPosts" prefHeight="35.0" prefWidth="99.0" style="-fx-background-color: #D5E8D2;" text="View all posts">
                <font>
                   <Font size="12.0" />
                </font>

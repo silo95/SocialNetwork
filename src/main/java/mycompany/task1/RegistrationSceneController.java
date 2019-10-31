@@ -3,8 +3,8 @@ package mycompany.task1;
 import java.io.*;
 import java.net.*;
 import java.security.*;
+import java.time.*;
 import java.util.*;
-import javafx.beans.value.ChangeListener;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.control.*;
@@ -14,7 +14,6 @@ public class RegistrationSceneController implements Initializable{
     private Long loggedUserId;
     private DBManager db;
     private final String levelDBString = "username";
-    //public static String username, password;
     @FXML private PasswordField passwordField;
     @FXML private Label errorLabel;
     @FXML private TextField usernameField;
@@ -57,7 +56,8 @@ public class RegistrationSceneController implements Initializable{
         
         if(!genderComboBox.getSelectionModel().isEmpty()){ 
             String gender = genderComboBox.getSelectionModel().getSelectedItem().toString();
-            MainApp.ldb.putValuesToUser(levelDBString +":"+ loggedUserId+":gender", gender);
+            if(!gender.equals("Prefer not to say"))
+                MainApp.ldb.putValuesToUser(levelDBString +":"+ loggedUserId+":gender", gender);
         }
         
         
@@ -132,7 +132,22 @@ public class RegistrationSceneController implements Initializable{
     
     public void initialize(URL url, ResourceBundle rb) {
         db = MainApp.db; 
-        genderComboBox.getItems().addAll("Female", "Male");
+        genderComboBox.getItems().addAll("Female", "Male", "Prefer not to say");
+        
+        phoneField.textProperty().addListener((ov, oldv, newValue) -> {
+            if(!newValue.matches("\\d*")){
+                phoneField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+        
+        calendar.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate today = LocalDate.now();
+                setDisable(empty || date.compareTo(today) > 0 );
+            }
+        });
         
     } 
     

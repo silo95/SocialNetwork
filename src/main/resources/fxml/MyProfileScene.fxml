@@ -99,7 +99,7 @@
                   <Font size="12.0" />
                </font>
             </Label>
-            <TextField fx:id="phoneField" layoutX="466.0" layoutY="465.0" prefHeight="30.0" prefWidth="300.0">
+            <TextField id="phoneField" fx:id="phoneField" layoutX="466.0" layoutY="465.0" prefHeight="30.0" prefWidth="300.0">
                <font>
                   <Font size="12.0" />
                </font>

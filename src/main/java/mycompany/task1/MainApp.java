@@ -45,6 +45,7 @@ public class MainApp extends Application {
         
         stage.setOnCloseRequest((WindowEvent we)-> {    
             db.exit();
+            ldb.close();
         });
         
         stage.setTitle("Social Network");
