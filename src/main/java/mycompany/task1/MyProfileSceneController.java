@@ -61,30 +61,36 @@ public class MyProfileSceneController implements Initializable{
         
         List<String> info = MainApp.ldb.getValuesFromUser(levelDBString, userId);
         int internalIndex = 0;
-                
+        //System.out.println("stampo valori da db: " + info);
         if(!info.isEmpty()){
             for(int i = 0; i < fields.size(); i++){
+                
                 String[] splittedElement = info.get(internalIndex).split(":");
+                if(splittedElement.length == 2){
 
-                if(splittedElement[0].compareTo(fields.get(i)) == 0){
-                    if(splittedElement[0].compareTo("gender") == 0){
-                        genderComboBox.setValue(splittedElement[1]);
-                    }
-                    else if(splittedElement[0].compareTo("dateBirth") == 0){
-                        calendar.getEditor().setText(splittedElement[1]);
-                    }
-                    else{
-                        infoUser.get(fields.get(i)).setText(splittedElement[1]);
+                    if(splittedElement[0].compareTo(fields.get(i)) == 0){
+                        if(splittedElement[0].compareTo("gender") == 0){
+                            genderComboBox.setValue(splittedElement[1]);
+                        }
+                        else if(splittedElement[0].compareTo("dateBirth") == 0){
+                            calendar.getEditor().setText(splittedElement[1]);
+                        }
+                        else{
+                            //System.out.println("stampo fields in posizione " + i + fields.get(i));
+                          //  System.out.println("stampo il valore a capo");
+                            //System.out.println(splittedElement[1]);
+                            if(splittedElement[1] != null)
+                                infoUser.get(fields.get(i)).setText(splittedElement[1]);
+                        }
+
+                        internalIndex++;
+                        if(internalIndex == info.size()){
+                            return;
+                        }
                     }
 
-                    internalIndex++;
-                    if(internalIndex == info.size()){
-                        return;
-                    }
-                }
                 
-                
-                
+                } 
             }   
         }
     }
@@ -131,7 +137,49 @@ public class MyProfileSceneController implements Initializable{
             return;
         }
         
+        //MODIFICA CAMPI
+        
+        //TO DO: Considerare variazioni?
+        
+        //System.out.println("Prendo i valori presenti");
+        for(int i = 0; i < fields.size(); i++){
+            String key = "username:"+ loggedUserId + ":" + fields.get(i);
+            //System.out.println("Relativo al campo " + fields.get(i));
+
+            if(fields.get(i).compareTo("gender") == 0){
+                //System.out.println("campo gender: " + genderComboBox.getValue());
+                if(genderComboBox.getValue() != null)
+                MainApp.ldb.putValuesToUser(key, (String) genderComboBox.getValue());            
+            }
+            else if(fields.get(i).compareTo("dateBirth") == 0){
+               // System.out.println(calendar.getEditor().getText());
+                if(calendar.getEditor().getText().isEmpty())
+                    MainApp.ldb.deleteSingleValueFromUser(key);            
+
+                else
+                    MainApp.ldb.putValuesToUser(key,(String)calendar.getEditor().getText());            
+            }
+            else{
+                TextField t = infoUser.get(fields.get(i));
+                if(t == null)
+                    continue;
+                else{
+                    if(t.getText().isEmpty()){
+                        //System.out.println("sto cancellando questo attributo: " + fields.get(i));
+                        MainApp.ldb.deleteSingleValueFromUser(key);
+                    }
+                    
+                    else{
+                       // System.out.println("sto aggiungendo questo attributo: " + fields.get(i) + " e aggiungo questo valore: " + (String)t.getText());
+                        MainApp.ldb.putValuesToUser(key,(String)t.getText());                        
+                    }
+                }
+                
+            }
+        }
         //levelDB -> altre info utente
+        
+        
         
     }
 

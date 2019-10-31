@@ -40,6 +40,11 @@ private DB db;
         }
     }
     
+    public void deleteSingleValueFromUser(String key){
+        System.out.println("dentro Delete: " + key);
+        db.delete(bytes(key));
+    }
+    
     //[username:id:attribute] [attribute_value]
     public void putValuesToUser(String key, String value){
         db.put(bytes(key), bytes(value));  
