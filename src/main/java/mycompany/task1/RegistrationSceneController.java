@@ -101,6 +101,7 @@ public class RegistrationSceneController implements Initializable{
 
                 getValuesFromForm();
 
+                MainApp.username = username;
                 MainApp.homeController.setParameters(username, password, loggedUserId);  
                 MainApp.getStage().setScene(MainApp.homeScene);
                 cleanFields(); 
