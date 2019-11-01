@@ -29,7 +29,8 @@ public class OtherProfileSceneController implements Initializable{
         if(!info.isEmpty()){
             for(int i = 0; i < fields.size(); i++){
                 String[] splittedElement = info.get(internalIndex).split(":");
-
+                if(splittedElement.length != 2)
+                    continue;
                 if(splittedElement[0].compareTo(fields.get(i)) == 0){
                     infoUser.get(fields.get(i)).setText(splittedElement[1]);
                     internalIndex++;
