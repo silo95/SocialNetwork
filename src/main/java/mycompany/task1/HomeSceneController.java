@@ -142,6 +142,7 @@ public class HomeSceneController implements Initializable {
     public void viewAllPosts(ActionEvent event){
         postOl = db.getPosts();
         postTable.setItems(postOl);
+        searchPost.clear();
     }
     
     @FXML
@@ -337,34 +338,6 @@ public class HomeSceneController implements Initializable {
     }   
     
     
-    @FXML
-    public void clickUser(){
-        userCol.setCellFactory(tc -> {
-            TableCell<PostBeans, String> cell = new TableCell<PostBeans, String>() {
-                @Override
-                protected void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty) ;
-                    setText(empty ? null : item);
-                }
-            };
-            cell.setOnMouseClicked(e -> {
-                if (!cell.isEmpty()) {
-                    String user = cell.getItem();
-                    if(!user.equals(username)){ 
-                        Long idUser = db.getIdByUser(user);
-                        MainApp.otherProfileController.getInfoUser(user, idUser);
-                        MainApp.getStage().setScene(MainApp.otherProfileScene);
-                    }
-                    else{
-                        MainApp.myProfileController.getInfoUser(username, password, loggedUserId);
-                        MainApp.getStage().setScene(MainApp.profileScene);
-                    }
-                }
-            });
-            return cell ;
-        });
-    }
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {   
         db = MainApp.db;         
@@ -383,6 +356,5 @@ public class HomeSceneController implements Initializable {
                 
         commentTableSetRowFactory();
         postTableSetRowFactory();
-        clickUser();
     }    
 }

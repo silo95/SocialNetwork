@@ -44,7 +44,7 @@
                   <Font size="12.0" />
                </font>
             </Button>
-            <TextField id="searchUser" fx:id="searchUser" layoutX="25.0" layoutY="98.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="120.0">
+            <TextField id="searchUser" fx:id="searchUser" layoutX="25.0" layoutY="98.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="120.0" promptText="Search User">
                <font>
                   <Font size="12.0" />
                </font></TextField>

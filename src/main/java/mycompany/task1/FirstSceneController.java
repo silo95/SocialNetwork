@@ -64,6 +64,7 @@ public class FirstSceneController implements Initializable {
         return null;
     }
     
+    @Override
     public void initialize(URL url, ResourceBundle rb) {
         
     }
