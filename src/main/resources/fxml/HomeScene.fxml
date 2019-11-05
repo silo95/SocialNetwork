@@ -93,7 +93,7 @@
             <StackPane layoutX="25.0" layoutY="381.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="242.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffd8b0" height="39.0" stroke="TRANSPARENT" strokeType="INSIDE" width="242.0" />
-                  <Label text="Insert post or comment">
+                  <Label text="Insert post or comment here:">
                      <font>
                         <Font size="12.0" />
                      </font>

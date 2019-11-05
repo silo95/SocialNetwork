@@ -129,7 +129,7 @@
                   <Font size="12.0" />
                </font>
             </Label>
-            <ImageView fitHeight="139.0" fitWidth="165.0" layoutX="234.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="139.0" fitWidth="165.0" layoutX="220.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/registration.png" />
                </image>
