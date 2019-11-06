@@ -44,7 +44,7 @@
                   <Font size="12.0" />
                </font>
             </Button>
-            <TextField id="searchUser" fx:id="searchUser" layoutX="25.0" layoutY="98.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="120.0" promptText="Search User">
+            <TextField id="searchUser" fx:id="searchUser" layoutX="25.0" layoutY="198.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="120.0" promptText="Search User">
                <font>
                   <Font size="12.0" />
                </font></TextField>
@@ -56,11 +56,11 @@
                <font>
                   <Font size="12.0" />
                </font></Label>
-            <Button id="logoutButton" fx:id="logoutButton" layoutX="147.0" layoutY="283.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#logoutButtonSetOnAction" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #b5c6f5;" text="Logout">
+            <Button id="logoutButton" fx:id="logoutButton" layoutX="147.0" layoutY="239.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#logoutButtonSetOnAction" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #b5c6f5;" text="Logout">
                <font>
                   <Font size="12.0" />
                </font></Button>
-            <Button id="profileButton" fx:id="profileButton" layoutX="25.0" layoutY="283.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#profileButtonOnAction" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #b5c6f5;" text="Edit your Profile">
+            <Button id="profileButton" fx:id="profileButton" layoutX="25.0" layoutY="239.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#profileButtonOnAction" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #b5c6f5;" text="Edit your Profile">
                <font>
                   <Font size="12.0" />
                </font></Button>
@@ -114,7 +114,7 @@
                <font>
                   <Font size="12.0" />
                </font></TextField>
-            <Button id="searchUserButton" fx:id="searchUserButton" layoutX="147.0" layoutY="98.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#searchButtonOnAction" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #8599d6;" text="Search User">
+            <Button id="searchUserButton" fx:id="searchUserButton" layoutX="147.0" layoutY="198.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#searchButtonOnAction" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #8599d6;" text="Search User">
                <font>
                   <Font size="12.0" />
                </font>
@@ -124,9 +124,9 @@
                   <Font size="12.0" />
                </font>
             </Button>
-            <ImageView fitHeight="130.0" fitWidth="113.0" layoutX="91.0" layoutY="159.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="130.0" fitWidth="113.0" layoutX="94.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/users.png" />
+                  <Image url="@../images/logo.png" />
                </image>
             </ImageView>
       </children>
