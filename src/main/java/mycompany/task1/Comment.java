@@ -29,8 +29,7 @@ public class Comment{
         
     }
         
-    public Comment(/*Long idComment, */String strComment, Person person, Post post,Timestamp t){
-       // this.idComment = idComment;
+    public Comment(String strComment, Person person, Post post,Timestamp t){
         this.strComment = strComment;
         this.person = person;
         this.post = post;

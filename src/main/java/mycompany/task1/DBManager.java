@@ -246,7 +246,6 @@ public class DBManager{
             return ((Number)q.getSingleResult()).longValue();
                 
         }catch(Exception e){
-            e.printStackTrace();
             return new Long(-1);
         }finally{
             entityManager.close();

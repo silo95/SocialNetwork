@@ -43,6 +43,11 @@ public class MyProfileSceneController implements Initializable{
     
     public void backSetOnAction(ActionEvent event){
         cleanFields();
+        MainApp.homeController.welcomeLabel.setText("Hello " + username + ", you've written " + 
+            db.getNumberOfPosts(loggedUserId) +" posts and " +
+            db.getNumberOfComments(loggedUserId)+ " comments");
+        MainApp.homeController.viewAllPosts(event);
+        MainApp.homeController.commentOl.clear();
         MainApp.getStage().setScene(MainApp.homeScene);
     }
     
@@ -87,12 +92,12 @@ public class MyProfileSceneController implements Initializable{
     
     
     @FXML
-    public void saveButtonOnAction(){
-        
+    public void saveButtonOnAction(){      
         String user = usernameField.getText();
         errorLabel.setText("");
-
+        
         if(!user.isEmpty() && user.compareTo(username) != 0){
+            //in case of username modification
             Long idUserTemp = db.getIdByUser(user);
             if(idUserTemp < 0){   
                 String pass = password;
@@ -103,6 +108,9 @@ public class MyProfileSceneController implements Initializable{
                 Person p = new Person(user, pass);
                 p.setIdUser(loggedUserId);
                 db.updatePerson(p);
+                username = user;
+                MainApp.homeController.username = user;
+                
                 errorLabel.setStyle("-fx-text-fill: green");
                 errorLabel.setText("Profile has ben correctly updated.");
             }
@@ -111,12 +119,13 @@ public class MyProfileSceneController implements Initializable{
                 return;
             }  
         }     
-        else{
+        else if (user.compareTo(username) == 0){
             if(!passwordField.getText().isEmpty()){
                 String pass = hash(String.valueOf(passwordField.getText()));
                 Person p = new Person(username, pass);
                 p.setIdUser(loggedUserId);
                 db.updatePerson(p);
+                
             }
         }
 

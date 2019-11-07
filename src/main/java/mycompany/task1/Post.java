@@ -15,10 +15,7 @@ public class Post{
     
     @Column(name="strPost", length=50, nullable=false, unique=false)
     private String strPost;
-    
-   /* @Column(name="person", nullable=false, unique=false)
-    private Long person;*/
-    
+
     @Column(name="postDate")
     private Timestamp postDate;
     
@@ -33,7 +30,6 @@ public class Post{
         
     }
     public Post(String strPost, Person person,Timestamp t){
-        //this.idPost = idPost;
         this.strPost = strPost;
         this.person = person;
         this.postDate = t;
@@ -85,7 +81,6 @@ public class Post{
         return "Post{ " + 
                 "id=" + idPost +
                 ", strPost=" + strPost +
-                //", personId=" + person +
                 ", date=" + postDate +
                 " }";
     }

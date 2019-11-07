@@ -11,15 +11,15 @@ import javafx.scene.control.cell.*;
 public class HomeSceneController implements Initializable {
     private Long loggedUserId;
     private DBManager db;
-    private String username, password;
+    protected String username, password;
     private Long currentPost;
     
     private ObservableList<PostBeans> postOl;
-    private ObservableList<CommentBeans> commentOl = FXCollections.observableArrayList();   
+    protected ObservableList<CommentBeans> commentOl = FXCollections.observableArrayList();   
     
     @FXML private TextField searchPost, searchComment;
     @FXML private TextField searchUser;
-    @FXML private Label welcomeLabel;
+    @FXML protected Label welcomeLabel;
     @FXML private Label errorLabel;
     @FXML private TableView<PostBeans> postTable;
     @FXML private TableView<CommentBeans> commentTable;

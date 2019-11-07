@@ -23,12 +23,12 @@
                   <Font size="14.0" />
                </font>
             </PasswordField>
-            <Button id="registrationButton" fx:id="registrationButton" layoutX="331.0" layoutY="392.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#registrationSetOnAction" prefHeight="35.0" prefWidth="99.0" style="-fx-background-color: #FBCFD0;" text="Registration">
+            <Button id="loginButton" fx:id="loginButton" layoutX="442.0" layoutY="392.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#loginSetOnAction" prefHeight="35.0" prefWidth="99.0" style="-fx-background-color: #FBCFD0;" text="Login">
                <font>
                   <Font size="12.0" />
                </font>
             </Button>
-            <Button id="loginButton" fx:id="loginButton" layoutX="442.0" layoutY="392.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#loginSetOnAction" prefHeight="35.0" prefWidth="99.0" style="-fx-background-color: #FBCFD0;" text="Login">
+            <Button id="registrationButton" fx:id="registrationButton" layoutX="331.0" layoutY="392.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#registrationSetOnAction" prefHeight="35.0" prefWidth="99.0" style="-fx-background-color: #FBCFD0;" text="Registration">
                <font>
                   <Font size="12.0" />
                </font>

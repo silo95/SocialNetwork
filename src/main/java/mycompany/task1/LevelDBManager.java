@@ -21,7 +21,6 @@ private DB db;
 
  
     public void deleteValuesFromUser(ArrayList<String> toDelete){
-        System.out.println("dentro Delete: " + toDelete.size());
         for(int i = 0; i < toDelete.size(); i++){
             String key = toDelete.get(i);
             db.delete(bytes(key));
@@ -29,7 +28,6 @@ private DB db;
     }
     
     public void deleteSingleValueFromUser(String key){
-        System.out.println("dentro Delete: " + key);
         db.delete(bytes(key));
     }
     
