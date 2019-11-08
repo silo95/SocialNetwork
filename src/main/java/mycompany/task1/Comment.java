@@ -1,63 +1,90 @@
-
 package mycompany.task1;
 
-import java.sql.*;
-import javafx.beans.property.*;
+import java.sql.Timestamp;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "Comment")
 public class Comment{
+    @Column(name="idComment")
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long idComment;
+    
+    @Column(name="strComment", length=50, nullable=false, unique=false)
+    private String strComment;
+    
+    @ManyToOne
+    @JoinColumn(name="post", nullable=false, unique=false)
+    private Post post;
+    
+    @ManyToOne
+    @JoinColumn(name="person", nullable=false, unique=false)
+    private Person person;
+    
+    @Column(name="commentDate", unique=false)
+    private Timestamp commentDate;
 
-    private final SimpleIntegerProperty idComment;
-    private final SimpleStringProperty strComment;
-    private final SimpleStringProperty user;
-    private final SimpleIntegerProperty post;
-    private final SimpleObjectProperty<Timestamp> date;
-
-    public Comment(int i, String s, String u, int p, Timestamp d){
-        idComment = new SimpleIntegerProperty(i);
-        strComment = new SimpleStringProperty(s);
-        user = new SimpleStringProperty(u);
-        post = new SimpleIntegerProperty(p);
-        date = new SimpleObjectProperty<>(d);
+    public Comment(){
+        
     }
-
-    public int getIdComment(){
-        return idComment.get();
+        
+    public Comment(String strComment, Person person, Post post,Timestamp t){
+        this.strComment = strComment;
+        this.person = person;
+        this.post = post;
+        this.commentDate = t;
+    }
+    
+    public Long getIdComment(){
+        return idComment;
+    }
+    
+    public void setIdComment(Long s){
+        this.idComment = s;
     }
 
     public String getStrComment(){
-       return strComment.get();
+       return strComment;
     } 
 
-    public String getUser(){
-       return user.get();
+    public void setStrComment(String str){
+        this.strComment = str;
+    }
+    
+    public Person getPerson(){
+       return person;
     } 
-
-    public int getPost(){
-        return post.get();
+    
+    public void setPerson(Person person){
+        this.person = person;
+    }
+    
+    public Post getPost(){
+        return post;
     }
 
+    public void setPost(Post p){
+        this.post = p;
+    }
+    
     public Timestamp getDate(){
-       return date.get();
+       return commentDate;
     } 
 
-    public void setIdComment(int s){
-        idComment.set(s);
+    public void setDate(Timestamp d){
+        this.commentDate= d;
     }
-
-    public void setUser(String s){
-        user.set(s);
+    
+    @Override
+    public String toString(){
+        return "Comment{ " + 
+                "id=" + idComment +
+                ", strPost=" + strComment +
+                ", post=" + post +
+                ", personId=" + person +
+                ", date=" + commentDate +
+                " }";
     }
-
-    public void setPost(int s){
-        post.set(s);
-    }
-
-    public void setStrComment(String s){
-        strComment.set(s);
-    }
-
-    public void setDate(Timestamp s){
-        date.set(s);
-    }
-
+    
 }

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mycompany.task1.RegistrationSceneController">
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="870.0" VBox.vgrow="ALWAYS">
+         <children>
+            <Label alignment="CENTER" layoutX="462.0" layoutY="151.0" prefHeight="20.0" prefWidth="300.0" text="Username (*)" textAlignment="CENTER">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <TextField id="usernameField" fx:id="usernameField" layoutX="462.0" layoutY="176.0" prefHeight="30.0" prefWidth="300.0">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </TextField>
+            <Label alignment="CENTER" layoutX="463.0" layoutY="217.0" prefHeight="20.0" prefWidth="300.0" text="Password (*)" textAlignment="CENTER">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <PasswordField id="passwordField" fx:id="passwordField" layoutX="462.0" layoutY="237.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0">
+               <font>
+                  <Font size="12.0" />
+               </font></PasswordField>
+            <Label alignment="CENTER" layoutX="139.0" layoutY="286.0" prefHeight="20.0" prefWidth="300.0" text="Name (optional)" textAlignment="CENTER">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <TextField id="nameField" fx:id="nameField" layoutX="139.0" layoutY="306.0" prefHeight="30.0" prefWidth="300.0">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </TextField>
+            <Label alignment="CENTER" layoutX="140.0" layoutY="344.0" prefHeight="20.0" prefWidth="300.0" text="Surname (optional)" textAlignment="CENTER">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <TextField id="surnameField" fx:id="surnameField" layoutX="139.0" layoutY="364.0" prefHeight="30.0" prefWidth="300.0">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </TextField>
+            <Label alignment="CENTER" layoutX="140.0" layoutY="404.0" prefHeight="20.0" prefWidth="300.0" text="Gender (optional)" textAlignment="CENTER">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <ComboBox id="genderComboBox" fx:id="genderComboBox" layoutX="139.0" layoutY="421.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" />
+            <Label alignment="CENTER" layoutX="141.0" layoutY="462.0" prefHeight="20.0" prefWidth="300.0" text="Date of Birth (optional)" textAlignment="CENTER">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <DatePicker id="calendar" fx:id="calendar" layoutX="139.0" layoutY="483.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" />
+            <Label alignment="CENTER" layoutX="464.0" layoutY="287.0" prefHeight="20.0" prefWidth="300.0" text="Country (optional)" textAlignment="CENTER">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <TextField id="countryField" fx:id="countryField" layoutX="464.0" layoutY="307.0" prefHeight="30.0" prefWidth="300.0">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </TextField>
+            <Label alignment="CENTER" layoutX="465.0" layoutY="345.0" prefHeight="20.0" prefWidth="300.0" text="City (optional)" textAlignment="CENTER">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <TextField id="cityField" fx:id="cityField" layoutX="464.0" layoutY="365.0" prefHeight="30.0" prefWidth="300.0">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </TextField>
+            <Label alignment="CENTER" layoutX="465.0" layoutY="405.0" prefHeight="20.0" prefWidth="300.0" text="Street Address (optional)" textAlignment="CENTER">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <TextField id="streetField" fx:id="streetField" layoutX="465.0" layoutY="425.0" prefHeight="30.0" prefWidth="300.0">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </TextField>
+            <Label alignment="CENTER" layoutX="466.0" layoutY="463.0" prefHeight="20.0" prefWidth="300.0" text="Phone Number (optional)" textAlignment="CENTER">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <TextField id="phoneField" fx:id="phoneField" layoutX="466.0" layoutY="483.0" prefHeight="30.0" prefWidth="300.0">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </TextField>
+            <Button layoutX="397.0" layoutY="537.0" mnemonicParsing="false" onAction="#registerOnAction" prefHeight="25.0" prefWidth="118.0" text="Register">
+               <font>
+                  <Font size="12.0" />
+               </font></Button>
+            <Button layoutX="21.0" layoutY="58.0" mnemonicParsing="false" onAction="#backSetOnAction" text="Back to Login page">
+               <font>
+                  <Font size="12.0" />
+               </font></Button>
+            <StackPane prefHeight="64.0" prefWidth="870.0">
+               <children>
+                  <Label id="welcomeLabel" fx:id="welcomeLabel" alignment="CENTER" contentDisplay="CENTER" text="Fill the following form. (*)Username and Password are required" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <graphic>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b0d2ff" height="45.0" stroke="TRANSPARENT" strokeType="INSIDE" width="830.0" />
+                     </graphic>
+                  </Label>
+               </children>
+            </StackPane>
+            <Label fx:id="errorLabel" alignment="CENTER" layoutX="162.0" layoutY="58.0" prefHeight="27.0" prefWidth="529.0" textAlignment="CENTER" textFill="#e50000">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="139.0" fitWidth="165.0" layoutX="220.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/registration.png" />
+               </image>
+            </ImageView>
+         </children>
+    </AnchorPane>
+  </children>
+</VBox>
