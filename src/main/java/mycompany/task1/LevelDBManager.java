@@ -3,6 +3,7 @@ package mycompany.task1;
 import java.io.*;
 import static java.lang.Long.*;
 import java.util.*;
+import javafx.application.Platform;
 import static org.iq80.leveldb.impl.Iq80DBFactory.*;
 import org.iq80.leveldb.*;
 
@@ -16,6 +17,8 @@ private DB db;
           db = factory.open(new File("leveldb"), options);
         } catch (IOException e){
             e.printStackTrace();
+            System.err.println("ERROR: Application closed, unable to open levelDB folder");
+            Platform.exit();
         }
     }
 
@@ -68,9 +71,9 @@ private DB db;
     public void close(){
        try{
            db.close();
-       }catch(IOException e){
-
+       }catch(IOException e){           
            e.printStackTrace();
+           Platform.exit();
        }
     }
  
